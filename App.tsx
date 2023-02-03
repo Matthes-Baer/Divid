@@ -1,8 +1,10 @@
 import { StatusBar } from "expo-status-bar";
 import { Button, StyleSheet, Text, View } from "react-native";
 import { auth } from "./firebaseConfig";
+import { database } from "./firebaseConfig";
 import { authRegister, authSignin } from "./utils/auth";
 import { onAuthStateChanged, signOut, User } from "firebase/auth";
+import { writeUserData, ReadTest, updateData } from "./utils/database";
 import { useEffect, useState } from "react";
 
 export default function App() {
@@ -36,8 +38,14 @@ export default function App() {
   if (loggedin) {
     return (
       <View style={styles.container}>
-        <Text>{userData.uid}</Text>
+        <Text>{userData && userData.uid}</Text>
         <Button onPress={signOutHandler} title="Log out" />
+        <Button
+          onPress={() => writeUserData(userData.uid, "Tester", "test@gmx.com")}
+          title="Test DB"
+        />
+        <Button onPress={() => ReadTest(userData.uid)} title="Read DB" />
+        <Button onPress={() => updateData(userData.uid)} title="update DB" />
         <StatusBar style="auto" />
       </View>
     );

@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 import { getAuth } from "firebase/auth";
+import { getDatabase } from "firebase/database";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -14,6 +15,8 @@ const firebaseConfig = {
   storageBucket: "divid-5f8e5.appspot.com",
   messagingSenderId: "119969415068",
   appId: "1:119969415068:web:1956f5655b819eeac61259",
+  databaseURL:
+    "https://divid-5f8e5-default-rtdb.europe-west1.firebasedatabase.app/",
 };
 
 // Initialize Firebase
@@ -21,3 +24,4 @@ const app = initializeApp(firebaseConfig);
 
 // Initialize Firebase Authentication and get a reference to the service
 export const auth = getAuth(app);
+export const database = getDatabase(app);
