@@ -1,6 +1,6 @@
 import { signOut } from "firebase/auth";
 import { useEffect } from "react";
-import { View, Text, Button } from "react-native";
+import { View, Text, Button, StyleSheet } from "react-native";
 import { auth } from "../../firebaseConfig";
 
 import type { Authenticated_Screens_Type } from "../../utils/interfaces-and-types";
@@ -21,12 +21,18 @@ const Home_Authenticated = ({ navigation }: Props) => {
   });
 
   return (
-    <View>
+    <View style={styles.container}>
       <Text>Logged in</Text>
       <Text>{auth.currentUser.uid}</Text>
       <Button title="logout" onPress={signOutHandler} />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    height: "100%",
+  },
+});
 
 export default Home_Authenticated;

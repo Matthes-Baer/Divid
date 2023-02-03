@@ -18,6 +18,8 @@ import Home_NotAuthenticated from "./screens/Not_Authenticated/Home_NotAuthentic
 import Login_NotAuthenticated from "./screens/Not_Authenticated/Login_NotAuthenticated";
 import Register_NotAuthenticated from "./screens/Not_Authenticated/Register_NotAuthenticated";
 
+import Constants from "expo-constants";
+
 const Authenticated_TopTabs_Navigator = createMaterialTopTabNavigator();
 const Not_Authenticated_Stack_Navigator = createStackNavigator();
 const Main = createStackNavigator();
@@ -35,7 +37,11 @@ const forFade = ({ current }) => ({
 const Authenticated_Navigation = () => {
   return (
     <Authenticated_TopTabs_Navigator.Navigator
-      screenOptions={{ animationEnabled: true }}
+      screenOptions={{
+        animationEnabled: true,
+        tabBarBounces: true,
+        tabBarStyle: { marginTop: Constants.statusBarHeight },
+      }}
     >
       <Authenticated_TopTabs_Navigator.Screen
         name="Home"
@@ -53,14 +59,15 @@ const Not_Authenticated_Navigation = () => {
   return (
     <Not_Authenticated_Stack_Navigator.Navigator
       screenOptions={{
-        headerShown: false,
         cardStyleInterpolator:
           CardStyleInterpolators.forRevealFromBottomAndroid,
+        headerStyle: { marginTop: Constants.statusBarHeight },
       }}
     >
       <Not_Authenticated_Stack_Navigator.Screen
         name="Not_Authenticated_Home"
         component={Home_NotAuthenticated}
+        options={{ headerShown: false }}
       />
       <Not_Authenticated_Stack_Navigator.Screen
         name="Login"
@@ -97,7 +104,11 @@ export default function App() {
           component={
             userData ? Authenticated_Navigation : Not_Authenticated_Navigation
           }
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+            cardStyleInterpolator:
+              CardStyleInterpolators.forRevealFromBottomAndroid,
+          }}
         />
       </Main.Navigator>
       <StatusBar backgroundColor="black" />
