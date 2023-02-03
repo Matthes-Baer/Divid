@@ -37,6 +37,11 @@ export default function Start(): JSX.Element {
         </Text>
         //! Hierauf wahrscheinlich zuerst Fokus legen?
         <Text>
+          Login-Screen (Form), Register-Screen (Form) + Möglichkeit für Username
+          hinzufügen, Main-Start-Screen, Generelle Database-Struktur festlegen
+          für alles
+        </Text>
+        <Text>
           Not authenticated: Start_NotAuthenticated Component, Login-Screen
           (nach Klick auf Login-Button), Register-Screen (nach Klick auf
           Register-Button)
