@@ -4,12 +4,7 @@ import { Button, StyleSheet, Text, View } from "react-native";
 import { auth } from "./firebaseConfig";
 import { register, signin } from "./utils/auth";
 
-import {
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  signOut,
-} from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 
 import { useEffect, useState } from "react";
 
@@ -22,7 +17,7 @@ export default function App() {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
         const uid = user.uid;
-        console.log("user is signed in", user);
+        console.log("user is signed in", auth.currentUser);
         setLoggedin(true);
         // ...
       } else {
@@ -46,8 +41,8 @@ export default function App() {
     return (
       <View style={styles.container}>
         <Text>Test</Text>
-        <Button onPress={register} title="Register" />
-        <Button onPress={signin} title="Log in" />
+        {/* <Button onPress={register} title="Register" />
+        <Button onPress={signin} title="Log in" /> */}
         <StatusBar style="auto" />
       </View>
     );
