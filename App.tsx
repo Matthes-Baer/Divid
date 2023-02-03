@@ -1,39 +1,43 @@
 import { StatusBar } from "expo-status-bar";
 import { Button, StyleSheet, Text, View } from "react-native";
-
 import { auth } from "./firebaseConfig";
-import { register, signin } from "./utils/auth";
-
-import { onAuthStateChanged, signOut } from "firebase/auth";
-
+import { authRegister, authSignin } from "./utils/auth";
+import { onAuthStateChanged, signOut, User } from "firebase/auth";
 import { useEffect, useState } from "react";
 
 export default function App() {
   const [loggedin, setLoggedin] = useState<boolean>();
+  const [userData, setUserData] = useState<User | null>();
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, (user: User) => {
       if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        const uid = user.uid;
-        console.log("user is signed in", auth.currentUser);
-        setLoggedin(true);
-        // ...
+        setUserData(user);
       } else {
-        // User is signed out
-        // ...
-        console.log("user is signed out");
-        setLoggedin(false);
+        console.log("no user found");
       }
     });
-  }, []);
+  }, [loggedin]);
+
+  const signInHandler = () => {
+    authSignin("TestNew234@gmail.com", "AAAAAA234");
+    setLoggedin(true);
+  };
+
+  const signOutHandler = () => {
+    signOut(auth);
+    setLoggedin(false);
+  };
+
+  const registerHandler = () => {
+    authRegister("TestNew234@gmail.com", "AAAAAA234", setLoggedin);
+  };
 
   if (loggedin) {
     return (
       <View style={styles.container}>
-        <Text>Logged in</Text>
-        <Button onPress={() => signOut(auth)} title="Log out" />
+        <Text>{userData.uid}</Text>
+        <Button onPress={signOutHandler} title="Log out" />
         <StatusBar style="auto" />
       </View>
     );
@@ -41,8 +45,8 @@ export default function App() {
     return (
       <View style={styles.container}>
         <Text>Test</Text>
-        {/* <Button onPress={register} title="Register" />
-        <Button onPress={signin} title="Log in" /> */}
+        <Button onPress={registerHandler} title="Register" />
+        <Button onPress={signInHandler} title="Log in" />
         <StatusBar style="auto" />
       </View>
     );

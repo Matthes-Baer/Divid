@@ -1,5 +1,7 @@
 import { auth } from "../firebaseConfig";
 
+// auth.useDeviceLanguage();
+
 import {
   createUserWithEmailAndPassword,
   deleteUser,
@@ -14,26 +16,26 @@ import {
   UserCredential,
 } from "firebase/auth";
 
-export const register: (a: string, b: string) => void = (
+export const authRegister: (a: string, b: string, c?: Function) => void = (
   email: string,
-  password: string
+  password: string,
+  setterCallback?: Function
 ) => {
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential: UserCredential) => {
-      // Signed in
       const user = userCredential.user;
-
-      // ...
+      authSignin(email, password);
+      setterCallback(true);
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log(errorCode, errorMessage);
-      // ..
+      setterCallback(false);
     });
 };
 
-export const signin: (a: string, b: string) => void = (
+export const authSignin: (a: string, b: string) => void = (
   email: string,
   password: string
 ) => {
@@ -41,26 +43,12 @@ export const signin: (a: string, b: string) => void = (
     .then((userCredential: UserCredential) => {
       // Signed in
       const user = userCredential.user;
-
-      // ...
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log(errorCode, errorMessage);
-      // ..
     });
-};
-
-export const getCurrentAuthState = () => {
-  onAuthStateChanged(auth, (user: User) => {
-    if (user) {
-      console.log("user is signed in");
-      // const uid = auth.currentUser.uid;
-    } else {
-      console.log("user is signed out");
-    }
-  });
 };
 
 export const updateUserProfile: (a: string, b: string) => void = (
