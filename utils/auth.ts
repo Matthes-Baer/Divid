@@ -1,4 +1,5 @@
 import { auth } from "../firebaseConfig";
+//! bei Register dafür sorgen, dass verification E-Mail gesendet wird zum Aktivieren des Accounts - ohne Aktivieren kann man ansonsten beispielsweise die Reward-Bilder nicht einsehen oder etwas ähnliches.
 
 // auth.useDeviceLanguage();
 
@@ -25,13 +26,13 @@ export const authRegister: (a: string, b: string, c?: Function) => void = (
     .then((userCredential: UserCredential) => {
       const user = userCredential.user;
       authSignin(email, password);
-      setterCallback(true);
+      // setterCallback(true);
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log(errorCode, errorMessage);
-      setterCallback(false);
+      // setterCallback(false);
     });
 };
 

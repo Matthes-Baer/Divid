@@ -1,14 +1,80 @@
 import { StatusBar } from "expo-status-bar";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View, Animated, Easing } from "react-native";
 import { auth } from "./firebaseConfig";
-import { database } from "./firebaseConfig";
-import { authRegister, authSignin } from "./utils/auth";
 import { onAuthStateChanged, signOut, User } from "firebase/auth";
-import { writeUserData, ReadTest, updateData } from "./utils/database";
 import { useEffect, useState } from "react";
 
+import { NavigationContainer } from "@react-navigation/native";
+import {
+  createStackNavigator,
+  CardStyleInterpolators,
+} from "@react-navigation/stack";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+
+import Home_Authenticated from "./screens/Authenticated/Home_Authenticated";
+import Game_Authenticated from "./screens/Authenticated/Game_Authenticated";
+
+import Home_NotAuthenticated from "./screens/Not_Authenticated/Home_NotAuthenticated";
+import Login_NotAuthenticated from "./screens/Not_Authenticated/Login_NotAuthenticated";
+import Register_NotAuthenticated from "./screens/Not_Authenticated/Register_NotAuthenticated";
+
+const Authenticated_TopTabs_Navigator = createMaterialTopTabNavigator();
+const Not_Authenticated_Stack_Navigator = createStackNavigator();
+const Main = createStackNavigator();
+
+// https://icons.expo.fyi/
+import { AntDesign } from "@expo/vector-icons";
+import Ionicons from "@expo/vector-icons/Ionicons";
+
+const forFade = ({ current }) => ({
+  cardStyle: {
+    opacity: current.progress,
+  },
+});
+
+const Authenticated_Navigation = () => {
+  return (
+    <Authenticated_TopTabs_Navigator.Navigator
+      screenOptions={{ animationEnabled: true }}
+    >
+      <Authenticated_TopTabs_Navigator.Screen
+        name="Home"
+        component={Home_Authenticated}
+      />
+      <Authenticated_TopTabs_Navigator.Screen
+        name="Game"
+        component={Game_Authenticated}
+      />
+    </Authenticated_TopTabs_Navigator.Navigator>
+  );
+};
+
+const Not_Authenticated_Navigation = () => {
+  return (
+    <Not_Authenticated_Stack_Navigator.Navigator
+      screenOptions={{
+        headerShown: false,
+        cardStyleInterpolator:
+          CardStyleInterpolators.forRevealFromBottomAndroid,
+      }}
+    >
+      <Not_Authenticated_Stack_Navigator.Screen
+        name="Not_Authenticated_Home"
+        component={Home_NotAuthenticated}
+      />
+      <Not_Authenticated_Stack_Navigator.Screen
+        name="Login"
+        component={Login_NotAuthenticated}
+      />
+      <Not_Authenticated_Stack_Navigator.Screen
+        name="Register"
+        component={Register_NotAuthenticated}
+      />
+    </Not_Authenticated_Stack_Navigator.Navigator>
+  );
+};
+
 export default function App() {
-  const [loggedin, setLoggedin] = useState<boolean>();
   const [userData, setUserData] = useState<User | null>();
 
   useEffect(() => {
@@ -17,48 +83,44 @@ export default function App() {
         setUserData(user);
       } else {
         console.log("no user found");
+        setUserData(null);
       }
     });
-  }, [loggedin]);
+  }, []);
 
-  const signInHandler = () => {
-    authSignin("TestNew234@gmail.com", "AAAAAA234");
-    setLoggedin(true);
-  };
-
-  const signOutHandler = () => {
-    signOut(auth);
-    setLoggedin(false);
-  };
-
-  const registerHandler = () => {
-    authRegister("TestNew234@gmail.com", "AAAAAA234", setLoggedin);
-  };
-
-  if (loggedin) {
-    return (
-      <View style={styles.container}>
-        <Text>{userData && userData.uid}</Text>
-        <Button onPress={signOutHandler} title="Log out" />
-        <Button
-          onPress={() => writeUserData(userData.uid, "Tester", "test@gmx.com")}
-          title="Test DB"
+  return (
+    <NavigationContainer>
+      <Main.Navigator>
+        {/* //? Anstatt einzelne Components sollte es jeweils einen Navigator Stack für Authenticated und einen für Not_Authenticated geben (also nested Navigation) */}
+        <Main.Screen
+          name="Start"
+          component={
+            userData ? Authenticated_Navigation : Not_Authenticated_Navigation
+          }
+          options={{ headerShown: false }}
         />
-        <Button onPress={() => ReadTest(userData.uid)} title="Read DB" />
-        <Button onPress={() => updateData(userData.uid)} title="update DB" />
-        <StatusBar style="auto" />
-      </View>
-    );
-  } else {
-    return (
-      <View style={styles.container}>
-        <Text>Test</Text>
-        <Button onPress={registerHandler} title="Register" />
-        <Button onPress={signInHandler} title="Log in" />
-        <StatusBar style="auto" />
-      </View>
-    );
-  }
+      </Main.Navigator>
+      <StatusBar backgroundColor="black" />
+    </NavigationContainer>
+  );
+
+  // if (loggedin) {
+  //   return (
+  //     <View style={styles.container}>
+  //       <Text>{userData && userData.uid}</Text>
+  //       <Button onPress={signOutHandler} title="Log out" />
+  //       <Button
+  //         onPress={() => writeUserData(userData.uid, "Tester", "test@gmx.com")}
+  //         title="Test DB"
+  //       />
+  //       <Button onPress={() => ReadTest(userData.uid)} title="Read DB" />
+  //       <Button onPress={() => updateData(userData.uid)} title="update DB" />
+  //       <StatusBar style="auto" />
+  //     </View>
+  //   );
+  // } else {
+  //   // return <Start_NotAuthenticated loginSetter={setLoggedin} />;
+  // }
 }
 
 const styles = StyleSheet.create({
