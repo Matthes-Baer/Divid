@@ -1,6 +1,9 @@
 import { StatusBar } from "expo-status-bar";
 import { Button, StyleSheet, Text, View } from "react-native";
 
+import { auth } from "./firebaseConfig";
+import { register, signin } from "./utils/auth";
+
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -8,45 +11,10 @@ import {
   signOut,
 } from "firebase/auth";
 
-import { auth } from "./firebaseConfig";
 import { useEffect, useState } from "react";
 
 export default function App() {
   const [loggedin, setLoggedin] = useState<boolean>();
-
-  const register = () => {
-    createUserWithEmailAndPassword(auth, "Test2@test.com", "1234567")
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        setLoggedin(true);
-        console.log(user);
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-        // ..
-      });
-  };
-
-  const signin = () => {
-    signInWithEmailAndPassword(auth, "Test@test.com", "123456")
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        console.log(user);
-        setLoggedin(true);
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-        // ..
-      });
-  };
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -54,7 +22,7 @@ export default function App() {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
         const uid = user.uid;
-        console.log("user is signed in");
+        console.log("user is signed in", user);
         setLoggedin(true);
         // ...
       } else {
