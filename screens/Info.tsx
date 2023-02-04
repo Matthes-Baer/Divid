@@ -10,7 +10,9 @@ export default function Start(): JSX.Element {
       </Text>
       <Text>
         Database-Funktionen mit Firebase einrichten, die als authenticated user
-        genutzt werden können - uids verwenden für database Einträge
+        genutzt werden können - uids verwenden für database Einträge - ChatGPT
+        befragt, ob uids verwendet werden können (Antwort war "ja"), token
+        funktioneren aber auch
       </Text>
       <Text>Routing, ...</Text>
       <View>
