@@ -1,3 +1,7 @@
+export type RootStackParamList = {
+  Start: undefined;
+};
+
 export type Not_Authenticated_Screens_Type = {
   Start: undefined;
   Not_Authenticated_Home: undefined;

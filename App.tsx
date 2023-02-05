@@ -9,6 +9,7 @@ import {
   createStackNavigator,
   CardStyleInterpolators,
 } from "@react-navigation/stack";
+import type { RootStackParamList } from "./utils/interfaces-and-types";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
 import Home_Authenticated from "./screens/Authenticated/Home_Authenticated";
@@ -22,7 +23,7 @@ import Constants from "expo-constants";
 
 const Authenticated_TopTabs_Navigator = createMaterialTopTabNavigator();
 const Not_Authenticated_Stack_Navigator = createStackNavigator();
-const Main = createStackNavigator();
+const Main = createStackNavigator<RootStackParamList>();
 
 // https://icons.expo.fyi/
 import { AntDesign } from "@expo/vector-icons";
