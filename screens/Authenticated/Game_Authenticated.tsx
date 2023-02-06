@@ -10,7 +10,9 @@ type Props = NativeStackScreenProps<Authenticated_Screens_Type, "Game">;
 const Home_Authenticated = ({ navigation }: Props) => {
   return (
     <View>
-      <Text>Game</Text>
+      <Text style={{ fontFamily: "Rajdhani_400Regular", fontSize: 25 }}>
+        Game
+      </Text>
       <Text>{auth.currentUser.uid}</Text>
     </View>
   );

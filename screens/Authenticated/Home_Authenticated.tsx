@@ -1,6 +1,12 @@
 import { signOut } from "firebase/auth";
 import { useEffect, useState } from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  ActivityIndicator,
+} from "react-native";
 import { auth } from "../../firebaseConfig";
 
 import type { database_userData } from "../../utils/interfaces-and-types";
@@ -31,11 +37,15 @@ const Home_Authenticated = ({ navigation }: Props) => {
       <Text>Logged in</Text>
       <View>
         {!userData ? (
-          <Text>Fetching user data...</Text>
+          <ActivityIndicator color="#0000ff" size="large" />
         ) : (
           <View>
-            <Text>{userData.email}</Text>
-            <Text>{userData.username}</Text>
+            <Text style={{ fontFamily: "Rajdhani_400Regular", fontSize: 25 }}>
+              {userData.email}
+            </Text>
+            <Text style={{ fontFamily: "Rajdhani_400Regular", fontSize: 25 }}>
+              {userData.username}
+            </Text>
           </View>
         )}
       </View>

@@ -7,7 +7,28 @@ type Props = NativeStackScreenProps<
   "Not_Authenticated_Home"
 >;
 
+//? Needed for custom font:
+import { useCallback } from "react";
+import { useFonts, Rajdhani_400Regular } from "@expo-google-fonts/rajdhani";
+import * as SplashScreen from "expo-splash-screen";
+SplashScreen.preventAutoHideAsync();
+
 const Start_NotAuthenticated = ({ navigation, route }: Props) => {
+  //? This is needed for loading the custom font and waiting for it before rendering the component.
+  let [fontsLoaded] = useFonts({
+    Rajdhani_400Regular,
+  });
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   const registerHandler = () => {
     navigation.navigate("Register");
   };
@@ -17,8 +38,10 @@ const Start_NotAuthenticated = ({ navigation, route }: Props) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text>Not logged in - Register Screen and Log In Screen: ...</Text>
+    <View style={styles.container} onLayout={onLayoutRootView}>
+      <Text style={{ fontFamily: "Rajdhani_400Regular", fontSize: 25 }}>
+        Not logged in - Register Screen and Log In Screen: ...
+      </Text>
       <Button onPress={registerHandler} title="Register" />
       <Button onPress={signInHandler} title="Log in" />
     </View>
@@ -31,7 +54,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "purple",
+    backgroundColor: "white",
     height: "100%",
   },
 });
