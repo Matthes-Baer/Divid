@@ -1,21 +1,20 @@
 import { getDatabase, onValue, ref, set, update } from "firebase/database";
+import type { database_userData } from "./interfaces-and-types";
 const db = getDatabase();
 
-export function writeUserData(userId, name, email) {
+export function createUser(userId, username, email) {
   set(ref(db, "users/" + userId), {
-    username: name,
-    email: email,
+    username,
+    email,
   });
 }
 
-export function ReadTest(userId: string) {
-  const test = ref(db, "users/" + userId);
-  //? Um auf bestimmten einzelnen Wert zuzugreifen
-  //? const test = ref(db, "users/" + userId + "/email");
+export function readSpecificUserData(userId: string, callback?: Function) {
+  const value = ref(db, "users/" + userId);
 
-  onValue(test, (snapshot) => {
-    const data = snapshot.val();
-    console.log(data);
+  onValue(value, (snapshot) => {
+    let data: database_userData = snapshot.val();
+    callback(data);
   });
 }
 

@@ -16,23 +16,26 @@ import {
   User,
   UserCredential,
 } from "firebase/auth";
+import { createUser } from "./database";
 
-export const authRegister: (a: string, b: string, c?: Function) => void = (
+export const authRegister: (a: string, b: string, c: string) => void = (
   email: string,
   password: string,
-  setterCallback?: Function
+  username: string
 ) => {
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential: UserCredential) => {
       const user = userCredential.user;
+      updateProfile(auth.currentUser, {
+        displayName: username,
+      });
       authSignin(email, password);
-      // setterCallback(true);
+      createUser(user.uid, username, email);
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log(errorCode, errorMessage);
-      // setterCallback(false);
     });
 };
 

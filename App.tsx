@@ -62,7 +62,6 @@ const Not_Authenticated_Navigation = () => {
       screenOptions={{
         cardStyleInterpolator:
           CardStyleInterpolators.forRevealFromBottomAndroid,
-        headerStyle: { marginTop: Constants.statusBarHeight },
       }}
     >
       <Not_Authenticated_Stack_Navigator.Screen

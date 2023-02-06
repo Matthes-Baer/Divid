@@ -14,3 +14,8 @@ export type Authenticated_Screens_Type = {
   Home: undefined;
   Game: undefined;
 };
+
+export interface database_userData {
+  email: string;
+  username: string;
+}
