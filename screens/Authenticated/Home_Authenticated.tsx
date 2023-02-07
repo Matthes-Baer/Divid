@@ -49,7 +49,9 @@ const Home_Authenticated = ({ navigation }: Props) => {
             <Text style={{ fontFamily: "Rajdhani_400Regular", fontSize: 25 }}>
               {userData.username}
             </Text>
-            <Text>Email verified?: {auth.currentUser.emailVerified}</Text>
+            <Text>
+              Email verified?: {auth.currentUser.emailVerified ? "Yes" : "No"}
+            </Text>
           </View>
         )}
       </View>

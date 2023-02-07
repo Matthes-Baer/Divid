@@ -12,11 +12,10 @@ export default function Start(): JSX.Element {
         <br />- Bei Register auf Login verweisen (Account schon vorhanden?)
       </Text>
 
+      <Text>jeweils 1 Alert bei login und register noch zu überarbeiten</Text>
       <Text>
-        Database-Funktionen mit Firebase einrichten, die als authenticated user
-        genutzt werden können - uids verwenden für database Einträge - ChatGPT
-        befragt, ob uids verwendet werden können (Antwort war "ja"), token
-        funktioneren aber auch
+        Bei Register auf Valid Email checken (firebase gibt error meldung raus)
+        - bei Login etwas ähnliches?
       </Text>
       <Text>Routing, ...</Text>
       <View>

@@ -1,25 +1,47 @@
 import { useState } from "react";
-import { View, Text, Button, StyleSheet, Alert } from "react-native";
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  Alert,
+  ActivityIndicator,
+} from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { authRegister } from "../../utils/auth";
 
 import { AntDesign, Feather } from "@expo/vector-icons";
 
 import CustomButton from "../../ui/CustomButton";
+import { auth } from "../../firebaseConfig";
 
 const Start_NotAuthenticated = () => {
   const [email, setEmail] = useState<string | null>(null);
   const [username, setUsername] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const registerHandler = () => {
     if (!email || !password || !username) {
       Alert.alert(
         "Insufficient Input",
         "email, password and/or username is missing.",
-        [{ text: "OK", style: "default" }],
-        { cancelable: true }
+        [
+          {
+            text: "OK",
+            style: "default",
+            onPress() {
+              setLoading(false);
+            },
+          },
+        ],
+        {
+          cancelable: true,
+          onDismiss() {
+            setLoading(false);
+          },
+        }
       );
       return;
     }
@@ -27,7 +49,15 @@ const Start_NotAuthenticated = () => {
       Alert.alert(
         "Weak Password",
         "password length has to be 6 or more.",
-        [{ text: "OK", style: "default" }],
+        [
+          {
+            text: "OK",
+            style: "default",
+            onPress() {
+              setLoading(false);
+            },
+          },
+        ],
         {
           cancelable: true,
         }
@@ -35,6 +65,15 @@ const Start_NotAuthenticated = () => {
       return;
     }
     authRegister(email, password, username);
+
+    const waitForRegisterTimeout = setTimeout(() => {
+      if (!auth.currentUser) {
+        Alert.alert("Error with register");
+      }
+      setLoading(false);
+    }, 5000);
+
+    return () => clearTimeout(waitForRegisterTimeout);
   };
 
   return (
@@ -84,9 +123,20 @@ const Start_NotAuthenticated = () => {
             />
           )}
         </View>
-        <View style={styles.customButtonViewContainer}>
-          <CustomButton onPress={registerHandler} width={"50%"}>
-            Register
+        <View
+          style={styles.customButtonViewContainer}
+          onTouchEnd={() => setLoading(true)}
+        >
+          <CustomButton
+            onPress={registerHandler}
+            width={"50%"}
+            loading={loading}
+          >
+            {loading ? (
+              <ActivityIndicator size={25} color={"#2b2024"} />
+            ) : (
+              "Register"
+            )}
           </CustomButton>
         </View>
       </View>
