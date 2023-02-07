@@ -41,17 +41,19 @@ const Start_NotAuthenticated = () => {
     <View style={styles.container}>
       <View style={styles.formContainer}>
         <Text style={styles.heading}>Register</Text>
-        <Text style={styles.inputLabel}>E-Mail:</Text>
+        <Text style={styles.inputLabel}>Email:</Text>
         <TextInput
           autoComplete="email"
-          selectionColor={"#2b2024"}
+          selectionColor={"rgba(25,25,25,0.25)"}
+          cursorColor={"#2b2024"}
           value={email}
           onChangeText={(e: string) => setEmail(e)}
           style={styles.textInput}
         ></TextInput>
         <Text style={styles.inputLabel}>Username:</Text>
         <TextInput
-          selectionColor={"#2b2024"}
+          selectionColor={"rgba(25,25,25,0.25)"}
+          cursorColor={"#2b2024"}
           value={username}
           onChangeText={(e: string) => setUsername(e)}
           style={styles.textInput}
@@ -59,7 +61,8 @@ const Start_NotAuthenticated = () => {
         <Text style={styles.inputLabel}>Password:</Text>
         <View style={styles.passwordViewContainer}>
           <TextInput
-            selectionColor={"#2b2024"}
+            selectionColor={"rgba(25,25,25,0.25)"}
+            cursorColor={"#2b2024"}
             value={password}
             onChangeText={(e: string) => setPassword(e)}
             secureTextEntry={showPassword}

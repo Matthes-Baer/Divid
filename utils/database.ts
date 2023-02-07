@@ -2,14 +2,14 @@ import { getDatabase, onValue, ref, set, update } from "firebase/database";
 import type { database_userData } from "./interfaces-and-types";
 const db = getDatabase();
 
-export function createUser(userId, username, email) {
+export function createUserDB(userId, username, email) {
   set(ref(db, "users/" + userId), {
     username,
     email,
   });
 }
 
-export function readSpecificUserData(userId: string, callback?: Function) {
+export function readSpecificUserDataDB(userId: string, callback?: Function) {
   const value = ref(db, "users/" + userId);
 
   onValue(value, (snapshot) => {
@@ -18,7 +18,7 @@ export function readSpecificUserData(userId: string, callback?: Function) {
   });
 }
 
-export function updateData(userId: string) {
+export function updateDataDB(userId: string) {
   const updates = {};
   updates["users/" + userId + "/email"] = "newEmail@test.com";
 

@@ -16,7 +16,7 @@ import {
   User,
   UserCredential,
 } from "firebase/auth";
-import { createUser } from "./database";
+import { createUserDB } from "./database";
 
 export const authRegister: (a: string, b: string, c: string) => void = (
   email: string,
@@ -33,7 +33,8 @@ export const authRegister: (a: string, b: string, c: string) => void = (
         displayName: username,
       });
       authSignin(email, password);
-      createUser(user.uid, username, email);
+      createUserDB(user.uid, username, email);
+      sendEmailVerificationMail();
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -59,14 +60,14 @@ export const authSignin: (a: string, b: string) => void = (
 };
 
 export const updateUserProfile: (a: string, b: string) => void = (
-  property: string,
+  key: string,
   input: string
 ) => {
   updateProfile(auth.currentUser, {
-    [property]: input,
+    [key]: input,
   })
     .then(() => {
-      console.log(`${property} was updated with ${input}!`);
+      console.log(`${key} was updated with ${input}!`);
     })
     .catch((error) => {
       console.log("error at updating user profile", error);

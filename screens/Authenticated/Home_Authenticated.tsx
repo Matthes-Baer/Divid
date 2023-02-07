@@ -14,7 +14,7 @@ import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 type Props = NativeStackScreenProps<Authenticated_Screens_Type, "Home">;
 
 //? Database & Auth
-import { readSpecificUserData } from "../../utils/database";
+import { readSpecificUserDataDB } from "../../utils/database";
 import type { database_userData } from "../../utils/interfaces-and-types";
 import { auth } from "../../firebaseConfig";
 
@@ -31,7 +31,8 @@ const Home_Authenticated = ({ navigation }: Props) => {
     if (!auth.currentUser) {
       navigation.navigate("Start");
     } else {
-      readSpecificUserData(auth.currentUser.uid, setUserData);
+      readSpecificUserDataDB(auth.currentUser.uid, setUserData);
+      console.log(auth.currentUser.emailVerified);
     }
   }, []);
 
