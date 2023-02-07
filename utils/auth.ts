@@ -26,6 +26,9 @@ export const authRegister: (a: string, b: string, c: string) => void = (
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential: UserCredential) => {
       const user = userCredential.user;
+      if (!user) {
+        throw new Error("User isn't authenticated.");
+      }
       updateProfile(auth.currentUser, {
         displayName: username,
       });

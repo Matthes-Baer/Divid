@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import { View, Text, Button, StyleSheet, Alert } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { authRegister } from "../../utils/auth";
 
 import { AntDesign, Feather } from "@expo/vector-icons";
+
+import CustomButton from "../../ui/CustomButton";
 
 const Start_NotAuthenticated = () => {
   const [email, setEmail] = useState<string | null>(null);
@@ -11,7 +13,27 @@ const Start_NotAuthenticated = () => {
   const [password, setPassword] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState<boolean>(true);
 
-  const registerHandler: () => void = (): void => {
+  const registerHandler = () => {
+    if (!email || !password || !username) {
+      Alert.alert(
+        "Insufficient Input",
+        "email, password and/or username is missing.",
+        [{ text: "OK", style: "default" }],
+        { cancelable: true }
+      );
+      return;
+    }
+    if (password.length < 6) {
+      Alert.alert(
+        "Weak Password",
+        "password length has to be 6 or more.",
+        [{ text: "OK", style: "default" }],
+        {
+          cancelable: true,
+        }
+      );
+      return;
+    }
     authRegister(email, password, username);
   };
 
@@ -21,6 +43,7 @@ const Start_NotAuthenticated = () => {
         <Text style={styles.heading}>Register</Text>
         <Text style={styles.inputLabel}>E-Mail:</Text>
         <TextInput
+          autoComplete="email"
           selectionColor={"#2b2024"}
           value={email}
           onChangeText={(e: string) => setEmail(e)}
@@ -58,8 +81,11 @@ const Start_NotAuthenticated = () => {
             />
           )}
         </View>
-
-        <Button onPress={registerHandler} title="Register" />
+        <View style={styles.customButtonViewContainer}>
+          <CustomButton onPress={registerHandler} width={"50%"}>
+            Register
+          </CustomButton>
+        </View>
       </View>
     </View>
   );
@@ -72,13 +98,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#f2f2f2",
-
     height: "100%",
   },
 
   formContainer: {
     backgroundColor: "#fbf9fa",
-
     padding: 15,
     borderRadius: 5,
     elevation: 10,
@@ -117,5 +141,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     marginBottom: 15,
+  },
+
+  customButtonViewContainer: {
+    alignItems: "center",
   },
 });
