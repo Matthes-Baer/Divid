@@ -32,7 +32,6 @@ const Home_Authenticated = ({ navigation }: Props) => {
       navigation.navigate("Start");
     } else {
       readSpecificUserDataDB(auth.currentUser.uid, setUserData);
-      console.log(auth.currentUser.emailVerified);
     }
   }, []);
 
@@ -50,6 +49,7 @@ const Home_Authenticated = ({ navigation }: Props) => {
             <Text style={{ fontFamily: "Rajdhani_400Regular", fontSize: 25 }}>
               {userData.username}
             </Text>
+            <Text>Email verified?: {auth.currentUser.emailVerified}</Text>
           </View>
         )}
       </View>

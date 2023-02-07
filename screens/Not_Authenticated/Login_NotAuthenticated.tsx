@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { View, Text, Button, StyleSheet, Alert } from "react-native";
+import { View, Text, StyleSheet, Alert, ActivityIndicator } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
-import { authRegister, authSignin } from "../../utils/auth";
-
+import { authSignin } from "../../utils/auth";
+import { auth } from "../../firebaseConfig";
 import { AntDesign, Feather } from "@expo/vector-icons";
 
 import CustomButton from "../../ui/CustomButton";
@@ -11,19 +11,43 @@ const Start_NotAuthenticated = () => {
   const [email, setEmail] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const loginHandler = () => {
     if (!email || !password) {
       Alert.alert(
         "Insufficient Input",
         "email and/or password is missing.",
-        [{ text: "OK", style: "default" }],
-        { cancelable: true }
+        [
+          {
+            text: "OK",
+            style: "default",
+            onPress() {
+              setLoading(false);
+            },
+          },
+        ],
+        {
+          cancelable: true,
+          onDismiss() {
+            setLoading(false);
+          },
+        }
       );
+
       return;
     }
 
     authSignin(email, password);
+
+    const waitForSigninTimeout = setTimeout(() => {
+      if (!auth.currentUser) {
+        Alert.alert("No user found");
+      }
+      setLoading(false);
+    }, 5000);
+
+    return () => clearTimeout(waitForSigninTimeout);
   };
 
   return (
@@ -65,9 +89,16 @@ const Start_NotAuthenticated = () => {
             />
           )}
         </View>
-        <View style={styles.customButtonViewContainer}>
-          <CustomButton onPress={loginHandler} width={"50%"}>
-            Login
+        <View
+          style={styles.customButtonViewContainer}
+          onTouchEnd={() => setLoading(true)}
+        >
+          <CustomButton onPress={loginHandler} loading={loading} width={"50%"}>
+            {loading ? (
+              <ActivityIndicator size={25} color={"#2b2024"} />
+            ) : (
+              "Login"
+            )}
           </CustomButton>
         </View>
       </View>
