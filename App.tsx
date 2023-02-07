@@ -29,11 +29,22 @@ const Main = createStackNavigator<RootStackParamList>();
 import { AntDesign } from "@expo/vector-icons";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-const forFade = ({ current }) => ({
-  cardStyle: {
-    opacity: current.progress,
-  },
-});
+//?
+// background: f2f2f2 (etwas gräulich)
+// .first-color { (neben background auch also font-color bei dunklerem Hintergrund)
+// 	background: #fbf9fa;
+// }
+
+// .second-color { (rötlich)
+// 	background: #fd0054;
+// }
+
+// .third-color { (dunkler rötlich)
+// 	background: #a80038;
+// }
+
+// .fourth-color { (geht ins Schwarze)
+// 	background: #2b2024;
 
 const Authenticated_Navigation = () => {
   return (
@@ -62,6 +73,10 @@ const Not_Authenticated_Navigation = () => {
       screenOptions={{
         cardStyleInterpolator:
           CardStyleInterpolators.forRevealFromBottomAndroid,
+        headerTintColor: "#fbf9fa",
+        headerStyle: {
+          backgroundColor: "#fd0054",
+        },
       }}
     >
       <Not_Authenticated_Stack_Navigator.Screen

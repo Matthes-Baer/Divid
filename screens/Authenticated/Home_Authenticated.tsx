@@ -7,13 +7,16 @@ import {
   StyleSheet,
   ActivityIndicator,
 } from "react-native";
-import { auth } from "../../firebaseConfig";
 
-import type { database_userData } from "../../utils/interfaces-and-types";
+//? Navigation
 import type { Authenticated_Screens_Type } from "../../utils/interfaces-and-types";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { readSpecificUserData } from "../../utils/database";
 type Props = NativeStackScreenProps<Authenticated_Screens_Type, "Home">;
+
+//? Database & Auth
+import { readSpecificUserData } from "../../utils/database";
+import type { database_userData } from "../../utils/interfaces-and-types";
+import { auth } from "../../firebaseConfig";
 
 const Home_Authenticated = ({ navigation }: Props) => {
   const [userData, setUserData] = useState<database_userData | null>(null);
