@@ -1,4 +1,6 @@
-import { View, Text, Button, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Button } from "react-native";
+import { useState } from "react";
+import { AntDesign, Feather } from "@expo/vector-icons";
 
 import type { Not_Authenticated_Screens_Type } from "../../utils/interfaces-and-types";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -12,10 +14,12 @@ import { useCallback } from "react";
 import { useFonts, Rajdhani_400Regular } from "@expo-google-fonts/rajdhani";
 import * as SplashScreen from "expo-splash-screen";
 import CustomButton from "../../ui/CustomButton";
-import SlideXAnimation from "../../ui/SlideXAnimation";
+import Constants from "expo-constants";
+import FadeAnimation from "../../ui/FadeAnimation";
 SplashScreen.preventAutoHideAsync();
 
 const Start_NotAuthenticated = ({ navigation, route }: Props) => {
+  const [fadeValue, setFadeValue] = useState<number>(1);
   //? This is needed for loading the custom font and waiting for it before rendering the component.
   let [fontsLoaded] = useFonts({
     Rajdhani_400Regular,
@@ -41,24 +45,82 @@ const Start_NotAuthenticated = ({ navigation, route }: Props) => {
 
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
-      <SlideXAnimation
+      <FadeAnimation
         style={{
-          width: 250,
-          height: 75,
-          backgroundColor: "powderblue",
+          backgroundColor: "transparent",
+          borderTopColor: "#fd0054",
+          borderTopWidth: 103.92, //? 2 * 60px * 0.866
+          borderLeftWidth: 60,
+          borderLeftColor: "transparent",
+          borderRightWidth: 60,
+          borderRightColor: "transparent",
+          borderBottomWidth: 60,
+          borderBottomColor: "transparent",
           position: "absolute",
-          bottom: 0,
-          right: -100,
+          top: Constants.statusBarHeight,
+          right: "50%",
           overflow: "hidden",
         }}
-        value={-300}
-        duration={5000}
-      >
-        <Text style={{ fontSize: 28, textAlign: "center", margin: 10 }}>
-          Fading in
-        </Text>
-      </SlideXAnimation>
+        value={fadeValue}
+        duration={2000}
+      ></FadeAnimation>
+      <FadeAnimation
+        style={{
+          backgroundColor: "transparent",
+          borderBottomColor: "#a80038",
+          borderBottomWidth: 103.92, //? 2 * 60px * 0.866
+          borderLeftWidth: 60,
+          borderLeftColor: "transparent",
+          borderRightWidth: 60,
+          borderRightColor: "transparent",
+          borderTopWidth: 60,
+          borderTopColor: "transparent",
+          position: "absolute",
+          bottom: 0,
+          right: 15,
+          overflow: "hidden",
+        }}
+        value={fadeValue}
+        duration={4000}
+      ></FadeAnimation>
+      <FadeAnimation
+        style={{
+          backgroundColor: "transparent",
+          borderLeftColor: "#fd0054",
+          borderLeftWidth: 103.92, //? 2 * 60px * 0.866
+          borderBottomWidth: 60,
+          borderBottomColor: "transparent",
+          borderRightWidth: 60,
+          borderRightColor: "transparent",
+          borderTopWidth: 60,
+          borderTopColor: "transparent",
+          position: "absolute",
+          bottom: "30%",
+          left: 0,
+          overflow: "hidden",
+        }}
+        value={fadeValue}
+        duration={3500}
+      ></FadeAnimation>
       <View style={styles.viewContainer}>
+        <View style={styles.eyeFadeSymbol}>
+          {fadeValue === 1 ? (
+            <Feather
+              name="eye-off"
+              size={24}
+              color="black"
+              onPress={() => setFadeValue(0)}
+            />
+          ) : (
+            <AntDesign
+              name="eyeo"
+              size={24}
+              color="black"
+              onPress={() => setFadeValue(1)}
+            />
+          )}
+        </View>
+
         <Text style={styles.heading}>Divid</Text>
         <View style={[styles.customButtonViewContainer, styles.firstButton]}>
           <CustomButton onPress={registerHandler} width={"50%"}>
@@ -83,6 +145,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#f2f2f2",
     height: "100%",
+  },
+
+  eyeFadeSymbol: {
+    position: "absolute",
+    top: 5,
+    right: 5,
   },
 
   viewContainer: {

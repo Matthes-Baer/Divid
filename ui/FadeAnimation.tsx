@@ -3,34 +3,34 @@ import { Animated } from "react-native";
 import type { PropsWithChildren } from "react";
 import type { ViewStyle } from "react-native";
 
-type SlideXAnimationProps = PropsWithChildren<{
+type FadeInViewProps = PropsWithChildren<{
   style: ViewStyle;
   value: number;
   duration: number;
 }>;
 
-const SlideXAnimation: React.FC<SlideXAnimationProps> = (props: {
+const FadeAnimation: React.FC<FadeInViewProps> = (props: {
   children: ReactNode;
   style: ViewStyle;
   value: number;
   duration: number;
 }) => {
-  const slideAnim = useRef(new Animated.Value(0)).current; // Initial value
+  const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value
 
   useEffect(() => {
-    Animated.timing(slideAnim, {
+    Animated.timing(fadeAnim, {
       toValue: props.value,
       duration: props.duration,
       useNativeDriver: true,
     }).start();
-  }, [slideAnim]);
+  }, [fadeAnim, props.value]);
 
   return (
     <Animated.View // Special animatable View
       style={{
         ...props.style,
         // Bind to animated value
-        transform: [{ translateX: slideAnim }],
+        opacity: fadeAnim,
       }}
     >
       {props.children}
@@ -38,4 +38,4 @@ const SlideXAnimation: React.FC<SlideXAnimationProps> = (props: {
   );
 };
 
-export default SlideXAnimation;
+export default FadeAnimation;

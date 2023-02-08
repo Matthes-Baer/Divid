@@ -13,6 +13,14 @@ export default function Start(): JSX.Element {
         <br />- Bei Register auf Login verweisen (Account schon vorhanden?)
       </Text>
 
+      <Text>
+        Logo erstellen mit Midjourney? Bei Home_NotAuthenticated einfügen.
+      </Text>
+      <Text>
+        Mit Home_Authenticated oder Game-Logik weitermachen? Ggf. erst
+        Auth-Funktionen/Database-Funtkionen auf das Game anpassen?
+      </Text>
+
       <View>
         <Text>
           Für Database-Struktur: db('user') - Array mit Objekten jeweils: (uid:

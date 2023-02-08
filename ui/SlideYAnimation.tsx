@@ -3,13 +3,13 @@ import { Animated } from "react-native";
 import type { PropsWithChildren } from "react";
 import type { ViewStyle } from "react-native";
 
-type FadeInViewProps = PropsWithChildren<{
+type SlideYAnimationProps = PropsWithChildren<{
   style: ViewStyle;
   value: number;
   duration: number;
 }>;
 
-const SlideXAnimation: React.FC<FadeInViewProps> = (props: {
+const SlideXAnimation: React.FC<SlideYAnimationProps> = (props: {
   children: ReactNode;
   style: ViewStyle;
   value: number;
