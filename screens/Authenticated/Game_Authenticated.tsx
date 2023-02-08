@@ -11,6 +11,9 @@ import InfoModal from "../../components/Game/InfoModal";
 import CustomButton from "../../components/ui/CustomButton";
 type Props = NativeStackScreenProps<Authenticated_Screens_Type, "Game">;
 
+// Easy: 5 - 100
+// Medium: 5 - 250
+// Hard: 5 - 500
 const GAMEMODES: Gamemode[] = [
   { mode: "easy", factor: 100 },
   { mode: "medium", factor: 250 },
