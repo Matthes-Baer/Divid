@@ -13,16 +13,10 @@ export default function Start(): JSX.Element {
         <br />- Bei Register auf Login verweisen (Account schon vorhanden?)
       </Text>
 
-      <Text>jeweils 1 Alert bei login und register noch zu überarbeiten</Text>
-
       <View>
         <Text>
-          Bei Auth-Nutzer-Erstellung auch Databse-Erstellung hinzufügen für neue
-          Nutzer (auf Basis der uid)
-        </Text>
-        <Text>
-          Für Database-Struktur: db('user') - Array mit Objektten jeweils: (uid:
-          ..., username: ..., Email?: ..., Scores: Array mit Objektten
+          Für Database-Struktur: db('user') - Array mit Objekten jeweils: (uid:
+          ..., username: ..., Email?: ..., Scores: Array mit Objekten
           jeweils:(score, data, used tips?, ), total points (für rewards?))
         </Text>
         <Text>

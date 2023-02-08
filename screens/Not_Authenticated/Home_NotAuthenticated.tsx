@@ -11,6 +11,8 @@ type Props = NativeStackScreenProps<
 import { useCallback } from "react";
 import { useFonts, Rajdhani_400Regular } from "@expo-google-fonts/rajdhani";
 import * as SplashScreen from "expo-splash-screen";
+import CustomButton from "../../ui/CustomButton";
+import SlideXAnimation from "../../ui/SlideXAnimation";
 SplashScreen.preventAutoHideAsync();
 
 const Start_NotAuthenticated = ({ navigation, route }: Props) => {
@@ -39,11 +41,36 @@ const Start_NotAuthenticated = ({ navigation, route }: Props) => {
 
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
-      <Text style={{ fontFamily: "Rajdhani_400Regular", fontSize: 25 }}>
-        Not logged in - Register Screen and Log In Screen: ...
-      </Text>
-      <Button onPress={registerHandler} title="Register" />
-      <Button onPress={signInHandler} title="Log in" />
+      <SlideXAnimation
+        style={{
+          width: 250,
+          height: 75,
+          backgroundColor: "powderblue",
+          position: "absolute",
+          bottom: 0,
+          right: -100,
+          overflow: "hidden",
+        }}
+        value={-300}
+        duration={5000}
+      >
+        <Text style={{ fontSize: 28, textAlign: "center", margin: 10 }}>
+          Fading in
+        </Text>
+      </SlideXAnimation>
+      <View style={styles.viewContainer}>
+        <Text style={styles.heading}>Divid</Text>
+        <View style={[styles.customButtonViewContainer, styles.firstButton]}>
+          <CustomButton onPress={registerHandler} width={"50%"}>
+            Register
+          </CustomButton>
+        </View>
+        <View style={styles.customButtonViewContainer}>
+          <CustomButton onPress={signInHandler} width={"50%"}>
+            Login
+          </CustomButton>
+        </View>
+      </View>
     </View>
   );
 };
@@ -54,7 +81,58 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "white",
+    backgroundColor: "#f2f2f2",
     height: "100%",
+  },
+
+  viewContainer: {
+    backgroundColor: "#fbf9fa",
+    padding: 15,
+    borderRadius: 5,
+    elevation: 10,
+    width: "70%",
+  },
+
+  heading: {
+    fontSize: 35,
+    marginBottom: 5,
+    marginLeft: "auto",
+    marginRight: "auto",
+    fontFamily: "Rajdhani_400Regular",
+    color: "#2b2024",
+  },
+
+  inputLabel: {
+    fontSize: 20,
+    fontFamily: "Rajdhani_400Regular",
+    color: "#2b2024",
+    marginTop: 10,
+  },
+
+  textInput: {
+    borderWidth: 1,
+    borderColor: "#2b2024",
+    fontFamily: "Rajdhani_400Regular",
+    color: "#2b2024",
+    width: "85%",
+    height: 40,
+    paddingLeft: 5,
+    fontSize: 18,
+  },
+
+  passwordViewContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 15,
+  },
+
+  customButtonViewContainer: {
+    alignItems: "center",
+  },
+
+  firstButton: {
+    marginTop: 15,
+    marginBottom: 15,
   },
 });
