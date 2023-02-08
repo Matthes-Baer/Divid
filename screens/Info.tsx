@@ -22,8 +22,9 @@ export default function Start(): JSX.Element {
       </Text>
 
       <Text>
-        Game: Hints: Teilbar durch x ..., größer oder kleiner als letzter Tipp?
-        / Legende/Erklärung als Modal einbauen zum Einblenden
+        Game: Zuerst Planung durchführen/aufschreiben / Hints: Teilbar durch x
+        ..., größer oder kleiner als letzter Tipp? / Legende/Erklärung als Modal
+        einbauen zum Einblenden
       </Text>
       <View>
         <Text>
