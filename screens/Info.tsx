@@ -6,18 +6,15 @@ export default function Start(): JSX.Element {
       <Text>
         Potenzieller Zusatz:
         <br />
-        - E-Mail-Verifikation richtig einbauen
+        - E-Mail-Verifikation richtig einbauen (firebase gibt error meldung
+        raus) - bei Login etwas ähnliches?
         <br />
         - Passwort-Vergessen-Funktion einbauen
         <br />- Bei Register auf Login verweisen (Account schon vorhanden?)
       </Text>
 
       <Text>jeweils 1 Alert bei login und register noch zu überarbeiten</Text>
-      <Text>
-        Bei Register auf Valid Email checken (firebase gibt error meldung raus)
-        - bei Login etwas ähnliches?
-      </Text>
-      <Text>Routing, ...</Text>
+
       <View>
         <Text>
           Bei Auth-Nutzer-Erstellung auch Databse-Erstellung hinzufügen für neue

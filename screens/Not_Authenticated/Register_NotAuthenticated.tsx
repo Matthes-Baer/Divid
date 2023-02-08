@@ -68,7 +68,14 @@ const Start_NotAuthenticated = () => {
 
     const waitForRegisterTimeout = setTimeout(() => {
       if (!auth.currentUser) {
-        Alert.alert("Error with register");
+        Alert.alert(
+          "Error",
+          "User could not be registered. Try again in a few minutes.",
+          [{ text: "OK", style: "default" }],
+          {
+            cancelable: true,
+          }
+        );
       }
       setLoading(false);
     }, 5000);

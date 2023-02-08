@@ -42,7 +42,12 @@ const Start_NotAuthenticated = () => {
 
     const waitForSigninTimeout = setTimeout(() => {
       if (!auth.currentUser) {
-        Alert.alert("No user found");
+        Alert.alert(
+          "No user found",
+          "There was no user found based on this data.",
+          [{ text: "OK", style: "default" }],
+          { cancelable: true }
+        );
       }
       setLoading(false);
     }, 5000);
