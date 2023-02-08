@@ -21,6 +21,10 @@ export default function Start(): JSX.Element {
         Auth-Funktionen/Database-Funtkionen auf das Game anpassen?
       </Text>
 
+      <Text>
+        Game: Hints: Teilbar durch x ..., größer oder kleiner als letzter Tipp?
+        / Legende/Erklärung als Modal einbauen zum Einblenden
+      </Text>
       <View>
         <Text>
           Für Database-Struktur: db('user') - Array mit Objekten jeweils: (uid:
