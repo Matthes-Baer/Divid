@@ -28,3 +28,6 @@ export interface databaseTopScores {
   date: Date;
   usedHints: number;
 }
+
+//* Game
+export type Gamemode = { mode: string; factor: number };

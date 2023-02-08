@@ -22,9 +22,8 @@ export default function Start(): JSX.Element {
       </Text>
 
       <Text>
-        Game: Zuerst Planung durchführen/aufschreiben / Hints: Teilbar durch x
-        ..., größer oder kleiner als letzter Tipp? / Legende/Erklärung als Modal
-        einbauen zum Einblenden
+        Legende/Erklärung als Modal einbauen zum Einblenden / Weitere Notizen in
+        Game_Authenticated.
       </Text>
       <View>
         <Text>

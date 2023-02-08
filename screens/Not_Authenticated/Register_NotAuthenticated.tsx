@@ -12,7 +12,7 @@ import { authRegister } from "../../utils/auth";
 
 import { AntDesign, Feather } from "@expo/vector-icons";
 
-import CustomButton from "../../ui/CustomButton";
+import CustomButton from "../../components/ui/CustomButton";
 import { auth } from "../../firebaseConfig";
 
 const Start_NotAuthenticated = () => {

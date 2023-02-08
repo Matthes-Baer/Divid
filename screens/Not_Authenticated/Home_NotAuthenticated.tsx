@@ -13,9 +13,9 @@ type Props = NativeStackScreenProps<
 import { useCallback } from "react";
 import { useFonts, Rajdhani_400Regular } from "@expo-google-fonts/rajdhani";
 import * as SplashScreen from "expo-splash-screen";
-import CustomButton from "../../ui/CustomButton";
+import CustomButton from "../../components/ui/CustomButton";
 import Constants from "expo-constants";
-import FadeAnimation from "../../ui/FadeAnimation";
+import FadeAnimation from "../../components/ui/FadeAnimation";
 SplashScreen.preventAutoHideAsync();
 
 const Start_NotAuthenticated = ({ navigation, route }: Props) => {

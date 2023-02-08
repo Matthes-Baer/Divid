@@ -5,7 +5,7 @@ import { authSignin } from "../../utils/auth";
 import { auth } from "../../firebaseConfig";
 import { AntDesign, Feather } from "@expo/vector-icons";
 
-import CustomButton from "../../ui/CustomButton";
+import CustomButton from "../../components/ui/CustomButton";
 
 const Start_NotAuthenticated = () => {
   const [email, setEmail] = useState<string | null>(null);

@@ -17,6 +17,7 @@ const CustomButton = (props: {
         },
         styles.pressableContainer,
       ]}
+      android_ripple={{ color: "#a80038" }}
     >
       <Text style={styles.text}>{props.children}</Text>
     </Pressable>
