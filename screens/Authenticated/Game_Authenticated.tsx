@@ -1,14 +1,28 @@
 import { signOut } from "firebase/auth";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  FlatList,
+  useWindowDimensions,
+} from "react-native";
 import { auth } from "../../firebaseConfig";
 
-import type { Gamemode } from "../../utils/interfaces-and-types";
+import type {
+  additionalHint,
+  Gamemode,
+  Hint,
+} from "../../utils/interfaces-and-types";
 
 import type { Authenticated_Screens_Type } from "../../utils/interfaces-and-types";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import InfoModal from "../../components/Game/InfoModal";
 import CustomButton from "../../components/ui/CustomButton";
+import HintItem from "../../components/Game/HintItem";
+import { TextInput } from "react-native-gesture-handler";
+import SuccessModal from "../../components/Game/SucessModal";
 type Props = NativeStackScreenProps<Authenticated_Screens_Type, "Game">;
 
 // Easy: 5 - 100
@@ -21,38 +35,30 @@ const GAMEMODES: Gamemode[] = [
 ];
 
 const Home_Authenticated = ({ navigation }: Props) => {
-  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const windowDimensions = useWindowDimensions();
+
+  const [infoModalVisible, setInfoModalVisible] = useState<boolean>(false);
+  const [successModalVisible, setSuccessModalVisible] =
+    useState<boolean>(false);
   const [gameMode, setGameMode] = useState(
     GAMEMODES.find((e: Gamemode) => e.mode === "easy")
   );
   const [gameNumber, setGameNumber] = useState<number | null>(null);
   const [gameActive, setGameActive] = useState<boolean>(false);
-  const [pickedNumber, setPickedNumber] = useState<number | null>(null);
+  const [pickedNumber, setPickedNumber] = useState<number>(5);
+
+  const [hints, setHints] = useState<Array<Hint>>([]);
+  const [givenHints, setGivenHints] = useState<Array<Hint>>([]);
+  const [hintsAmount, setHintsAmount] = useState<number>(givenHints.length);
+  const [additionalHint, setAdditionalHint] = useState<additionalHint | null>(
+    null
+  );
+
+  const [attempts, setAttempts] = useState<number>(3);
+  const [totalAttempts, setTotalAttempts] = useState<number>(0);
 
   const gameModeSetHandler = (setMode: string) => {
     setGameMode(GAMEMODES.find((e: Gamemode) => e.mode === setMode));
-  };
-
-  const gameStartHandler = () => {
-    setGameActive(true);
-    getRandomGameNumber();
-    // state mit Array mit Objekten für jeden Tipp (conditional testen, ob die Zahl jeweils die Bedingung erfüllt (beispielsweise teilbar durch 4)) - key für "used", nur "unused" hints werden weiterhin ausgegeben - wenn alle "used" sind, muss eine Meldung geben mit den letzten 3 Versuchen, danach hat man verloren und die game Number wird angezeigt
-    // state mit Versuchsanzahl
-    // state mit Hinweisanzahl
-    // Anfangstipp (bspw: Zahl ist teilbar durch 5) und dann geht es los.
-    // Man hat dann 3 Versuche. Danach erhält man einen weiteren Tipp - oder man holt sich vorher den nächsten Tipp ein und hat dann wieder 3 Versuche
-  };
-
-  const nextRoundHandler = () => {
-    if (gameNumber == pickedNumber) {
-      // let totalScore = 0
-      // Database-Eintrag...
-      // won? true
-      // Animation einbauen für Bereich, der dann aufkommt... (ähnlich wie bei fadeIn)
-    } else {
-      // Versuchsstate-- -> wenn = 0, dann neuer Tipp & Hinweisstate++ & Versuche = 3 & Hinweis als "used" markieren / Kann auch vorher neuen Tipp einholen, dann wird das gleiche Prozedere wie bei Versuche = 0 eingeleitet.
-      // zufälligen Hinweis aus Array raussuchen (filter und dann Math.random)
-    }
   };
 
   const getRandomGameNumber = () => {
@@ -61,16 +67,174 @@ const Home_Authenticated = ({ navigation }: Props) => {
     );
 
     setGameNumber(randomNumber);
+    return randomNumber;
+  };
+
+  const gameStartHandler = () => {
+    setGameActive(true);
+    const number = getRandomGameNumber();
+    const HINTS_STATIC = [
+      {
+        number: 3,
+        dividable: number % 3 === 0 ? true : false,
+        used: false,
+      },
+      {
+        number: 4,
+        dividable: number % 4 === 0 ? true : false,
+        used: false,
+      },
+      {
+        number: 5,
+        dividable: number % 5 === 0 ? true : false,
+        used: false,
+      },
+      {
+        number: 6,
+        dividable: number % 6 === 0 ? true : false,
+        used: false,
+      },
+      {
+        number: 7,
+        dividable: number % 7 === 0 ? true : false,
+        used: false,
+      },
+      {
+        number: 8,
+        dividable: number % 8 === 0 ? true : false,
+        used: false,
+      },
+      {
+        number: 9,
+        dividable: number % 9 === 0 ? true : false,
+        used: false,
+      },
+      {
+        number: 10,
+        dividable: number % 10 === 0 ? true : false,
+        used: false,
+      },
+      {
+        number: 11,
+        dividable: number % 11 === 0 ? true : false,
+        used: false,
+      },
+      {
+        number: 12,
+        dividable: number % 12 === 0 ? true : false,
+        used: false,
+      },
+      {
+        number: 13,
+        dividable: number % 13 === 0 ? true : false,
+        used: false,
+      },
+      {
+        number: 14,
+        dividable: number % 14 === 0 ? true : false,
+        used: false,
+      },
+      {
+        number: 15,
+        dividable: number % 15 === 0 ? true : false,
+        used: false,
+      },
+      {
+        number: 16,
+        dividable: number % 16 === 0 ? true : false,
+        used: false,
+      },
+      {
+        number: 17,
+        dividable: number % 17 === 0 ? true : false,
+        used: false,
+      },
+      {
+        number: 18,
+        dividable: number % 18 === 0 ? true : false,
+        used: false,
+      },
+      {
+        number: 19,
+        dividable: number % 19 === 0 ? true : false,
+        used: false,
+      },
+      {
+        number: 20,
+        dividable: number % 20 === 0 ? true : false,
+        used: false,
+      },
+    ];
+
+    setHints(HINTS_STATIC);
+    getHintHandler(HINTS_STATIC);
+  };
+
+  const getHintHandler = (HINTS_STATIC?: Array<Hint>) => {
+    const filteredHints =
+      hints.length > 0 ? hints.filter((e: Hint) => !e.used) : HINTS_STATIC;
+    console.log(filteredHints);
+    if (filteredHints.length === 0) {
+      setAdditionalHint({ larger: gameNumber > pickedNumber ? true : false });
+      setHintsAmount((prev: number) => prev + 1);
+    } else {
+      const randomHint =
+        filteredHints[Math.floor(Math.random() * filteredHints.length)];
+
+      setGivenHints((prev: Array<Hint>) => [...prev, randomHint]);
+      setHints((prev: Array<Hint>) =>
+        prev.map((e: Hint) =>
+          e.number === randomHint.number ? { ...randomHint, used: true } : e
+        )
+      );
+      setHintsAmount(givenHints.length);
+    }
+  };
+
+  const guessHandler = () => {
+    setTotalAttempts((prev: number) => prev + 1);
+    console.log(hints);
+    if (gameNumber == pickedNumber) {
+      console.log("you won.", {
+        totalScore: 1000 - totalAttempts - hintsAmount * 5,
+      });
+      setSuccessModalVisible(true);
+      return;
+      // let totalScore = 0
+      // Database-Eintrag...
+      // Animation einbauen für Bereich, der dann aufkommt... (ähnlich wie bei fadeIn) - mittels Modal
+    } else {
+      setAttempts((prev: number) => prev - 1);
+      console.log(attempts);
+      if (attempts === 1) {
+        getHintHandler();
+        setAttempts(3);
+      }
+    }
+  };
+
+  const gameResetHandler = () => {
+    setGameActive(false);
+    setPickedNumber(5);
+    setGameNumber(null);
+
+    setHints([]);
+    setGivenHints([]);
+    setHintsAmount(givenHints.length);
+    setAdditionalHint(null);
   };
 
   return (
     <View>
-      <View style={{ opacity: modalVisible ? 0.25 : 1 }}>
+      <View style={{ opacity: infoModalVisible ? 0.25 : 1 }}>
         <Text style={{ fontFamily: "Rajdhani_400Regular", fontSize: 25 }}>
           Game
         </Text>
         <Text>{auth.currentUser.uid}</Text>
-        <Button title="modal" onPress={() => setModalVisible(!modalVisible)} />
+        <Button
+          title="modal"
+          onPress={() => setInfoModalVisible(!infoModalVisible)}
+        />
 
         {!gameActive ? (
           <View>
@@ -79,19 +243,34 @@ const Home_Authenticated = ({ navigation }: Props) => {
               onPress={() => gameModeSetHandler("easy")}
               width={"50%"}
             >
-              Easy
+              <View style={styles.customButtonChildrenContainer}>
+                <Text style={styles.customButtonText}>Easy</Text>
+                <Text style={[styles.customButtonText, { fontSize: 10 }]}>
+                  Game number can be 5 - 100 (including)
+                </Text>
+              </View>
             </CustomButton>
             <CustomButton
               onPress={() => gameModeSetHandler("medium")}
               width={"50%"}
             >
-              Medium
+              <View style={styles.customButtonChildrenContainer}>
+                <Text style={styles.customButtonText}>Medium</Text>
+                <Text style={[styles.customButtonText, { fontSize: 10 }]}>
+                  Game number can be 5 - 250 (including)
+                </Text>
+              </View>
             </CustomButton>
             <CustomButton
               onPress={() => gameModeSetHandler("hard")}
               width={"50%"}
             >
-              Hard
+              <View style={styles.customButtonChildrenContainer}>
+                <Text style={styles.customButtonText}>Hard</Text>
+                <Text style={[styles.customButtonText, { fontSize: 10 }]}>
+                  Game number can be 5 - 500 (including)
+                </Text>
+              </View>
             </CustomButton>
             <Text>
               {gameMode.mode}: {gameMode.factor}
@@ -101,16 +280,63 @@ const Home_Authenticated = ({ navigation }: Props) => {
           </View>
         ) : (
           <View>
-            <Text>Game active: {gameNumber}</Text>
-            <Button
-              onPress={() => setGameActive(false)}
-              title="abort game"
-            ></Button>
+            <View>
+              <TextInput
+                keyboardType="numeric"
+                value={pickedNumber.toString()}
+                onChangeText={(e: string) => setPickedNumber(+e)}
+                maxLength={3}
+              />
+            </View>
+            <Text>
+              Game number: {gameNumber} / pickedNumber: {pickedNumber}
+            </Text>
+            <Button onPress={gameResetHandler} title="abort game"></Button>
             <Text>Hints: ...</Text>
+            <Text>{attempts}</Text>
+            <Button title="guess Number" onPress={guessHandler} />
+            <View style={{ height: windowDimensions.height / 2 }}>
+              <FlatList
+                data={givenHints}
+                renderItem={(hint) => {
+                  return (
+                    <View>
+                      <HintItem
+                        hintNumber={hint.item.number}
+                        hintDividable={hint.item.dividable}
+                        hintUsed={hint.item.used}
+                      />
+                    </View>
+                  );
+                }}
+                keyExtractor={(hint, index) => {
+                  // should only be implemented in the state (item) which would be structured as an object with "key" - then this function would not be needed.
+                  // Or use "id", for example, and return that in this function.
+                  const keyValue = hint.number.toString();
+                  return keyValue;
+                }}
+              />
+            </View>
+
+            <View>
+              {additionalHint ? (
+                <Text>
+                  {additionalHint.larger
+                    ? "Game Number is higher than the picked Number"
+                    : "Game Number is lower than the picked number"}
+                </Text>
+              ) : (
+                ""
+              )}
+            </View>
           </View>
         )}
 
-        <InfoModal visible={modalVisible} setter={setModalVisible} />
+        <InfoModal visible={infoModalVisible} setter={setInfoModalVisible} />
+        <SuccessModal
+          visible={successModalVisible}
+          setter={setSuccessModalVisible}
+        />
       </View>
     </View>
   );
@@ -127,6 +353,19 @@ const styles = StyleSheet.create({
     left: 0,
     bottom: 0,
     right: 0,
+  },
+
+  customButtonChildrenContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  customButtonText: {
+    color: "#fbf9fa",
+    fontFamily: "Rajdhani_400Regular",
+    justifyContent: "center",
+    fontSize: 20,
+    fontWeight: "bold",
   },
 });
 

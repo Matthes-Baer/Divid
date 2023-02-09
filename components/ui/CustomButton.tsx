@@ -19,7 +19,7 @@ const CustomButton = (props: {
       ]}
       android_ripple={{ color: "#a80038" }}
     >
-      <Text style={styles.text}>{props.children}</Text>
+      {props.children}
     </Pressable>
   );
 };
@@ -34,13 +34,5 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     elevation: 3.5,
     height: 50,
-  },
-
-  text: {
-    color: "#fbf9fa",
-    fontFamily: "Rajdhani_400Regular",
-    justifyContent: "center",
-    fontSize: 20,
-    fontWeight: "bold",
   },
 });

@@ -142,7 +142,7 @@ const Start_NotAuthenticated = () => {
             {loading ? (
               <ActivityIndicator size={25} color={"#2b2024"} />
             ) : (
-              "Register"
+              <Text style={styles.customButtonText}>Register</Text>
             )}
           </CustomButton>
         </View>
@@ -194,6 +194,14 @@ const styles = StyleSheet.create({
     height: 40,
     paddingLeft: 5,
     fontSize: 18,
+  },
+
+  customButtonText: {
+    color: "#fbf9fa",
+    fontFamily: "Rajdhani_400Regular",
+    justifyContent: "center",
+    fontSize: 20,
+    fontWeight: "bold",
   },
 
   passwordViewContainer: {

@@ -31,3 +31,17 @@ export interface databaseTopScores {
 
 //* Game
 export type Gamemode = { mode: string; factor: number };
+
+export interface Hint {
+  number: number;
+  dividable: boolean;
+  used: boolean;
+}
+
+export type additionalHint = { larger: boolean };
+
+export interface HintItemProps {
+  hintNumber: number;
+  hintDividable: boolean;
+  hintUsed: boolean;
+}

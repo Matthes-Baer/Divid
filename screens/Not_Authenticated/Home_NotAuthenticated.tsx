@@ -124,12 +124,12 @@ const Start_NotAuthenticated = ({ navigation, route }: Props) => {
         <Text style={styles.heading}>Divid</Text>
         <View style={[styles.customButtonViewContainer, styles.firstButton]}>
           <CustomButton onPress={registerHandler} width={"50%"}>
-            Register
+            <Text style={styles.customButtonText}>Register</Text>
           </CustomButton>
         </View>
         <View style={styles.customButtonViewContainer}>
           <CustomButton onPress={signInHandler} width={"50%"}>
-            Login
+            <Text style={styles.customButtonText}>Login</Text>
           </CustomButton>
         </View>
       </View>
@@ -186,6 +186,14 @@ const styles = StyleSheet.create({
     height: 40,
     paddingLeft: 5,
     fontSize: 18,
+  },
+
+  customButtonText: {
+    color: "#fbf9fa",
+    fontFamily: "Rajdhani_400Regular",
+    justifyContent: "center",
+    fontSize: 20,
+    fontWeight: "bold",
   },
 
   passwordViewContainer: {
