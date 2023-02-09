@@ -171,14 +171,13 @@ const Home_Authenticated = ({ navigation }: Props) => {
   };
 
   const getHintHandler = (HINTS_STATIC?: Array<Hint>) => {
-    const filteredHints =
+    const filteredHints: Array<Hint> =
       hints.length > 0 ? hints.filter((e: Hint) => !e.used) : HINTS_STATIC;
-    console.log(filteredHints);
     if (filteredHints.length === 0) {
       setAdditionalHint({ larger: gameNumber > pickedNumber ? true : false });
       setHintsAmount((prev: number) => prev + 1);
     } else {
-      const randomHint =
+      const randomHint: Hint =
         filteredHints[Math.floor(Math.random() * filteredHints.length)];
 
       setGivenHints((prev: Array<Hint>) => [...prev, randomHint]);

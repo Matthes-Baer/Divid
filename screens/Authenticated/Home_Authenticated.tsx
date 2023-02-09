@@ -14,12 +14,17 @@ import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 type Props = NativeStackScreenProps<Authenticated_Screens_Type, "Home">;
 
 //? Database & Auth
-import { readSpecificUserDataDB } from "../../utils/database";
+import {
+  readSortedScoresArrayDB,
+  readSpecificUserDataDB,
+  updateScoresArrayDB,
+} from "../../utils/database";
 import type { database_userData } from "../../utils/interfaces-and-types";
 import { auth } from "../../firebaseConfig";
 
 const Home_Authenticated = ({ navigation }: Props) => {
   const [userData, setUserData] = useState<database_userData | null>(null);
+  const [readDbData, setReadDbData] = useState<any>();
 
   const signOutHandler = () => {
     signOut(auth);
@@ -59,6 +64,27 @@ const Home_Authenticated = ({ navigation }: Props) => {
       <Text>{auth.currentUser.uid}</Text>
       <Text></Text>
       <Button title="logout" onPress={signOutHandler} />
+      <Button
+        title="DBUpdateTest"
+        onPress={() =>
+          updateScoresArrayDB(
+            auth.currentUser.uid,
+            50,
+            {
+              day: new Date().getDate(),
+              month: new Date().getMonth(),
+              year: new Date().getFullYear(),
+              total: 3000,
+            },
+            1,
+            7
+          )
+        }
+      />
+      <Button
+        title="sortDBTest"
+        onPress={() => readSortedScoresArrayDB(auth.currentUser.uid)}
+      />
     </View>
   );
 };

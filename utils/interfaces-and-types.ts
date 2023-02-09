@@ -23,10 +23,11 @@ export interface database_userData {
   username: string;
 }
 
-export interface databaseTopScores {
+export interface databaseScoresArrayElement {
   score: number;
-  date: Date;
+  date: { day: number; month: number; year: number; total: number };
   usedHints: number;
+  attempts: number;
 }
 
 //* Game

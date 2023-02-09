@@ -17,8 +17,9 @@ export default function Start(): JSX.Element {
         Logo erstellen mit Midjourney? Bei Home_NotAuthenticated einfügen.
       </Text>
       <Text>
-        Mit Home_Authenticated oder Game-Logik weitermachen? Ggf. erst
-        Auth-Funktionen/Database-Funtkionen auf das Game anpassen?
+        Database: Generische Read-Funktion ohne Sort einbauen? / Werte testweise
+        im SuccessModal einbauen & und im neuen Screen mit Rekorden /
+        SuccessModal bearbeiten / InfoModal bearbeiten / andere Screens ...
       </Text>
 
       <Text>
