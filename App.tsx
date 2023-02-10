@@ -12,9 +12,13 @@ import {
 import type { RootStackParamList } from "./utils/interfaces-and-types";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
+//? Authenticated Screens
 import Home_Authenticated from "./screens/Authenticated/Home_Authenticated";
 import Game_Authenticated from "./screens/Authenticated/Game_Authenticated";
+import Scores_Authenticated from "./screens/Authenticated/Scores_Authenticated";
+import Trophies_Authenticated from "./screens/Authenticated/Trophies_Authenticated";
 
+//? Not Authenticated Screens
 import Home_NotAuthenticated from "./screens/Not_Authenticated/Home_NotAuthenticated";
 import Login_NotAuthenticated from "./screens/Not_Authenticated/Login_NotAuthenticated";
 import Register_NotAuthenticated from "./screens/Not_Authenticated/Register_NotAuthenticated";
@@ -29,7 +33,7 @@ const Main = createStackNavigator<RootStackParamList>();
 import { AntDesign } from "@expo/vector-icons";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-//?
+//? Colors
 // background: f2f2f2 (etwas gräulich)
 // .first-color { (neben background auch also font-color bei dunklerem Hintergrund)
 // 	background: #fbf9fa;
@@ -62,6 +66,14 @@ const Authenticated_Navigation = () => {
       <Authenticated_TopTabs_Navigator.Screen
         name="Game"
         component={Game_Authenticated}
+      />
+      <Authenticated_TopTabs_Navigator.Screen
+        name="Scores"
+        component={Scores_Authenticated}
+      />
+      <Authenticated_TopTabs_Navigator.Screen
+        name="Trophies"
+        component={Trophies_Authenticated}
       />
     </Authenticated_TopTabs_Navigator.Navigator>
   );

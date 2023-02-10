@@ -106,7 +106,7 @@ export function readSortedScoresArrayDB(
     snapshot.forEach((childSnapshot) => {
       result.push(childSnapshot.val());
     });
-    callback ? callback(result) : null;
+    callback ? callback(result.reverse()) : null;
     console.log(result);
   });
 }

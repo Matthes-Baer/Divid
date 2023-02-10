@@ -15,6 +15,8 @@ export type Authenticated_Screens_Type = {
   Start: undefined;
   Home: undefined;
   Game: undefined;
+  Scores: undefined;
+  Trophies: undefined;
 };
 
 //* Database

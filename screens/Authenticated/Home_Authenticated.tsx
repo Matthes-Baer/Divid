@@ -71,15 +71,18 @@ const Home_Authenticated = ({ navigation }: Props) => {
         onPress={() =>
           updateScoresArrayDB(
             auth.currentUser.uid,
-            50,
+            5000,
             {
               day: new Date().getDate(),
               month: new Date().getMonth(),
               year: new Date().getFullYear(),
-              total: 3000,
+              total:
+                new Date().getDate() +
+                new Date().getMonth() +
+                new Date().getFullYear(),
             },
-            1,
-            7
+            3,
+            2
           )
         }
       />
