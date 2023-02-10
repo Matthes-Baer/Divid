@@ -15,9 +15,11 @@ type Props = NativeStackScreenProps<Authenticated_Screens_Type, "Home">;
 
 //? Database & Auth
 import {
+  readingAllUserData,
   readSortedScoresArrayDB,
   readSpecificUserDataDB,
   updateScoresArrayDB,
+  updateSingleData,
 } from "../../utils/database";
 import type { database_userData } from "../../utils/interfaces-and-types";
 import { auth } from "../../firebaseConfig";
@@ -84,6 +86,16 @@ const Home_Authenticated = ({ navigation }: Props) => {
       <Button
         title="sortDBTest"
         onPress={() => readSortedScoresArrayDB(auth.currentUser.uid)}
+      />
+      <Button
+        title="Reading All User Data"
+        onPress={() => readingAllUserData(auth.currentUser.uid)}
+      />
+      <Button
+        title="Update Single Data"
+        onPress={() =>
+          updateSingleData(auth.currentUser.uid, "TotalScore", 1000)
+        }
       />
     </View>
   );

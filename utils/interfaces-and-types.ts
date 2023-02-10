@@ -19,7 +19,10 @@ export type Authenticated_Screens_Type = {
 
 //* Database
 export interface database_userData {
+  Scores: databaseScoresArrayElement[];
+  TotalScore: number;
   email: string;
+  uid: string;
   username: string;
 }
 

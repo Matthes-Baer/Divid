@@ -17,7 +17,11 @@ import {
 import type { database_userData } from "./interfaces-and-types";
 const db = getDatabase();
 
-export function createUserDB(userId, username, email) {
+export function createUserDB(
+  userId: string,
+  username: string,
+  email: string
+): void {
   set(ref(db, "users/" + userId), {
     uid: userId as string,
     username: username as string,
@@ -41,8 +45,9 @@ export function updateScoresArrayDB(
   date: { day: number; month: number; year: number; total: number },
   usedHints: number,
   attempts: number
-) {
+): void {
   // const newPostKey = push(child(ref(db), "Scores")).key;
+  //! wird so auch ein ganz neues Array angelegt wenn noch keine Einträge vorhanden sind?
   const postListRef = ref(db, "users/" + userId + "/Scores");
   const newPostRef = push(postListRef);
   set(newPostRef, {
@@ -56,19 +61,22 @@ export function updateScoresArrayDB(
     usedHints,
     attempts,
   });
-
-  // const updates = {};
-  // updates["users/" + userId + "/TopScores2"].contact({
-  //   score: 10,
-  //   date: new Date(),
-  //   usedHints: 3,
-  //   attempts: 7,
-  // });
-
-  // return update(ref(db), updates);
 }
 
-export function readSortedScoresArrayDB(userId: string, callback?: Function) {
+export function updateSingleData(
+  userId: string,
+  key: string,
+  input: string | number
+): Promise<void> {
+  const updates = {};
+  updates["users/" + userId + `/${key}`] = input;
+  return update(ref(db), updates);
+}
+
+export function readSortedScoresArrayDB(
+  userId: string,
+  callback?: Function
+): void {
   const sortedScoresArray = query(
     ref(db, "users/" + userId + "/Scores"),
     orderByChild("score")
@@ -80,7 +88,19 @@ export function readSortedScoresArrayDB(userId: string, callback?: Function) {
     orderByChild("score")
   );
 
-  get(que).then((snapshot) => {
+  //* Reading Data once
+  // get(que).then((snapshot) => {
+  //   var result = [];
+
+  //   snapshot.forEach((childSnapshot) => {
+  //     result.push(childSnapshot.val());
+  //   });
+  //   callback ? callback(result) : null;
+  //   console.log(result);
+  // });
+
+  //* Reading Data in realtime
+  onValue(que, (snapshot) => {
     var result = [];
 
     snapshot.forEach((childSnapshot) => {
@@ -89,4 +109,16 @@ export function readSortedScoresArrayDB(userId: string, callback?: Function) {
     callback ? callback(result) : null;
     console.log(result);
   });
+}
+
+export function readingAllUserData(userId: string, callback?: Function): void {
+  const refUser = ref(db, "users/" + userId);
+  let result: database_userData;
+
+  onValue(refUser, (snapshot) => {
+    result = snapshot.val();
+  });
+
+  console.log(result);
+  callback ? callback(result) : null;
 }
