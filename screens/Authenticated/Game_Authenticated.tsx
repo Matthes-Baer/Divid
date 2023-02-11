@@ -23,6 +23,7 @@ import CustomButton from "../../components/ui/CustomButton";
 import HintItem from "../../components/Game/HintItem";
 import { TextInput } from "react-native-gesture-handler";
 import SuccessModal from "../../components/Game/SucessModal";
+import { HINTS_STATIC } from "../../data/GameData";
 type Props = NativeStackScreenProps<Authenticated_Screens_Type, "Game">;
 
 // Easy: 5 - 100
@@ -73,106 +74,15 @@ const Home_Authenticated = ({ navigation }: Props) => {
   const gameStartHandler = () => {
     setGameActive(true);
     const number = getRandomGameNumber();
-    const HINTS_STATIC = [
-      {
-        number: 3,
-        dividable: number % 3 === 0 ? true : false,
-        used: false,
-      },
-      {
-        number: 4,
-        dividable: number % 4 === 0 ? true : false,
-        used: false,
-      },
-      {
-        number: 5,
-        dividable: number % 5 === 0 ? true : false,
-        used: false,
-      },
-      {
-        number: 6,
-        dividable: number % 6 === 0 ? true : false,
-        used: false,
-      },
-      {
-        number: 7,
-        dividable: number % 7 === 0 ? true : false,
-        used: false,
-      },
-      {
-        number: 8,
-        dividable: number % 8 === 0 ? true : false,
-        used: false,
-      },
-      {
-        number: 9,
-        dividable: number % 9 === 0 ? true : false,
-        used: false,
-      },
-      {
-        number: 10,
-        dividable: number % 10 === 0 ? true : false,
-        used: false,
-      },
-      {
-        number: 11,
-        dividable: number % 11 === 0 ? true : false,
-        used: false,
-      },
-      {
-        number: 12,
-        dividable: number % 12 === 0 ? true : false,
-        used: false,
-      },
-      {
-        number: 13,
-        dividable: number % 13 === 0 ? true : false,
-        used: false,
-      },
-      {
-        number: 14,
-        dividable: number % 14 === 0 ? true : false,
-        used: false,
-      },
-      {
-        number: 15,
-        dividable: number % 15 === 0 ? true : false,
-        used: false,
-      },
-      {
-        number: 16,
-        dividable: number % 16 === 0 ? true : false,
-        used: false,
-      },
-      {
-        number: 17,
-        dividable: number % 17 === 0 ? true : false,
-        used: false,
-      },
-      {
-        number: 18,
-        dividable: number % 18 === 0 ? true : false,
-        used: false,
-      },
-      {
-        number: 19,
-        dividable: number % 19 === 0 ? true : false,
-        used: false,
-      },
-      {
-        number: 20,
-        dividable: number % 20 === 0 ? true : false,
-        used: false,
-      },
-    ];
+    const HINTS = HINTS_STATIC(number);
 
-    setHints(HINTS_STATIC);
-    getHintHandler(HINTS_STATIC);
+    setHints(HINTS);
+    getHintHandler(HINTS);
   };
 
-  const getHintHandler = (HINTS_STATIC?: Array<Hint>) => {
+  const getHintHandler = (HINTS?: Array<Hint>) => {
     const filteredHints: Array<Hint> =
-      hints.length > 0 ? hints.filter((e: Hint) => !e.used) : HINTS_STATIC;
+      hints.length > 0 ? hints.filter((e: Hint) => !e.used) : HINTS;
     if (filteredHints.length === 0) {
       setAdditionalHint({ larger: gameNumber > pickedNumber ? true : false });
       setHintsAmount((prev: number) => prev + 1);
@@ -192,7 +102,7 @@ const Home_Authenticated = ({ navigation }: Props) => {
 
   const guessHandler = () => {
     setTotalAttempts((prev: number) => prev + 1);
-    console.log(hints);
+    console.log(totalAttempts);
     if (gameNumber == pickedNumber) {
       console.log("you won.", {
         totalScore: 1000 - totalAttempts - hintsAmount * 5,
