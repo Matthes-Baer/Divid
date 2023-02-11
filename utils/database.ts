@@ -30,6 +30,7 @@ export function createUser_DB(
     username: username as string,
     email: email as string,
     TotalScore: 0 as number,
+    trophyImage: "None" as string,
   });
 
   const data = [
@@ -57,9 +58,10 @@ export function createUser_DB(
 
 export function readSpecificUserData_DB(userId: string, callback?: Function) {
   const value = ref(db, "users/" + userId);
+  let data: userData_DB;
 
   onValue(value, (snapshot) => {
-    let data: userData_DB = snapshot.val();
+    data = snapshot.val();
     callback(data);
   });
 }
@@ -177,9 +179,10 @@ export function readingAllUserData_DB(
   callback ? callback(result) : null;
 }
 
-export function readingTrophiesData_DB(
+export function readTrophiesData_DB(
   userId: string,
-  callback?: Function
+  callback?: Function,
+  available?: boolean
 ): void {
   const refUser = ref(db, "users/" + userId + "/Trophies");
 
@@ -190,6 +193,10 @@ export function readingTrophiesData_DB(
       result.push(snapshotChild.val());
     });
 
-    callback ? callback(result) : null;
+    callback
+      ? available
+        ? callback(result.filter((e: trophy_DB) => e.available))
+        : callback(result)
+      : null;
   });
 }

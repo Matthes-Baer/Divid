@@ -1,11 +1,12 @@
 import { signOut } from "firebase/auth";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import {
   View,
   Text,
   Button,
   StyleSheet,
   ActivityIndicator,
+  Image,
 } from "react-native";
 
 //? Navigation
@@ -21,13 +22,17 @@ import {
   addScore_DB,
   updateSingleData_DB,
   updateSingleTrophyData_DB,
+  readTrophiesData_DB,
 } from "../../utils/database";
-import type { userData_DB } from "../../utils/interfaces-and-types";
+import type { userData_DB, trophy_DB } from "../../utils/interfaces-and-types";
 import { auth } from "../../firebaseConfig";
+import { Picker } from "@react-native-picker/picker";
+import TROPHY_IMAGE_URL from "../../data/TrohpyData";
 
 const Home_Authenticated = ({ navigation }: Props) => {
-  const [userData, setUserData] = useState<userData_DB | null>(null);
-  const [readDbData, setReadDbData] = useState<any>();
+  const [userData, setUserData] = useState<userData_DB>();
+  const [activeTrophyImage, setActiveTrophyImage] = useState<string>();
+  const [trophiesArray, setTrophiesArray] = useState<Array<trophy_DB>>();
 
   const signOutHandler = () => {
     signOut(auth);
@@ -40,8 +45,14 @@ const Home_Authenticated = ({ navigation }: Props) => {
       navigation.navigate("Start");
     } else {
       readSpecificUserData_DB(auth.currentUser.uid, setUserData);
+      readTrophiesData_DB(auth.currentUser.uid, setTrophiesArray, true);
     }
   }, []);
+
+  const activeImageHandler = (value, index) => {
+    updateSingleData_DB(auth.currentUser.uid, value, "/trophyImage");
+    setActiveTrophyImage(value);
+  };
 
   return (
     <View style={styles.container}>
@@ -111,11 +122,56 @@ const Home_Authenticated = ({ navigation }: Props) => {
           updateSingleTrophyData_DB(
             auth.currentUser.uid,
             "FirstPic",
-            "active",
-            false
+            "available",
+            true
           )
         }
       />
+      {!trophiesArray ? (
+        <ActivityIndicator size={"large"} />
+      ) : (
+        <Picker
+          selectedValue={
+            !activeTrophyImage && !userData ? (
+              <ActivityIndicator size={"large"} />
+            ) : activeTrophyImage ? (
+              activeTrophyImage
+            ) : (
+              userData.trophyImage
+            )
+          }
+          onValueChange={activeImageHandler}
+          mode="dropdown" // Android only
+          style={styles.picker}
+        >
+          <Picker.Item label="None" value="None" />
+
+          {trophiesArray.map((e: trophy_DB) => (
+            <Picker.Item key={e.name} label={e.name} value={e.name} />
+          ))}
+        </Picker>
+      )}
+
+      {!activeTrophyImage && !userData ? (
+        <ActivityIndicator size={"large"} />
+      ) : (
+        <View>
+          <Image
+            style={{
+              height: 250,
+              width: 250,
+              backgroundColor: "transparent",
+            }}
+            source={
+              TROPHY_IMAGE_URL.find(
+                (e: { image: string; url: NodeRequire }) =>
+                  e.image ===
+                  (activeTrophyImage ? activeTrophyImage : userData.trophyImage)
+              )?.url || TROPHY_IMAGE_URL[0].url
+            }
+          />
+        </View>
+      )}
     </View>
   );
 };
@@ -123,6 +179,14 @@ const Home_Authenticated = ({ navigation }: Props) => {
 const styles = StyleSheet.create({
   container: {
     height: "100%",
+  },
+
+  picker: {
+    marginVertical: 30,
+    width: 300,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#666",
   },
 });
 

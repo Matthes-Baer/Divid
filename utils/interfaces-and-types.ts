@@ -27,6 +27,7 @@ export interface userData_DB {
   uid: string;
   username: string;
   Trophies: trophy_DB[];
+  trophyImage: string;
 }
 
 export interface scoresArrayElement_DB {
@@ -40,7 +41,6 @@ export interface trophy_DB {
   name: string;
   costs: number;
   available: boolean;
-  active: boolean;
 }
 
 //* Game

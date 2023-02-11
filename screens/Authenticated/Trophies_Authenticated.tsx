@@ -23,7 +23,7 @@ import {
   readSpecificUserData_DB,
   addScore_DB,
   updateSingleData_DB,
-  readingTrophiesData_DB,
+  readTrophiesData_DB,
 } from "../../utils/database";
 import type { userData_DB } from "../../utils/interfaces-and-types";
 import { auth } from "../../firebaseConfig";
@@ -39,7 +39,7 @@ const Trophies_Authenticated = ({ navigation, route }: Props) => {
     if (!auth.currentUser) {
       navigation.navigate("Start");
     } else {
-      readingTrophiesData_DB(auth.currentUser.uid, setUserData);
+      readTrophiesData_DB(auth.currentUser.uid, setUserData);
 
       //   const Image = require(URL);
     }

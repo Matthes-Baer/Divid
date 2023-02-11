@@ -3,6 +3,10 @@
 
 const TROPHY_IMAGE_URL = [
   {
+    image: "None",
+    url: require("../assets/trophyImages/splash.png"),
+  },
+  {
     image: "FirstPic",
     url: require("../assets/trophyImages/Test.webp"),
   },

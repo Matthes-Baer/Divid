@@ -14,13 +14,20 @@ export default function Start(): JSX.Element {
       </Text>
 
       <Text>
-        Logo erstellen mit Midjourney? Bei Home_NotAuthenticated einfügen.
+        Logo erstellen mit Midjourney / Trophies erstellen mit Midjourney (Auch
+        Bild für "None" raussuchen) - webp verwenden.
       </Text>
       <Text>
         Logik: Bei Game muss noch weitergebaut werden (Sieg-Modal
-        (Database-Eintrag und so) / Info-Modal) Logik: Bei Home muss noch
-        weitergebaut werden (Einbindung des active Image / Leeres Image wenn
-        kein active vorhanden / Noch weitere Einträge?)
+        (Database-Eintrag und so) / Info-Modal)
+      </Text>
+      <Text>
+        Logik: Home ggf. aufteilen in einzelne Components / generell
+        übersichtlicher gestalten
+      </Text>
+      <Text>
+        Logik: Für Home noch weitere Einträge für UserData, ggf. Settings zum
+        Anpassen?
       </Text>
       <Text>Styling: Home, Game, Scores & Trophies</Text>
 
@@ -30,13 +37,8 @@ export default function Start(): JSX.Element {
       </Text>
       <View>
         <Text>
-          Für Database-Struktur: db('user') - Array mit Objekten jeweils: (uid:
-          ..., username: ..., Email?: ..., Scores: Array mit Objekten
-          jeweils:(score, data, used tips?, ), total points (für rewards?))
-        </Text>
-        <Text>
-          Bereich einbauen, wo man abhängig von den totalPoints Bilder
-          freispielen kann (mittels Midjourney erstellt)?
+          Bereich einbauen, wo man abhängig von den totalPoints Bilder kaufen
+          kann (mittels Midjourney erstellt)?
         </Text>
       </View>
       <View>
