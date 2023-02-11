@@ -20,19 +20,27 @@ export type Authenticated_Screens_Type = {
 };
 
 //* Database
-export interface database_userData {
-  Scores: databaseScoresArrayElement[];
+export interface userData_DB {
+  Scores: scoresArrayElement_DB[];
   TotalScore: number;
   email: string;
   uid: string;
   username: string;
+  Trophies: trophy_DB[];
 }
 
-export interface databaseScoresArrayElement {
+export interface scoresArrayElement_DB {
   score: number;
   date: { day: number; month: number; year: number; total: number };
   usedHints: number;
   attempts: number;
+}
+
+export interface trophy_DB {
+  name: string;
+  costs: number;
+  available: boolean;
+  active: boolean;
 }
 
 //* Game

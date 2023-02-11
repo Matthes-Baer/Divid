@@ -16,7 +16,7 @@ import {
   User,
   UserCredential,
 } from "firebase/auth";
-import { createUserDB } from "./database";
+import { createUser_DB } from "./database";
 
 export const authRegister: (a: string, b: string, c: string) => void = (
   email: string,
@@ -33,7 +33,7 @@ export const authRegister: (a: string, b: string, c: string) => void = (
         displayName: username,
       });
       authSignin(email, password);
-      createUserDB(user.uid, username, email);
+      createUser_DB(user.uid, username, email);
       sendEmailVerificationMail();
     })
     .catch((error) => {

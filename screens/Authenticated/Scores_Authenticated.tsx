@@ -8,44 +8,52 @@ import {
 } from "react-native";
 
 //? Navigation
-import type { Authenticated_Screens_Type } from "../../utils/interfaces-and-types";
+import type {
+  Authenticated_Screens_Type,
+  scoresArrayElement_DB,
+} from "../../utils/interfaces-and-types";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 type Props = NativeStackScreenProps<Authenticated_Screens_Type, "Scores">;
 
 //? Database & Auth
 import {
-  readingAllUserData,
-  readSortedScoresArrayDB,
-  readSpecificUserDataDB,
-  updateScoresArrayDB,
-  updateSingleData,
+  readingAllUserData_DB,
+  readSortedScoresArray_DB,
+  readSpecificUserData_DB,
+  addScore_DB,
+  updateSingleData_DB,
 } from "../../utils/database";
-import type { database_userData } from "../../utils/interfaces-and-types";
+import type { userData_DB } from "../../utils/interfaces-and-types";
 import { auth } from "../../firebaseConfig";
 import { FlatList } from "react-native-gesture-handler";
 
 const Scores_Authenticated = ({ navigation, route }: Props) => {
-  const [scoresArray, setScoresArray] = useState();
+  const [scoresArray, setScoresArray] =
+    useState<Array<scoresArrayElement_DB>>();
 
   useEffect(() => {
     if (!auth.currentUser) {
       navigation.navigate("Start");
     } else {
-      readSortedScoresArrayDB(auth.currentUser.uid, setScoresArray);
+      readSortedScoresArray_DB(auth.currentUser.uid, setScoresArray);
     }
   }, []);
 
   return (
     <View style={styles.container}>
       <Text>Scores</Text>
-      {scoresArray ? (
+      {!scoresArray ? (
+        <ActivityIndicator size={"large"} />
+      ) : scoresArray.length > 0 ? (
         <FlatList
           data={scoresArray}
           renderItem={(data) => <Text>{data.item.score}</Text>}
-          keyExtractor={(item) => item.score + Math.random() + item.date.total}
+          keyExtractor={(item) =>
+            item.score.toString() + Math.random() + item.date.total
+          }
         />
       ) : (
-        <ActivityIndicator size={"large"} />
+        <Text>Nothing found</Text>
       )}
     </View>
   );

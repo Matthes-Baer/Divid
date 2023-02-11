@@ -15,17 +15,18 @@ type Props = NativeStackScreenProps<Authenticated_Screens_Type, "Home">;
 
 //? Database & Auth
 import {
-  readingAllUserData,
-  readSortedScoresArrayDB,
-  readSpecificUserDataDB,
-  updateScoresArrayDB,
-  updateSingleData,
+  readingAllUserData_DB,
+  readSortedScoresArray_DB,
+  readSpecificUserData_DB,
+  addScore_DB,
+  updateSingleData_DB,
+  updateSingleTrophyData_DB,
 } from "../../utils/database";
-import type { database_userData } from "../../utils/interfaces-and-types";
+import type { userData_DB } from "../../utils/interfaces-and-types";
 import { auth } from "../../firebaseConfig";
 
 const Home_Authenticated = ({ navigation }: Props) => {
-  const [userData, setUserData] = useState<database_userData | null>(null);
+  const [userData, setUserData] = useState<userData_DB | null>(null);
   const [readDbData, setReadDbData] = useState<any>();
 
   const signOutHandler = () => {
@@ -38,7 +39,7 @@ const Home_Authenticated = ({ navigation }: Props) => {
     if (!auth.currentUser) {
       navigation.navigate("Start");
     } else {
-      readSpecificUserDataDB(auth.currentUser.uid, setUserData);
+      readSpecificUserData_DB(auth.currentUser.uid, setUserData);
     }
   }, []);
 
@@ -69,9 +70,9 @@ const Home_Authenticated = ({ navigation }: Props) => {
       <Button
         title="DBUpdateTest"
         onPress={() =>
-          updateScoresArrayDB(
+          addScore_DB(
             auth.currentUser.uid,
-            5000,
+            20500,
             {
               day: new Date().getDate(),
               month: new Date().getMonth(),
@@ -88,16 +89,26 @@ const Home_Authenticated = ({ navigation }: Props) => {
       />
       <Button
         title="sortDBTest"
-        onPress={() => readSortedScoresArrayDB(auth.currentUser.uid)}
+        onPress={() => readSortedScoresArray_DB(auth.currentUser.uid)}
       />
       <Button
         title="Reading All User Data"
-        onPress={() => readingAllUserData(auth.currentUser.uid)}
+        onPress={() => readingAllUserData_DB(auth.currentUser.uid)}
       />
       <Button
         title="Update Single Data"
         onPress={() =>
-          updateSingleData(auth.currentUser.uid, "TotalScore", 1000)
+          updateSingleData_DB(
+            auth.currentUser.uid,
+            2200,
+            "/Scores" + "/-NNsJoRYEham1_JRihlv" + "/attempts"
+          )
+        }
+      />
+      <Button
+        title="Single Trophy Data"
+        onPress={() =>
+          updateSingleTrophyData_DB(auth.currentUser.uid, "FirstPic")
         }
       />
     </View>

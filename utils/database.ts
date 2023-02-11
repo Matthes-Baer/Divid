@@ -13,33 +13,58 @@ import {
   get,
   startAt,
   endAt,
+  DatabaseReference,
 } from "firebase/database";
-import type { database_userData } from "./interfaces-and-types";
+import firebase from "firebase/app";
+import type { userData_DB, trophy_DB } from "./interfaces-and-types";
 const db = getDatabase();
 
-export function createUserDB(
+export function createUser_DB(
   userId: string,
   username: string,
   email: string
 ): void {
+  //* "set" for adding single entries.
   set(ref(db, "users/" + userId), {
     uid: userId as string,
     username: username as string,
     email: email as string,
     TotalScore: 0 as number,
   });
+
+  const data = [
+    {
+      name: "FirstPic" as string,
+      costs: 50 as number,
+      available: false as boolean,
+      active: false as boolean,
+    },
+    {
+      name: "SecondPic" as string,
+      costs: 75 as number,
+      available: false as boolean,
+      active: false as boolean,
+    },
+  ];
+
+  const imagesRef = ref(db, "users/" + userId + "/Trophies");
+  //* "update" for adding multiple entries at once.
+  update(imagesRef, {
+    FirstPic: data[0],
+    SecondPic: data[1],
+  });
 }
 
-export function readSpecificUserDataDB(userId: string, callback?: Function) {
+export function readSpecificUserData_DB(userId: string, callback?: Function) {
   const value = ref(db, "users/" + userId);
 
   onValue(value, (snapshot) => {
-    let data: database_userData = snapshot.val();
+    let data: userData_DB = snapshot.val();
     callback(data);
   });
 }
 
-export function updateScoresArrayDB(
+export function addScore_DB(
   userId: string,
   score: number,
   date: { day: number; month: number; year: number; total: number },
@@ -63,17 +88,38 @@ export function updateScoresArrayDB(
   });
 }
 
-export function updateSingleData(
+export function updateSingleData_DB(
   userId: string,
-  key: string,
-  input: string | number
+  input: string | number,
+  ...key: Array<string | number>
 ): Promise<void> {
   const updates = {};
-  updates["users/" + userId + `/${key}`] = input;
+  updates["users/" + userId + key] = input;
   return update(ref(db), updates);
 }
 
-export function readSortedScoresArrayDB(
+export function updateSingleTrophyData_DB(userId: string, imageName: string) {
+  const baseAddress: string = "users/" + userId + "/Trophies";
+  const refTrophyArray: DatabaseReference = ref(db, baseAddress);
+  let resultArray = [];
+
+  //* OnValue would not work in this case due to the realtime change - crashes the app.
+  get(refTrophyArray).then((snapshot) => {
+    let key: string;
+    snapshot.forEach((childSnapshot) => {
+      resultArray.push(childSnapshot.val());
+      if (childSnapshot.val().name === imageName) {
+        key = childSnapshot.key;
+        const updates = {};
+        console.log(key);
+        updates[baseAddress + `/${key}` + "/available"] = true;
+        update(ref(db), updates);
+      }
+    });
+  });
+}
+
+export function readSortedScoresArray_DB(
   userId: string,
   callback?: Function
 ): void {
@@ -111,9 +157,12 @@ export function readSortedScoresArrayDB(
   });
 }
 
-export function readingAllUserData(userId: string, callback?: Function): void {
+export function readingAllUserData_DB(
+  userId: string,
+  callback?: Function
+): void {
   const refUser = ref(db, "users/" + userId);
-  let result: database_userData;
+  let result: userData_DB;
 
   onValue(refUser, (snapshot) => {
     result = snapshot.val();
@@ -121,4 +170,21 @@ export function readingAllUserData(userId: string, callback?: Function): void {
 
   console.log(result);
   callback ? callback(result) : null;
+}
+
+export function readingTrophiesData_DB(
+  userId: string,
+  callback?: Function
+): void {
+  const refUser = ref(db, "users/" + userId + "/Trophies");
+
+  onValue(refUser, (snapshot) => {
+    let result: trophy_DB[] = [];
+
+    snapshot.forEach((snapshotChild) => {
+      result.push(snapshotChild.val());
+    });
+
+    callback ? callback(result) : null;
+  });
 }
