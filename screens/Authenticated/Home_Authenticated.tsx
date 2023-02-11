@@ -68,7 +68,7 @@ const Home_Authenticated = ({ navigation }: Props) => {
       <Text></Text>
       <Button title="logout" onPress={signOutHandler} />
       <Button
-        title="DBUpdateTest"
+        title="addScore_DB"
         onPress={() =>
           addScore_DB(
             auth.currentUser.uid,
@@ -88,15 +88,15 @@ const Home_Authenticated = ({ navigation }: Props) => {
         }
       />
       <Button
-        title="sortDBTest"
+        title="readSortedScoresArray_DB"
         onPress={() => readSortedScoresArray_DB(auth.currentUser.uid)}
       />
       <Button
-        title="Reading All User Data"
+        title="readingAllUserData_DB"
         onPress={() => readingAllUserData_DB(auth.currentUser.uid)}
       />
       <Button
-        title="Update Single Data"
+        title="updateSingleData_DB - attempts of a specific score (hardcoded)"
         onPress={() =>
           updateSingleData_DB(
             auth.currentUser.uid,
@@ -106,7 +106,7 @@ const Home_Authenticated = ({ navigation }: Props) => {
         }
       />
       <Button
-        title="Single Trophy Data"
+        title="updateSingleTrophyData_DB (FirstPic)"
         onPress={() =>
           updateSingleTrophyData_DB(auth.currentUser.uid, "FirstPic")
         }

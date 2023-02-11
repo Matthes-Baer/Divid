@@ -112,6 +112,8 @@ export function updateSingleTrophyData_DB(userId: string, imageName: string) {
         key = childSnapshot.key;
         const updates = {};
         console.log(key);
+
+        //! Das hier macht so eigentlich keinen Sinn, weil man im Frontend nicht so einfach an den Key rankommt. Die einzelnen Scores werden im Nachhinein nicht weiter verändert, weshalb keine richtige ID oder sowas eingebaut werden muss, um den score-Eintrag tatsächlich dynamisch finden zu können.
         updates[baseAddress + `/${key}` + "/available"] = true;
         update(ref(db), updates);
       }
