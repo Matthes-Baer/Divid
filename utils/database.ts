@@ -98,23 +98,26 @@ export function updateSingleData_DB(
   return update(ref(db), updates);
 }
 
-export function updateSingleTrophyData_DB(userId: string, imageName: string) {
+export function updateSingleTrophyData_DB(
+  userId: string,
+  imageName: string,
+  keyName: string,
+  input: boolean
+) {
   const baseAddress: string = "users/" + userId + "/Trophies";
   const refTrophyArray: DatabaseReference = ref(db, baseAddress);
   let resultArray = [];
 
   //* OnValue would not work in this case due to the realtime change - crashes the app.
   get(refTrophyArray).then((snapshot) => {
-    let key: string;
+    let imageKey: string;
     snapshot.forEach((childSnapshot) => {
       resultArray.push(childSnapshot.val());
       if (childSnapshot.val().name === imageName) {
-        key = childSnapshot.key;
-        const updates = {};
-        console.log(key);
+        imageKey = childSnapshot.key;
 
-        //! Das hier macht so eigentlich keinen Sinn, weil man im Frontend nicht so einfach an den Key rankommt. Die einzelnen Scores werden im Nachhinein nicht weiter verändert, weshalb keine richtige ID oder sowas eingebaut werden muss, um den score-Eintrag tatsächlich dynamisch finden zu können.
-        updates[baseAddress + `/${key}` + "/available"] = true;
+        const updates = {};
+        updates[baseAddress + `/${imageKey}` + `/${keyName}`] = input;
         update(ref(db), updates);
       }
     });

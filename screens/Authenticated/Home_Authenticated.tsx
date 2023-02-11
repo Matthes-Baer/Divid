@@ -108,7 +108,12 @@ const Home_Authenticated = ({ navigation }: Props) => {
       <Button
         title="updateSingleTrophyData_DB (FirstPic)"
         onPress={() =>
-          updateSingleTrophyData_DB(auth.currentUser.uid, "FirstPic")
+          updateSingleTrophyData_DB(
+            auth.currentUser.uid,
+            "FirstPic",
+            "active",
+            false
+          )
         }
       />
     </View>

@@ -8,19 +8,21 @@ export default function Start(): JSX.Element {
         <br />
         - E-Mail-Verifikation richtig einbauen (firebase gibt error meldung
         raus) - bei Login etwas ähnliches?
-        <br />
-        - Passwort-Vergessen-Funktion einbauen
-        <br />- Bei Register auf Login verweisen (Account schon vorhanden?)
+        <br />- Passwort-Vergessen-Funktion einbauen - Bei Register auf Login
+        verweisen (Account schon vorhanden?) - Genereller Einstellungen-Screen
+        erstellen
       </Text>
 
       <Text>
         Logo erstellen mit Midjourney? Bei Home_NotAuthenticated einfügen.
       </Text>
       <Text>
-        Trophies: Array mit Objekten (Relative URL & name & cost & available)
-        für jedes Bild - Rumprobieren mit relative paths und versuchen bilder
-        anzuzeigen.
+        Logik: Bei Game muss noch weitergebaut werden (Sieg-Modal
+        (Database-Eintrag und so) / Info-Modal) Logik: Bei Home muss noch
+        weitergebaut werden (Einbindung des active Image / Leeres Image wenn
+        kein active vorhanden / Noch weitere Einträge?)
       </Text>
+      <Text>Styling: Home, Game, Scores & Trophies</Text>
 
       <Text>
         Legende/Erklärung als Modal einbauen zum Einblenden / Weitere Notizen in
@@ -44,17 +46,7 @@ export default function Start(): JSX.Element {
           Register Möglichkeiten. Wenn eingeloggt, landet man im
           Authenticated-Screen-Bereich
         </Text>
-        //! Hierauf wahrscheinlich zuerst Fokus legen?
-        <Text>
-          Login-Screen (Form), Register-Screen (Form) + Möglichkeit für Username
-          hinzufügen, Main-Start-Screen, Generelle Database-Struktur festlegen
-          für alles
-        </Text>
-        <Text>
-          Not authenticated: Start_NotAuthenticated Component, Login-Screen
-          (nach Klick auf Login-Button), Register-Screen (nach Klick auf
-          Register-Button)
-        </Text>
+
         <Text>
           Authenticated: Home-Screen (total points, profile pic wird angezeigt,
           wenn eines erspielt wurde), Screen für Profileinstellungen
