@@ -30,7 +30,9 @@ export default function Start(): JSX.Element {
         Anpassen?
       </Text>
       <Text>Styling: Home, Game, Scores & Trophies</Text>
-      <Text>Database und Auth Funktionen etwas aufräumen ggf.</Text>
+      <Text>
+        Database und Auth Funktionen etwas aufräumen ggf. (Namen beispielsweise)
+      </Text>
 
       <Text>
         Legende/Erklärung als Modal einbauen zum Einblenden / Weitere Notizen in
