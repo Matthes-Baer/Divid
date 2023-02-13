@@ -22,8 +22,9 @@ import InfoModal from "../../components/Game/InfoModal";
 import CustomButton from "../../components/ui/CustomButton";
 import HintItem from "../../components/Game/HintItem";
 import { TextInput } from "react-native-gesture-handler";
-import SuccessModal from "../../components/Game/SucessModal";
+import SuccessModal from "../../components/Game/SuccessModal";
 import { HINTS_STATIC } from "../../data/GameData";
+import { addScore_DB } from "../../utils/database";
 type Props = NativeStackScreenProps<Authenticated_Screens_Type, "Game">;
 
 // Easy: 5 - 100
@@ -102,16 +103,28 @@ const Home_Authenticated = ({ navigation }: Props) => {
 
   const guessHandler = () => {
     setTotalAttempts((prev: number) => prev + 1);
-    console.log(totalAttempts);
+
     if (gameNumber == pickedNumber) {
-      console.log("you won.", {
-        totalScore: 1000 - totalAttempts - hintsAmount * 5,
-      });
+      const currentDate: Date = new Date();
+
+      addScore_DB(
+        auth.currentUser.uid,
+        Math.max(0, gameMode.factor - totalAttempts - hintsAmount * 2),
+        {
+          day: currentDate.getDate(),
+          month: currentDate.getMonth() + 1,
+          year: currentDate.getFullYear(),
+          total:
+            currentDate.getDate() +
+            currentDate.getMonth() +
+            currentDate.getFullYear(),
+        },
+        hintsAmount,
+        totalAttempts
+      );
+
       setSuccessModalVisible(true);
       return;
-      // let totalScore = 0
-      // Database-Eintrag...
-      // Animation einbauen für Bereich, der dann aufkommt... (ähnlich wie bei fadeIn) - mittels Modal
     } else {
       setAttempts((prev: number) => prev - 1);
       console.log(attempts);
@@ -126,11 +139,14 @@ const Home_Authenticated = ({ navigation }: Props) => {
     setGameActive(false);
     setPickedNumber(5);
     setGameNumber(null);
+    setSuccessModalVisible(false);
 
     setHints([]);
     setGivenHints([]);
-    setHintsAmount(givenHints.length);
+    setHintsAmount(0);
     setAdditionalHint(null);
+    setTotalAttempts(0);
+    setAttempts(3);
   };
 
   return (
@@ -245,6 +261,7 @@ const Home_Authenticated = ({ navigation }: Props) => {
         <SuccessModal
           visible={successModalVisible}
           setter={setSuccessModalVisible}
+          resetHandler={gameResetHandler}
         />
       </View>
     </View>

@@ -31,7 +31,9 @@ export default function Start(): JSX.Element {
       </Text>
       <Text>Styling: Home, Game, Scores & Trophies</Text>
       <Text>
-        Database und Auth Funktionen etwas aufräumen ggf. (Namen beispielsweise)
+        Für Game: Bessere Score-Berechnung überlegen (Mit welchem Faktor
+        subtrahiert wird / soll der erste Hint, der immer erscheint, auch schon
+        subtrahiert werden vom totalScore?)
       </Text>
       <Text>
         Für Trophies: Bilder-Namen und Paths bei TropyData.ts eintragen /
@@ -43,19 +45,6 @@ export default function Start(): JSX.Element {
         Game_Authenticated.
       </Text>
       <View>
-        <Text>
-          Bereich einbauen, wo man abhängig von den totalPoints Bilder kaufen
-          kann (mittels Midjourney erstellt)?
-        </Text>
-      </View>
-      <View>
-        <Text>
-          In App.tsx wird gecheckt, ob jemand eingeloggt ist: Wenn nein, wird
-          landet man im Not_Authenticated_Bereich Startübersicht mitsamt LogIn &
-          Register Möglichkeiten. Wenn eingeloggt, landet man im
-          Authenticated-Screen-Bereich
-        </Text>
-
         <Text>
           Authenticated: Home-Screen (total points, profile pic wird angezeigt,
           wenn eines erspielt wurde), Screen für Profileinstellungen

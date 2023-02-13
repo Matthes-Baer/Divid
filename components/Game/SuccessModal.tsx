@@ -7,13 +7,15 @@ import {
   Pressable,
   View,
   StatusBar,
+  Button,
 } from "react-native";
 
-type PropsType = { visible: boolean; setter: Function };
+type PropsType = { visible: boolean; setter: Function; resetHandler: Function };
 
 const SuccessModal: React.FC<PropsType> = (props: {
   visible: boolean;
   setter: Function;
+  resetHandler: Function;
 }) => {
   return (
     <View style={styles.centeredView}>
@@ -32,7 +34,9 @@ const SuccessModal: React.FC<PropsType> = (props: {
             <Text style={styles.modalText}>Won</Text>
             <Pressable
               style={[styles.button, styles.buttonClose]}
-              onPress={() => props.setter(!props.visible)}
+              onPress={() => {
+                props.setter(!props.visible), props.resetHandler();
+              }}
             >
               <Text style={styles.textStyle}>Hide Modal</Text>
             </Pressable>
