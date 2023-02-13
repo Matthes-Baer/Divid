@@ -14,10 +14,13 @@ import {
   startAt,
   endAt,
   DatabaseReference,
+  ThenableReference,
 } from "firebase/database";
-import firebase from "firebase/app";
 import type { userData_DB, trophy_DB } from "./interfaces-and-types";
+
 const db = getDatabase();
+
+//? Create & Add Functions
 
 export function createUser_DB(
   userId: string,
@@ -33,36 +36,27 @@ export function createUser_DB(
     trophyImage: "None" as string,
   });
 
-  const data = [
+  const tropyArray: Array<trophy_DB> = [
     {
       name: "FirstPic" as string,
       costs: 50 as number,
       available: false as boolean,
-      active: false as boolean,
     },
     {
       name: "SecondPic" as string,
       costs: 75 as number,
       available: false as boolean,
-      active: false as boolean,
     },
   ];
 
-  const imagesRef = ref(db, "users/" + userId + "/Trophies");
+  const trophiesRef: DatabaseReference = ref(
+    db,
+    "users/" + userId + "/Trophies"
+  );
   //* "update" for adding multiple entries at once.
-  update(imagesRef, {
-    FirstPic: data[0],
-    SecondPic: data[1],
-  });
-}
-
-export function readSpecificUserData_DB(userId: string, callback?: Function) {
-  const value = ref(db, "users/" + userId);
-  let data: userData_DB;
-
-  onValue(value, (snapshot) => {
-    data = snapshot.val();
-    callback(data);
+  update(trophiesRef, {
+    FirstPic: tropyArray[0],
+    SecondPic: tropyArray[1],
   });
 }
 
@@ -74,9 +68,8 @@ export function addScore_DB(
   attempts: number
 ): void {
   // const newPostKey = push(child(ref(db), "Scores")).key;
-  //! wird so auch ein ganz neues Array angelegt wenn noch keine Einträge vorhanden sind?
-  const postListRef = ref(db, "users/" + userId + "/Scores");
-  const newPostRef = push(postListRef);
+  const postListRef: DatabaseReference = ref(db, "users/" + userId + "/Scores");
+  const newPostRef: ThenableReference = push(postListRef);
   set(newPostRef, {
     score,
     date: {
@@ -90,14 +83,16 @@ export function addScore_DB(
   });
 }
 
+//? Update Functions
+
 export function updateSingleData_DB(
   userId: string,
   input: string | number,
   ...key: Array<string | number>
-): Promise<void> {
+): void {
   const updates = {};
   updates["users/" + userId + key] = input;
-  return update(ref(db), updates);
+  update(ref(db), updates);
 }
 
 export function updateSingleTrophyData_DB(
@@ -105,16 +100,15 @@ export function updateSingleTrophyData_DB(
   imageName: string,
   keyName: string,
   input: boolean
-) {
+): void {
   const baseAddress: string = "users/" + userId + "/Trophies";
   const refTrophyArray: DatabaseReference = ref(db, baseAddress);
-  let resultArray = [];
 
   //* OnValue would not work in this case due to the realtime change - crashes the app.
   get(refTrophyArray).then((snapshot) => {
     let imageKey: string;
+
     snapshot.forEach((childSnapshot) => {
-      resultArray.push(childSnapshot.val());
       if (childSnapshot.val().name === imageName) {
         imageKey = childSnapshot.key;
 
@@ -126,17 +120,24 @@ export function updateSingleTrophyData_DB(
   });
 }
 
+//? Read Functions
+
+export function readSpecificUserData_DB(userId: string, callback?: Function) {
+  const value = ref(db, "users/" + userId);
+  let data: userData_DB;
+
+  onValue(value, (snapshot) => {
+    data = snapshot.val();
+    callback(data);
+  });
+}
+
 export function readSortedScoresArray_DB(
   userId: string,
   callback?: Function
 ): void {
-  const sortedScoresArray = query(
-    ref(db, "users/" + userId + "/Scores"),
-    orderByChild("score")
-  );
-
   //* Multiple Orders don't work at once with the realtime database - for such queries the Firebase Cloud Firestore would be needed.
-  const que = query(
+  const queryRef = query(
     ref(db, "users/" + userId + "/Scores"),
     orderByChild("score")
   );
@@ -153,7 +154,7 @@ export function readSortedScoresArray_DB(
   // });
 
   //* Reading Data in realtime
-  onValue(que, (snapshot) => {
+  onValue(queryRef, (snapshot) => {
     var result = [];
 
     snapshot.forEach((childSnapshot) => {
@@ -164,18 +165,14 @@ export function readSortedScoresArray_DB(
   });
 }
 
-export function readingAllUserData_DB(
-  userId: string,
-  callback?: Function
-): void {
-  const refUser = ref(db, "users/" + userId);
+export function readAllUserData_DB(userId: string, callback?: Function): void {
+  const refUser: DatabaseReference = ref(db, "users/" + userId);
   let result: userData_DB;
 
   onValue(refUser, (snapshot) => {
     result = snapshot.val();
   });
 
-  console.log(result);
   callback ? callback(result) : null;
 }
 
@@ -184,7 +181,7 @@ export function readTrophiesData_DB(
   callback?: Function,
   available?: boolean
 ): void {
-  const refUser = ref(db, "users/" + userId + "/Trophies");
+  const refUser: DatabaseReference = ref(db, "users/" + userId + "/Trophies");
 
   onValue(refUser, (snapshot) => {
     let result: trophy_DB[] = [];

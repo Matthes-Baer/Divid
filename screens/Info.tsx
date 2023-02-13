@@ -33,6 +33,10 @@ export default function Start(): JSX.Element {
       <Text>
         Database und Auth Funktionen etwas aufräumen ggf. (Namen beispielsweise)
       </Text>
+      <Text>
+        Für Trophies: Bilder-Namen und Paths bei TropyData.ts eintragen /
+        Bilder-Namen bei createUser_DB eintragen
+      </Text>
 
       <Text>
         Legende/Erklärung als Modal einbauen zum Einblenden / Weitere Notizen in
