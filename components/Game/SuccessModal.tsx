@@ -68,7 +68,11 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5,
+    elevation: 10,
+    borderRightWidth: 4,
+    borderRightColor: "#2b2024",
+    borderBottomWidth: 4,
+    borderBottomColor: "#2b2024",
   },
 
   upperTextView: {

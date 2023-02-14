@@ -1,5 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { Modal, StyleSheet, Text, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import CustomButton from "../ui/CustomButton";
 
 type PropsType = {
@@ -21,11 +22,47 @@ const InfoModal: React.FC<PropsType> = (props: {
           props.setter(!props.visible);
         }}
       >
-        <View style={styles.centeredView}>
+        <ScrollView contentContainerStyle={styles.scrollView}>
           <View style={styles.modalView}>
-            <View style={styles.upperTextView}>
-              <Text style={[styles.textStyle, styles.wonText]}>
-                How to Play
+            <Text style={[styles.mainHeading]}>How to Play</Text>
+            <View>
+              <Text style={styles.SectionHeading}>Goal:</Text>
+              <Text style={styles.normalText}>
+                Your goal is to guess the correct number.
+              </Text>
+            </View>
+
+            <View>
+              <Text style={styles.SectionHeading}>Game mode:</Text>
+              <Text style={styles.normalText}>
+                In easy mode, the number can range from 5 to 100, while in
+                medium mode, it can range from 5 to 250, and from 5 to 500 in
+                hard mode.The harder the The more game modes you play, the more
+                points you can earn.
+              </Text>
+            </View>
+
+            <View>
+              <Text style={styles.SectionHeading}>Hints:</Text>
+              <Text style={styles.normalText}>
+                You start off with a single hint that tells you if the number is
+                dividable or not dividable by a specific number. With this hint
+                You have three chances to guess the right number.If you don't If
+                you guess the correct number within these three attempts, you
+                will receive a new hint and another three attempts. appears.
+                After 20 hints, you will get hints on whether the number is
+                higher or lower than your last guess number.
+              </Text>
+            </View>
+
+            <View>
+              <Text style={styles.SectionHeading}>Winning:</Text>
+              <Text style={styles.normalText}>
+                As soon as you guess the correct number, you win the game. When
+                you win a game, you receive points that you can spend in the
+                Trophies area to adjust your image in the Home area. However,
+                the potential points you may earn are reduced by each attempt
+                and hint given throughout the game round.
               </Text>
             </View>
             <CustomButton
@@ -35,7 +72,7 @@ const InfoModal: React.FC<PropsType> = (props: {
               <Text style={styles.buttonText}>Back</Text>
             </CustomButton>
           </View>
-        </View>
+        </ScrollView>
       </Modal>
     </View>
   );
@@ -61,10 +98,39 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5,
+    elevation: 10,
+    borderRightWidth: 4,
+    borderRightColor: "#2b2024",
+    borderBottomWidth: 4,
+    borderBottomColor: "#2b2024",
   },
 
-  upperTextView: {
+  mainHeading: {
+    fontSize: 40,
+    fontWeight: "bold",
+    color: "#2b2024",
+    textAlign: "center",
+    fontFamily: "Rajdhani_400Regular",
+    marginBottom: 20,
+  },
+
+  SectionHeading: {
+    fontSize: 35,
+    color: "#2b2024",
+    textAlign: "center",
+    fontFamily: "Rajdhani_400Regular",
+    marginBottom: 10,
+  },
+
+  scrollView: {
+    backgroundColor: "#a80038",
+  },
+
+  normalText: {
+    color: "#2b2024",
+    textAlign: "center",
+    fontFamily: "Rajdhani_400Regular",
+    fontSize: 20,
     marginBottom: 15,
   },
 
@@ -72,22 +138,6 @@ const styles = StyleSheet.create({
     color: "#fbf9fa",
     fontFamily: "Rajdhani_400Regular",
     fontSize: 25,
-  },
-
-  totalScoreText: {
-    fontSize: 35,
-  },
-
-  textStyle: {
-    color: "#2b2024",
-    textAlign: "center",
-    fontFamily: "Rajdhani_400Regular",
-    fontSize: 35,
-    marginBottom: 10,
-  },
-
-  wonText: {
-    fontSize: 50,
   },
 });
 

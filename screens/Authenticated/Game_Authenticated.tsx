@@ -21,7 +21,7 @@ import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import InfoModal from "../../components/Game/InfoModal";
 import CustomButton from "../../components/ui/CustomButton";
 import HintItem from "../../components/Game/HintItem";
-import { TextInput } from "react-native-gesture-handler";
+import { ScrollView, TextInput } from "react-native-gesture-handler";
 import SuccessModal from "../../components/Game/SuccessModal";
 import { HINTS_STATIC } from "../../data/GameData";
 import { addScore_DB } from "../../utils/database";
@@ -151,208 +151,221 @@ const Home_Authenticated = ({ navigation }: Props) => {
   };
 
   return (
-    <View>
-      <View>
-        <CustomButton
-          width={"50%"}
-          onPress={() => setInfoModalVisible(!infoModalVisible)}
-        >
-          <Text>How to Play</Text>
-        </CustomButton>
+    <View style={styles.mainContainer}>
+      <CustomButton
+        width={"75%"}
+        onPress={() => setInfoModalVisible(!infoModalVisible)}
+      >
+        <Text style={styles.customButtonText}>How to Play</Text>
+      </CustomButton>
 
-        {!gameActive ? (
-          <View>
-            <Text>Gamemode:</Text>
-            <SlideXAnimation
-              value={50}
-              duration={1000}
-              active={gameMode.mode === "easy"}
+      {!gameActive ? (
+        <View style={styles.sectionViewContainer}>
+          <Text style={styles.SectionHeading}>Gamemode:</Text>
+          <SlideXAnimation
+            value={25}
+            duration={1000}
+            active={gameMode.mode === "easy"}
+            style={styles.gamemodePickerView}
+          >
+            <CustomButton
+              onPress={() => gameModeSetHandler("easy")}
+              width={"75%"}
             >
-              <CustomButton
-                onPress={() => gameModeSetHandler("easy")}
-                width={"50%"}
-              >
-                <View style={styles.customButtonChildrenContainer}>
-                  <Text
-                    style={[
-                      styles.customButtonText,
-                      {
-                        color: gameMode.mode === "easy" ? "#02FFAB" : "#fbf9fa",
-                      },
-                    ]}
-                  >
-                    Easy
-                  </Text>
-                  <Text
-                    style={[
-                      styles.customButtonText,
-                      {
-                        fontSize: 10,
-                        color: gameMode.mode === "easy" ? "#02FFAB" : "#fbf9fa",
-                      },
-                    ]}
-                  >
-                    Game number can be 5 - 100 (including)
-                  </Text>
-                </View>
-              </CustomButton>
-            </SlideXAnimation>
-            <SlideXAnimation
-              value={50}
-              duration={1000}
-              active={gameMode.mode === "medium"}
-            >
-              <CustomButton
-                onPress={() => gameModeSetHandler("medium")}
-                width={"50%"}
-              >
-                <View style={styles.customButtonChildrenContainer}>
-                  <Text
-                    style={[
-                      styles.customButtonText,
-                      {
-                        color:
-                          gameMode.mode === "medium" ? "#02FFAB" : "#fbf9fa",
-                      },
-                    ]}
-                  >
-                    Medium
-                  </Text>
-                  <Text
-                    style={[
-                      styles.customButtonText,
-                      {
-                        fontSize: 10,
-                        color:
-                          gameMode.mode === "medium" ? "#02FFAB" : "#fbf9fa",
-                      },
-                    ]}
-                  >
-                    Game number can be 5 - 250 (including)
-                  </Text>
-                </View>
-              </CustomButton>
-            </SlideXAnimation>
-            <SlideXAnimation
-              value={50}
-              duration={1000}
-              active={gameMode.mode === "hard"}
-            >
-              <CustomButton
-                onPress={() => gameModeSetHandler("hard")}
-                width={"50%"}
-              >
-                <View style={styles.customButtonChildrenContainer}>
-                  <Text
-                    style={[
-                      styles.customButtonText,
-                      {
-                        color: gameMode.mode === "hard" ? "#02FFAB" : "#fbf9fa",
-                      },
-                    ]}
-                  >
-                    Hard
-                  </Text>
-                  <Text
-                    style={[
-                      styles.customButtonText,
-                      {
-                        fontSize: 10,
-                        color: gameMode.mode === "hard" ? "#02FFAB" : "#fbf9fa",
-                      },
-                    ]}
-                  >
-                    Game number can be 5 - 500 (including)
-                  </Text>
-                </View>
-              </CustomButton>
-            </SlideXAnimation>
-
-            <Button title="start game" onPress={gameStartHandler} />
-            <Text>Game not started yet.</Text>
-          </View>
-        ) : (
-          <View>
-            <View>
-              <TextInput
-                keyboardType="numeric"
-                value={pickedNumber.toString()}
-                onChangeText={(e: string) => setPickedNumber(+e)}
-                maxLength={3}
-              />
-            </View>
-            <Text>
-              Game number: {gameNumber} / pickedNumber: {pickedNumber}
-            </Text>
-            <Button onPress={gameResetHandler} title="abort game"></Button>
-            <Text>Hints: ...</Text>
-            <Text>{attempts}</Text>
-            <Button title="guess Number" onPress={guessHandler} />
-            <View style={{ height: windowDimensions.height / 2 }}>
-              <FlatList
-                data={givenHints}
-                renderItem={(hint) => {
-                  return (
-                    <View>
-                      <HintItem
-                        hintNumber={hint.item.number}
-                        hintDividable={hint.item.dividable}
-                        hintUsed={hint.item.used}
-                      />
-                    </View>
-                  );
-                }}
-                keyExtractor={(hint, index) => {
-                  // should only be implemented in the state (item) which would be structured as an object with "key" - then this function would not be needed.
-                  // Or use "id", for example, and return that in this function.
-                  const keyValue = hint.number.toString();
-                  return keyValue;
-                }}
-              />
-            </View>
-
-            <View>
-              {additionalHint ? (
-                <Text>
-                  {additionalHint.larger
-                    ? "Game Number is higher than the picked Number"
-                    : "Game Number is lower than the picked number"}
+              <View style={styles.customButtonChildrenContainer}>
+                <Text
+                  style={[
+                    styles.customButtonText,
+                    {
+                      color: gameMode.mode === "easy" ? "#2b2024" : "#fbf9fa",
+                    },
+                  ]}
+                >
+                  Easy
                 </Text>
-              ) : (
-                ""
-              )}
-            </View>
-          </View>
-        )}
+                <Text
+                  style={[
+                    styles.customButtonText,
+                    {
+                      fontSize: 10,
+                      color: gameMode.mode === "easy" ? "#2b2024" : "#fbf9fa",
+                    },
+                  ]}
+                >
+                  Game number can range from 5 to 100
+                </Text>
+              </View>
+            </CustomButton>
+          </SlideXAnimation>
+          <SlideXAnimation
+            value={25}
+            duration={1000}
+            active={gameMode.mode === "medium"}
+            style={styles.gamemodePickerView}
+          >
+            <CustomButton
+              onPress={() => gameModeSetHandler("medium")}
+              width={"75%"}
+            >
+              <View style={styles.customButtonChildrenContainer}>
+                <Text
+                  style={[
+                    styles.customButtonText,
+                    {
+                      color: gameMode.mode === "medium" ? "#2b2024" : "#fbf9fa",
+                    },
+                  ]}
+                >
+                  Medium
+                </Text>
+                <Text
+                  style={[
+                    styles.customButtonText,
+                    {
+                      fontSize: 10,
+                      color: gameMode.mode === "medium" ? "#2b2024" : "#fbf9fa",
+                    },
+                  ]}
+                >
+                  Game number can range from 5 to 250
+                </Text>
+              </View>
+            </CustomButton>
+          </SlideXAnimation>
+          <SlideXAnimation
+            value={25}
+            duration={1000}
+            active={gameMode.mode === "hard"}
+            style={styles.gamemodePickerView}
+          >
+            <CustomButton
+              onPress={() => gameModeSetHandler("hard")}
+              width={"75%"}
+            >
+              <View style={styles.customButtonChildrenContainer}>
+                <Text
+                  style={[
+                    styles.customButtonText,
+                    {
+                      color: gameMode.mode === "hard" ? "#2b2024" : "#fbf9fa",
+                    },
+                  ]}
+                >
+                  Hard
+                </Text>
+                <Text
+                  style={[
+                    styles.customButtonText,
+                    {
+                      fontSize: 10,
+                      color: gameMode.mode === "hard" ? "#2b2024" : "#fbf9fa",
+                    },
+                  ]}
+                >
+                  Game number can range from 5 to 500
+                </Text>
+              </View>
+            </CustomButton>
+          </SlideXAnimation>
 
-        <InfoModal visible={infoModalVisible} setter={setInfoModalVisible} />
-        <SuccessModal
-          visible={successModalVisible}
-          setter={setSuccessModalVisible}
-          resetHandler={gameResetHandler}
-          totalScore={gameMode.factor - totalAttempts - hintsAmount * 2 + 1}
-        />
-      </View>
+          <View style={styles.startGameButtonViewContainer}>
+            <CustomButton width={"75%"} onPress={gameStartHandler}>
+              <Text style={styles.customButtonText}>Start Game</Text>
+            </CustomButton>
+          </View>
+        </View>
+      ) : (
+        <View>
+          <TextInput
+            keyboardType="numeric"
+            value={pickedNumber.toString()}
+            onChangeText={(e: string) => setPickedNumber(+e)}
+            maxLength={3}
+          />
+
+          <Text>
+            Game number: {gameNumber} / pickedNumber: {pickedNumber}
+          </Text>
+          <Button onPress={gameResetHandler} title="abort game"></Button>
+          <Text>Hints: ...</Text>
+          <Text>{attempts}</Text>
+          <Button title="guess Number" onPress={guessHandler} />
+          <View style={{ height: windowDimensions.height / 2 }}>
+            <FlatList
+              data={givenHints}
+              renderItem={(hint) => {
+                return (
+                  <View>
+                    <HintItem
+                      hintNumber={hint.item.number}
+                      hintDividable={hint.item.dividable}
+                      hintUsed={hint.item.used}
+                    />
+                  </View>
+                );
+              }}
+              keyExtractor={(hint, index) => {
+                // should only be implemented in the state (item) which would be structured as an object with "key" - then this function would not be needed.
+                // Or use "id", for example, and return that in this function.
+                const keyValue = hint.number.toString();
+                return keyValue;
+              }}
+            />
+          </View>
+
+          <View>
+            {additionalHint ? (
+              <Text>
+                {additionalHint.larger
+                  ? "Game Number is higher than the picked Number"
+                  : "Game Number is lower than the picked number"}
+              </Text>
+            ) : (
+              ""
+            )}
+          </View>
+        </View>
+      )}
+
+      <InfoModal visible={infoModalVisible} setter={setInfoModalVisible} />
+      <SuccessModal
+        visible={successModalVisible}
+        setter={setSuccessModalVisible}
+        resetHandler={gameResetHandler}
+        totalScore={gameMode.factor - totalAttempts - hintsAmount * 2 + 1}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  mainContainer: {
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#f2f2f2",
+    marginTop: 50,
   },
-  absolute: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
+
+  sectionViewContainer: {
+    width: "100%",
+    alignItems: "center",
+    marginTop: 50,
   },
 
   customButtonChildrenContainer: {
     justifyContent: "center",
     alignItems: "center",
+    padding: 15,
+  },
+
+  startGameButtonViewContainer: {
+    width: "100%",
+    alignItems: "center",
+    marginTop: 50,
+  },
+
+  gamemodePickerView: {
+    marginBottom: 15,
   },
 
   customButtonText: {
@@ -361,6 +374,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     fontSize: 20,
     fontWeight: "bold",
+  },
+
+  SectionHeading: {
+    fontSize: 35,
+    color: "#2b2024",
+    textAlign: "center",
+    fontFamily: "Rajdhani_400Regular",
+    marginBottom: 10,
   },
 });
 

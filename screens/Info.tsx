@@ -39,7 +39,11 @@ export default function Start(): JSX.Element {
         Bilder-Namen bei createUser_DB eintragen
       </Text>
 
-      <Text>Info-Modal füllen mit Infos & Styling bearbeiten</Text>
+      <Text>
+        Bei Info-Modal ggf. noch anpassen, ob es sich um das Bild nur beim Home
+        Screen handelt oder auch bei anderen Screens (derzeit nur bei Home)
+      </Text>
+
       <View>
         <Text>
           Authenticated: Home-Screen (total points, profile pic wird angezeigt,
