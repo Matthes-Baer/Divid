@@ -18,10 +18,6 @@ export default function Start(): JSX.Element {
         Bild für "None" raussuchen) - webp verwenden.
       </Text>
       <Text>
-        Logik: Bei Game muss noch weitergebaut werden (Sieg-Modal
-        (Database-Eintrag und so) / Info-Modal)
-      </Text>
-      <Text>
         Logik: Home ggf. aufteilen in einzelne Components / generell
         übersichtlicher gestalten
       </Text>
@@ -29,7 +25,10 @@ export default function Start(): JSX.Element {
         Logik: Für Home noch weitere Einträge für UserData, ggf. Settings zum
         Anpassen?
       </Text>
-      <Text>Styling: Home, Game, Scores & Trophies</Text>
+      <Text>Styling: Home</Text>
+      <Text>Styling: Game</Text>
+      <Text>Styling: Scores</Text>
+      <Text>Styling: Trophies</Text>
       <Text>
         Für Game: Bessere Score-Berechnung überlegen (Mit welchem Faktor
         subtrahiert wird / soll der erste Hint, der immer erscheint, auch schon
@@ -40,10 +39,7 @@ export default function Start(): JSX.Element {
         Bilder-Namen bei createUser_DB eintragen
       </Text>
 
-      <Text>
-        Legende/Erklärung als Modal einbauen zum Einblenden / Weitere Notizen in
-        Game_Authenticated.
-      </Text>
+      <Text>Info-Modal füllen mit Infos & Styling bearbeiten</Text>
       <View>
         <Text>
           Authenticated: Home-Screen (total points, profile pic wird angezeigt,
