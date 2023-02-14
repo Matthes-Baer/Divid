@@ -4,7 +4,7 @@ import type { PropsWithChildren } from "react";
 import type { ViewStyle } from "react-native";
 
 type FadeInViewProps = PropsWithChildren<{
-  style: ViewStyle;
+  style?: ViewStyle;
   value: number;
   duration: number;
 }>;

@@ -151,7 +151,7 @@ const Home_Authenticated = ({ navigation }: Props) => {
 
   return (
     <View>
-      <View style={{ opacity: infoModalVisible ? 0.25 : 1 }}>
+      <View>
         <Text style={{ fontFamily: "Rajdhani_400Regular", fontSize: 25 }}>
           Game
         </Text>
@@ -262,6 +262,7 @@ const Home_Authenticated = ({ navigation }: Props) => {
           visible={successModalVisible}
           setter={setSuccessModalVisible}
           resetHandler={gameResetHandler}
+          totalScore={gameMode.factor - totalAttempts - hintsAmount * 2 + 1}
         />
       </View>
     </View>

@@ -18,7 +18,7 @@ type Props = NativeStackScreenProps<Authenticated_Screens_Type, "Trophies">;
 
 //? Database & Auth
 import {
-  readingAllUserData_DB,
+  readAllUserData_DB,
   readSortedScoresArray_DB,
   readSpecificUserData_DB,
   addScore_DB,

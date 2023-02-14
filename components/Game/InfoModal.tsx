@@ -1,15 +1,10 @@
-import React, { useState } from "react";
-import {
-  Alert,
-  Modal,
-  StyleSheet,
-  Text,
-  Pressable,
-  View,
-  StatusBar,
-} from "react-native";
+import { Modal, StyleSheet, Text, View } from "react-native";
+import CustomButton from "../ui/CustomButton";
 
-type PropsType = { visible: boolean; setter: Function };
+type PropsType = {
+  visible: boolean;
+  setter: Function;
+};
 
 const InfoModal: React.FC<PropsType> = (props: {
   visible: boolean;
@@ -17,25 +12,27 @@ const InfoModal: React.FC<PropsType> = (props: {
 }) => {
   return (
     <View style={styles.centeredView}>
-      <StatusBar backgroundColor={"black"} />
       <Modal
         animationType="slide"
         transparent={true}
         visible={props.visible}
         onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
           props.setter(!props.visible);
         }}
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hello World!</Text>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
+            <View style={styles.upperTextView}>
+              <Text style={[styles.textStyle, styles.wonText]}>
+                How to Play
+              </Text>
+            </View>
+            <CustomButton
               onPress={() => props.setter(!props.visible)}
+              width={150}
             >
-              <Text style={styles.textStyle}>Hide Modal</Text>
-            </Pressable>
+              <Text style={styles.buttonText}>Back</Text>
+            </CustomButton>
           </View>
         </View>
       </Modal>
@@ -48,15 +45,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22,
+    backgroundColor: "#a80038",
   },
   modalView: {
     margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
+    backgroundColor: "#f2f2f2",
+    borderRadius: 15,
+    padding: 50,
     alignItems: "center",
-    shadowColor: "#000",
+    shadowColor: "#2b2024",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -65,25 +62,31 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: "#F194FF",
-  },
-  buttonClose: {
-    backgroundColor: "#2196F3",
-  },
-  textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  modalText: {
+
+  upperTextView: {
     marginBottom: 15,
+  },
+
+  buttonText: {
+    color: "#fbf9fa",
+    fontFamily: "Rajdhani_400Regular",
+    fontSize: 25,
+  },
+
+  totalScoreText: {
+    fontSize: 35,
+  },
+
+  textStyle: {
+    color: "#2b2024",
     textAlign: "center",
+    fontFamily: "Rajdhani_400Regular",
+    fontSize: 35,
+    marginBottom: 10,
+  },
+
+  wonText: {
+    fontSize: 50,
   },
 });
 

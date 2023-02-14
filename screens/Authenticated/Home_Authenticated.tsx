@@ -16,7 +16,7 @@ type Props = NativeStackScreenProps<Authenticated_Screens_Type, "Home">;
 
 //? Database & Auth
 import {
-  readingAllUserData_DB,
+  readAllUserData_DB,
   readSortedScoresArray_DB,
   readSpecificUserData_DB,
   addScore_DB,
@@ -57,6 +57,7 @@ const Home_Authenticated = ({ navigation }: Props) => {
   return (
     <View style={styles.container}>
       <Text>Logged in</Text>
+
       <View>
         {!userData ? (
           <ActivityIndicator color="#0000ff" size="large" />
@@ -104,7 +105,7 @@ const Home_Authenticated = ({ navigation }: Props) => {
       />
       <Button
         title="readingAllUserData_DB"
-        onPress={() => readingAllUserData_DB(auth.currentUser.uid)}
+        onPress={() => readAllUserData_DB(auth.currentUser.uid)}
       />
       <Button
         title="updateSingleData_DB - attempts of a specific score (hardcoded)"
