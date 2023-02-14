@@ -25,6 +25,7 @@ import { TextInput } from "react-native-gesture-handler";
 import SuccessModal from "../../components/Game/SuccessModal";
 import { HINTS_STATIC } from "../../data/GameData";
 import { addScore_DB } from "../../utils/database";
+import SlideXAnimation from "../../components/ui/SlideXAnimation";
 type Props = NativeStackScreenProps<Authenticated_Screens_Type, "Game">;
 
 // Easy: 5 - 100
@@ -152,54 +153,121 @@ const Home_Authenticated = ({ navigation }: Props) => {
   return (
     <View>
       <View>
-        <Text style={{ fontFamily: "Rajdhani_400Regular", fontSize: 25 }}>
-          Game
-        </Text>
-        <Text>{auth.currentUser.uid}</Text>
-        <Button
-          title="modal"
+        <CustomButton
+          width={"50%"}
           onPress={() => setInfoModalVisible(!infoModalVisible)}
-        />
+        >
+          <Text>How to Play</Text>
+        </CustomButton>
 
         {!gameActive ? (
           <View>
             <Text>Gamemode:</Text>
-            <CustomButton
-              onPress={() => gameModeSetHandler("easy")}
-              width={"50%"}
+            <SlideXAnimation
+              value={50}
+              duration={1000}
+              active={gameMode.mode === "easy"}
             >
-              <View style={styles.customButtonChildrenContainer}>
-                <Text style={styles.customButtonText}>Easy</Text>
-                <Text style={[styles.customButtonText, { fontSize: 10 }]}>
-                  Game number can be 5 - 100 (including)
-                </Text>
-              </View>
-            </CustomButton>
-            <CustomButton
-              onPress={() => gameModeSetHandler("medium")}
-              width={"50%"}
+              <CustomButton
+                onPress={() => gameModeSetHandler("easy")}
+                width={"50%"}
+              >
+                <View style={styles.customButtonChildrenContainer}>
+                  <Text
+                    style={[
+                      styles.customButtonText,
+                      {
+                        color: gameMode.mode === "easy" ? "#02FFAB" : "#fbf9fa",
+                      },
+                    ]}
+                  >
+                    Easy
+                  </Text>
+                  <Text
+                    style={[
+                      styles.customButtonText,
+                      {
+                        fontSize: 10,
+                        color: gameMode.mode === "easy" ? "#02FFAB" : "#fbf9fa",
+                      },
+                    ]}
+                  >
+                    Game number can be 5 - 100 (including)
+                  </Text>
+                </View>
+              </CustomButton>
+            </SlideXAnimation>
+            <SlideXAnimation
+              value={50}
+              duration={1000}
+              active={gameMode.mode === "medium"}
             >
-              <View style={styles.customButtonChildrenContainer}>
-                <Text style={styles.customButtonText}>Medium</Text>
-                <Text style={[styles.customButtonText, { fontSize: 10 }]}>
-                  Game number can be 5 - 250 (including)
-                </Text>
-              </View>
-            </CustomButton>
-            <CustomButton
-              onPress={() => gameModeSetHandler("hard")}
-              width={"50%"}
+              <CustomButton
+                onPress={() => gameModeSetHandler("medium")}
+                width={"50%"}
+              >
+                <View style={styles.customButtonChildrenContainer}>
+                  <Text
+                    style={[
+                      styles.customButtonText,
+                      {
+                        color:
+                          gameMode.mode === "medium" ? "#02FFAB" : "#fbf9fa",
+                      },
+                    ]}
+                  >
+                    Medium
+                  </Text>
+                  <Text
+                    style={[
+                      styles.customButtonText,
+                      {
+                        fontSize: 10,
+                        color:
+                          gameMode.mode === "medium" ? "#02FFAB" : "#fbf9fa",
+                      },
+                    ]}
+                  >
+                    Game number can be 5 - 250 (including)
+                  </Text>
+                </View>
+              </CustomButton>
+            </SlideXAnimation>
+            <SlideXAnimation
+              value={50}
+              duration={1000}
+              active={gameMode.mode === "hard"}
             >
-              <View style={styles.customButtonChildrenContainer}>
-                <Text style={styles.customButtonText}>Hard</Text>
-                <Text style={[styles.customButtonText, { fontSize: 10 }]}>
-                  Game number can be 5 - 500 (including)
-                </Text>
-              </View>
-            </CustomButton>
-            <Text>
-              {gameMode.mode}: {gameMode.factor}
-            </Text>
+              <CustomButton
+                onPress={() => gameModeSetHandler("hard")}
+                width={"50%"}
+              >
+                <View style={styles.customButtonChildrenContainer}>
+                  <Text
+                    style={[
+                      styles.customButtonText,
+                      {
+                        color: gameMode.mode === "hard" ? "#02FFAB" : "#fbf9fa",
+                      },
+                    ]}
+                  >
+                    Hard
+                  </Text>
+                  <Text
+                    style={[
+                      styles.customButtonText,
+                      {
+                        fontSize: 10,
+                        color: gameMode.mode === "hard" ? "#02FFAB" : "#fbf9fa",
+                      },
+                    ]}
+                  >
+                    Game number can be 5 - 500 (including)
+                  </Text>
+                </View>
+              </CustomButton>
+            </SlideXAnimation>
+
             <Button title="start game" onPress={gameStartHandler} />
             <Text>Game not started yet.</Text>
           </View>

@@ -1,3 +1,4 @@
+import { StatusBar } from "expo-status-bar";
 import { Modal, StyleSheet, Text, View } from "react-native";
 import CustomButton from "../ui/CustomButton";
 
