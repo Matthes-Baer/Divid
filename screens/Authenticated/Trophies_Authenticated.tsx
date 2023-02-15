@@ -31,6 +31,7 @@ import { FlatList } from "react-native-gesture-handler";
 
 //* Needed for dynamic import of images
 import TROPHY_IMAGE_URL from "../../data/TrohpyData";
+import FlatListSingleComponent from "../../components/Trophies/FlatListSingleComponent";
 
 const Trophies_Authenticated = ({ navigation, route }: Props) => {
   const [userData, setUserData] = useState<Array<trophy_DB>>();
@@ -40,38 +41,19 @@ const Trophies_Authenticated = ({ navigation, route }: Props) => {
       navigation.navigate("Start");
     } else {
       readTrophiesData_DB(auth.currentUser.uid, setUserData);
-
-      //   const Image = require(URL);
     }
   }, []);
 
   return (
     <View style={styles.container}>
-      <Text>Trophies</Text>
+      <Text style={styles.mainHeading}>Enable Trophies</Text>
       {!userData ? (
         <ActivityIndicator size={"large"} />
       ) : (
         <FlatList
           data={userData}
           renderItem={(data) => (
-            <View>
-              <Text>{data.item.name}</Text>
-              <View>
-                <Image
-                  style={{
-                    height: 250,
-                    width: 250,
-                    backgroundColor: "transparent",
-                  }}
-                  source={
-                    TROPHY_IMAGE_URL.find(
-                      (e: { image: string; url: NodeRequire }) =>
-                        e.image === data.item.name
-                    ).url
-                  }
-                />
-              </View>
-            </View>
+            <FlatListSingleComponent data={data.item} index={data.index} />
           )}
           keyExtractor={(item) => item.name + Math.random()}
         />
@@ -83,6 +65,15 @@ const Trophies_Authenticated = ({ navigation, route }: Props) => {
 const styles = StyleSheet.create({
   container: {
     height: "100%",
+    alignItems: "center",
+  },
+
+  mainHeading: {
+    fontSize: 45,
+    fontFamily: "Rajdhani_400Regular",
+    color: "#2b2024",
+    marginTop: 35,
+    marginBottom: 25,
   },
 });
 
