@@ -28,9 +28,6 @@ import { addScore_DB } from "../../utils/database";
 import SlideXAnimation from "../../components/ui/SlideXAnimation";
 type Props = NativeStackScreenProps<Authenticated_Screens_Type, "Game">;
 
-// Easy: 5 - 100
-// Medium: 5 - 250
-// Hard: 5 - 500
 const GAMEMODES: Gamemode[] = [
   { mode: "easy", factor: 100 },
   { mode: "medium", factor: 250 },
@@ -152,6 +149,7 @@ const Home_Authenticated = ({ navigation }: Props) => {
 
   return (
     <View style={styles.mainContainer}>
+      <Text style={styles.mainHeading}>Play a Game</Text>
       <CustomButton
         width={"75%"}
         onPress={() => setInfoModalVisible(!infoModalVisible)}
@@ -343,13 +341,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#f2f2f2",
-    marginTop: 50,
   },
 
   sectionViewContainer: {
-    width: "100%",
+    width: "85%",
     alignItems: "center",
     marginTop: 50,
+    backgroundColor: "transparent",
+    padding: 15,
+    elevation: 1,
   },
 
   customButtonChildrenContainer: {
@@ -382,6 +382,14 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: "Rajdhani_400Regular",
     marginBottom: 10,
+  },
+
+  mainHeading: {
+    fontSize: 45,
+    fontFamily: "Rajdhani_400Regular",
+    color: "#2b2024",
+    marginTop: 35,
+    marginBottom: 25,
   },
 });
 

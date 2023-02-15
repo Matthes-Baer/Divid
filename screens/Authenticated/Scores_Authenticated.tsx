@@ -1,11 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  Button,
-  StyleSheet,
-  ActivityIndicator,
-} from "react-native";
+import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 
 //? Navigation
 import type {
@@ -17,15 +11,12 @@ type Props = NativeStackScreenProps<Authenticated_Screens_Type, "Scores">;
 
 //? Database & Auth
 import {
-  readAllUserData_DB,
   readSortedScoresArray_DB,
-  readSpecificUserData_DB,
-  addScore_DB,
-  updateSingleData_DB,
+  readTopTenSortedScoresArray_DB,
 } from "../../utils/database";
-import type { userData_DB } from "../../utils/interfaces-and-types";
 import { auth } from "../../firebaseConfig";
 import { FlatList } from "react-native-gesture-handler";
+import FlatListSingleComponent from "../../components/Scores/FlatListSingleComponent";
 
 const Scores_Authenticated = ({ navigation, route }: Props) => {
   const [scoresArray, setScoresArray] =
@@ -35,25 +26,30 @@ const Scores_Authenticated = ({ navigation, route }: Props) => {
     if (!auth.currentUser) {
       navigation.navigate("Start");
     } else {
-      readSortedScoresArray_DB(auth.currentUser.uid, setScoresArray);
+      readTopTenSortedScoresArray_DB(auth.currentUser.uid, setScoresArray);
     }
   }, []);
 
   return (
     <View style={styles.container}>
-      <Text>Scores</Text>
+      <Text style={styles.mainHeading}>Top 10 Scores</Text>
       {!scoresArray ? (
         <ActivityIndicator size={"large"} />
       ) : scoresArray.length > 0 ? (
         <FlatList
           data={scoresArray}
-          renderItem={(data) => <Text>{data.item.score}</Text>}
+          renderItem={(data) => (
+            <FlatListSingleComponent data={data.item} index={data.index} />
+          )}
           keyExtractor={(item) =>
             item.score.toString() + Math.random() + item.date.total
           }
+          style={styles.flatList}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
         />
       ) : (
-        <Text>Nothing found</Text>
+        <Text>No Scores found yet.</Text>
       )}
     </View>
   );
@@ -62,6 +58,19 @@ const Scores_Authenticated = ({ navigation, route }: Props) => {
 const styles = StyleSheet.create({
   container: {
     height: "100%",
+    alignItems: "center",
+  },
+
+  flatList: {
+    width: "90%",
+  },
+
+  mainHeading: {
+    fontSize: 45,
+    fontFamily: "Rajdhani_400Regular",
+    color: "#2b2024",
+    marginTop: 35,
+    marginBottom: 25,
   },
 });
 

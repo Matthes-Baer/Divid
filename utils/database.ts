@@ -161,7 +161,27 @@ export function readSortedScoresArray_DB(
       result.push(childSnapshot.val());
     });
     callback ? callback(result.reverse()) : null;
-    console.log(result);
+  });
+}
+
+export function readTopTenSortedScoresArray_DB(
+  userId: string,
+  callback?: Function
+): void {
+  //* Multiple Orders don't work at once with the realtime database - for such queries the Firebase Cloud Firestore would be needed.
+  const queryRef = query(
+    ref(db, "users/" + userId + "/Scores"),
+    orderByChild("score")
+  );
+
+  //* Reading Data in realtime
+  onValue(queryRef, (snapshot) => {
+    var result = [];
+
+    snapshot.forEach((childSnapshot) => {
+      result.push(childSnapshot.val());
+    });
+    callback ? callback(result.reverse().splice(0, 10)) : null;
   });
 }
 
