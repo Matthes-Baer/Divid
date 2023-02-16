@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text } from "react-native";
+import { View, Text } from "react-native";
 
 export default function Start(): JSX.Element {
   return (
@@ -44,6 +44,11 @@ export default function Start(): JSX.Element {
         Screen handelt oder auch bei anderen Screens (derzeit nur bei Home)
       </Text>
 
+      <Text>
+        Für Screen Navigation Top Bar bei Authenticated noch anderen Style
+        nutzen? Andere Farbe für diese border bottom bspw.
+      </Text>
+
       <View>
         <Text>
           Authenticated: Home-Screen (total points, profile pic wird angezeigt,
@@ -56,5 +61,3 @@ export default function Start(): JSX.Element {
     </View>
   );
 }
-
-const styles = StyleSheet.create({});
