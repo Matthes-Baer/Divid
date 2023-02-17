@@ -59,11 +59,11 @@ const Authenticated_Navigation = () => {
         tabBarBounces: true,
         tabBarStyle: {
           marginTop: Constants.statusBarHeight,
-          borderBottomColor: "red",
+          backgroundColor: "#2b2024",
         },
-        tabBarActiveTintColor: "#2b2024",
-        tabBarPressColor: "#fd0054",
-        tabBarIndicatorStyle: { borderColor: "red" },
+        tabBarActiveTintColor: "#fd0054",
+        tabBarInactiveTintColor: "#fbf9fa",
+        tabBarPressColor: "#fbf9fa",
       }}
     >
       <Authenticated_TopTabs_Navigator.Screen
@@ -75,10 +75,11 @@ const Authenticated_Navigation = () => {
             <AntDesign
               name="home"
               size={13}
-              color="black"
+              color="white"
               style={{ marginTop: 5, marginRight: 5 }}
             />
           ),
+          tabBarIndicator: () => null,
         }}
       />
       <Authenticated_TopTabs_Navigator.Screen
@@ -90,10 +91,11 @@ const Authenticated_Navigation = () => {
             <Ionicons
               name="game-controller-outline"
               size={13}
-              color="black"
+              color="white"
               style={{ marginTop: 5, marginRight: 5 }}
             />
           ),
+          tabBarIndicator: () => null,
         }}
       />
       <Authenticated_TopTabs_Navigator.Screen
@@ -105,10 +107,11 @@ const Authenticated_Navigation = () => {
             <Entypo
               name="price-ribbon"
               size={13}
-              color="black"
+              color="white"
               style={{ marginTop: 5, marginRight: 5 }}
             />
           ),
+          tabBarIndicator: () => null,
         }}
       />
       <Authenticated_TopTabs_Navigator.Screen
@@ -120,10 +123,11 @@ const Authenticated_Navigation = () => {
             <AntDesign
               name="Trophy"
               size={13}
-              color="black"
+              color="white"
               style={{ marginTop: 5, marginRight: 5 }}
             />
           ),
+          tabBarIndicator: () => null,
         }}
       />
     </Authenticated_TopTabs_Navigator.Navigator>
