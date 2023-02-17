@@ -49,7 +49,7 @@ const Scores_Authenticated = ({ navigation, route }: Props) => {
           showsVerticalScrollIndicator={false}
         />
       ) : (
-        <Text>No Scores found yet.</Text>
+        <Text style={styles.normalTextStyle}>No Scores found yet.</Text>
       )}
     </View>
   );
@@ -71,6 +71,12 @@ const styles = StyleSheet.create({
     color: "#2b2024",
     marginTop: 35,
     marginBottom: 25,
+  },
+
+  normalTextStyle: {
+    fontSize: 20,
+    fontFamily: "Rajdhani_400Regular",
+    color: "#2b2024",
   },
 });
 

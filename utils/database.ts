@@ -15,6 +15,7 @@ import {
   endAt,
   DatabaseReference,
   ThenableReference,
+  runTransaction,
 } from "firebase/database";
 import type { userData_DB, trophy_DB } from "./interfaces-and-types";
 
@@ -117,6 +118,15 @@ export function updateSingleTrophyData_DB(
         update(ref(db), updates);
       }
     });
+  });
+}
+
+export function updateTotalScore_DB(userId: string, inputValue: number): void {
+  const currentValueRef = ref(db, "users/" + userId + "/TotalScore");
+
+  //* runTransaction can be used to update based on the current value of a db reference without array (unlike set or update).
+  runTransaction(currentValueRef, (currentValue) => {
+    return currentValue + inputValue;
   });
 }
 

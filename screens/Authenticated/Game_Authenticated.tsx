@@ -24,7 +24,12 @@ import HintItem from "../../components/Game/HintItem";
 import { ScrollView, TextInput } from "react-native-gesture-handler";
 import SuccessModal from "../../components/Game/SuccessModal";
 import { HINTS_STATIC } from "../../data/GameData";
-import { addScore_DB } from "../../utils/database";
+import {
+  addScore_DB,
+  readSpecificUserData_DB,
+  updateSingleData_DB,
+  updateTotalScore_DB,
+} from "../../utils/database";
 import SlideXAnimation from "../../components/ui/SlideXAnimation";
 type Props = NativeStackScreenProps<Authenticated_Screens_Type, "Game">;
 
@@ -104,10 +109,11 @@ const Home_Authenticated = ({ navigation }: Props) => {
 
     if (gameNumber == pickedNumber) {
       const currentDate: Date = new Date();
+      let score = gameMode.factor - totalAttempts - hintsAmount * 2;
 
       addScore_DB(
         auth.currentUser.uid,
-        Math.max(0, gameMode.factor - totalAttempts - hintsAmount * 2),
+        Math.max(0, score),
         {
           day: currentDate.getDate(),
           month: currentDate.getMonth() + 1,
@@ -120,6 +126,8 @@ const Home_Authenticated = ({ navigation }: Props) => {
         hintsAmount,
         totalAttempts
       );
+
+      updateTotalScore_DB(auth.currentUser.uid, score);
 
       setSuccessModalVisible(true);
       return;
