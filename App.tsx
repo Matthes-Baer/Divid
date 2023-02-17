@@ -32,6 +32,7 @@ const Main = createStackNavigator<RootStackParamList>();
 // https://icons.expo.fyi/
 import { AntDesign } from "@expo/vector-icons";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { Entypo } from "@expo/vector-icons";
 
 //? Colors
 // background: f2f2f2 (etwas gräulich)
@@ -56,24 +57,74 @@ const Authenticated_Navigation = () => {
       screenOptions={{
         animationEnabled: true,
         tabBarBounces: true,
-        tabBarStyle: { marginTop: Constants.statusBarHeight },
+        tabBarStyle: {
+          marginTop: Constants.statusBarHeight,
+          borderBottomColor: "red",
+        },
+        tabBarActiveTintColor: "#2b2024",
+        tabBarPressColor: "#fd0054",
+        tabBarIndicatorStyle: { borderColor: "red" },
       }}
     >
       <Authenticated_TopTabs_Navigator.Screen
         name="Home"
         component={Home_Authenticated}
+        options={{
+          tabBarAccessibilityLabel: "Home Screen",
+          tabBarBadge: () => (
+            <AntDesign
+              name="home"
+              size={13}
+              color="black"
+              style={{ marginTop: 5, marginRight: 5 }}
+            />
+          ),
+        }}
       />
       <Authenticated_TopTabs_Navigator.Screen
         name="Game"
         component={Game_Authenticated}
+        options={{
+          tabBarAccessibilityLabel: "Game Screen",
+          tabBarBadge: () => (
+            <Ionicons
+              name="game-controller-outline"
+              size={13}
+              color="black"
+              style={{ marginTop: 5, marginRight: 5 }}
+            />
+          ),
+        }}
       />
       <Authenticated_TopTabs_Navigator.Screen
         name="Scores"
         component={Scores_Authenticated}
+        options={{
+          tabBarAccessibilityLabel: "Scores Screen",
+          tabBarBadge: () => (
+            <Entypo
+              name="price-ribbon"
+              size={13}
+              color="black"
+              style={{ marginTop: 5, marginRight: 5 }}
+            />
+          ),
+        }}
       />
       <Authenticated_TopTabs_Navigator.Screen
         name="Trophies"
         component={Trophies_Authenticated}
+        options={{
+          tabBarAccessibilityLabel: "Trophies Screen",
+          tabBarBadge: () => (
+            <AntDesign
+              name="Trophy"
+              size={13}
+              color="black"
+              style={{ marginTop: 5, marginRight: 5 }}
+            />
+          ),
+        }}
       />
     </Authenticated_TopTabs_Navigator.Navigator>
   );

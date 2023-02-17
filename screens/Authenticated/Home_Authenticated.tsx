@@ -57,58 +57,71 @@ const Home_Authenticated = ({ navigation }: Props) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.topBarViewContainer}>
-        <Text style={styles.normalTextStyle}>Hello, {userData.username}</Text>
-        <CustomButton onPress={signOutHandler} width={"25%"}>
-          <Text style={styles.customButtonText}>Logout</Text>
-        </CustomButton>
-      </View>
-
-      {!activeTrophyImage && !userData ? (
+      {!userData ? (
         <ActivityIndicator size={"large"} />
       ) : (
-        <View>
-          <Image
-            style={{
-              height: 250,
-              width: 250,
-              backgroundColor: "transparent",
-            }}
-            source={
-              TROPHY_IMAGE_URL.find(
-                (e: { image: string; url: NodeRequire }) =>
-                  e.image ===
-                  (activeTrophyImage ? activeTrophyImage : userData.trophyImage)
-              )?.url || TROPHY_IMAGE_URL[0].url
-            }
-          />
+        <View style={styles.topBarViewContainer}>
+          <Text style={styles.normalTextStyle}>Hello, {userData.username}</Text>
+          <CustomButton onPress={signOutHandler} width={"25%"}>
+            <Text style={styles.customButtonText}>Logout</Text>
+          </CustomButton>
         </View>
       )}
 
-      {!trophiesArray ? (
-        <ActivityIndicator size={"large"} />
-      ) : (
-        <Picker
-          selectedValue={
-            !activeTrophyImage && !userData ? (
-              <ActivityIndicator size={"large"} />
-            ) : activeTrophyImage ? (
-              activeTrophyImage
-            ) : (
-              userData.trophyImage
-            )
-          }
-          onValueChange={activeImageHandler}
-          mode="dropdown" // Android only
-          style={styles.picker}
-        >
-          <Picker.Item label="None" value="None" />
+      <View style={styles.midPartViewContainer}>
+        <Text>
+          Play a game and pick a trophy image in the Trophies section which can
+          be enabled on this home screen.
+        </Text>
 
-          {trophiesArray.map((e: trophy_DB) => (
-            <Picker.Item key={e.name} label={e.name} value={e.name} />
-          ))}
-        </Picker>
-      )}
+        {!activeTrophyImage && !userData ? (
+          <ActivityIndicator size={"large"} />
+        ) : (
+          <View>
+            <Image
+              style={{
+                height: 250,
+                width: 250,
+                backgroundColor: "transparent",
+              }}
+              source={
+                TROPHY_IMAGE_URL.find(
+                  (e: { image: string; url: NodeRequire }) =>
+                    e.image ===
+                    (activeTrophyImage
+                      ? activeTrophyImage
+                      : userData.trophyImage)
+                )?.url || TROPHY_IMAGE_URL[0].url
+              }
+            />
+          </View>
+        )}
+
+        {!trophiesArray ? (
+          <ActivityIndicator size={"large"} />
+        ) : (
+          <Picker
+            selectedValue={
+              !activeTrophyImage && !userData ? (
+                <ActivityIndicator size={"large"} />
+              ) : activeTrophyImage ? (
+                activeTrophyImage
+              ) : (
+                userData.trophyImage
+              )
+            }
+            onValueChange={activeImageHandler}
+            mode="dropdown" // Android only
+            style={styles.picker}
+          >
+            <Picker.Item label="None" value="None" />
+
+            {trophiesArray.map((e: trophy_DB) => (
+              <Picker.Item key={e.name} label={e.name} value={e.name} />
+            ))}
+          </Picker>
+        )}
+      </View>
     </View>
   );
 };
@@ -123,6 +136,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+  },
+
+  midPartViewContainer: {
+    width: "100%",
+    alignItems: "center",
+    marginTop: 25,
   },
 
   picker: {
