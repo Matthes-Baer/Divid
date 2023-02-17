@@ -28,6 +28,7 @@ import type { userData_DB, trophy_DB } from "../../utils/interfaces-and-types";
 import { auth } from "../../firebaseConfig";
 import { Picker } from "@react-native-picker/picker";
 import TROPHY_IMAGE_URL from "../../data/TrohpyData";
+import CustomButton from "../../components/ui/CustomButton";
 
 const Home_Authenticated = ({ navigation }: Props) => {
   const [userData, setUserData] = useState<userData_DB>();
@@ -56,78 +57,34 @@ const Home_Authenticated = ({ navigation }: Props) => {
 
   return (
     <View style={styles.container}>
-      <Text>Logged in</Text>
-
-      <View>
-        {!userData ? (
-          <ActivityIndicator color="#0000ff" size="large" />
-        ) : (
-          <View>
-            <Text style={{ fontFamily: "Rajdhani_400Regular", fontSize: 25 }}>
-              {userData.email}
-            </Text>
-            <Text style={{ fontFamily: "Rajdhani_400Regular", fontSize: 25 }}>
-              {userData.username}
-            </Text>
-            <Text>
-              Email verified?: {auth.currentUser.emailVerified ? "Yes" : "No"}
-            </Text>
-          </View>
-        )}
+      <View style={styles.topBarViewContainer}>
+        <Text style={styles.normalTextStyle}>Hello, {userData.username}</Text>
+        <CustomButton onPress={signOutHandler} width={"25%"}>
+          <Text style={styles.customButtonText}>Logout</Text>
+        </CustomButton>
       </View>
 
-      <Text>{auth.currentUser.uid}</Text>
-      <Text></Text>
-      <Button title="logout" onPress={signOutHandler} />
-      <Button
-        title="addScore_DB"
-        onPress={() =>
-          addScore_DB(
-            auth.currentUser.uid,
-            20500,
-            {
-              day: new Date().getDate(),
-              month: new Date().getMonth(),
-              year: new Date().getFullYear(),
-              total:
-                new Date().getDate() +
-                new Date().getMonth() +
-                new Date().getFullYear(),
-            },
-            3,
-            2
-          )
-        }
-      />
-      <Button
-        title="readSortedScoresArray_DB"
-        onPress={() => readSortedScoresArray_DB(auth.currentUser.uid)}
-      />
-      <Button
-        title="readingAllUserData_DB"
-        onPress={() => readAllUserData_DB(auth.currentUser.uid)}
-      />
-      <Button
-        title="updateSingleData_DB - attempts of a specific score (hardcoded)"
-        onPress={() =>
-          updateSingleData_DB(
-            auth.currentUser.uid,
-            2200,
-            "/Scores" + "/-NNsJoRYEham1_JRihlv" + "/attempts"
-          )
-        }
-      />
-      <Button
-        title="updateSingleTrophyData_DB (FirstPic)"
-        onPress={() =>
-          updateSingleTrophyData_DB(
-            auth.currentUser.uid,
-            "FirstPic",
-            "available",
-            true
-          )
-        }
-      />
+      {!activeTrophyImage && !userData ? (
+        <ActivityIndicator size={"large"} />
+      ) : (
+        <View>
+          <Image
+            style={{
+              height: 250,
+              width: 250,
+              backgroundColor: "transparent",
+            }}
+            source={
+              TROPHY_IMAGE_URL.find(
+                (e: { image: string; url: NodeRequire }) =>
+                  e.image ===
+                  (activeTrophyImage ? activeTrophyImage : userData.trophyImage)
+              )?.url || TROPHY_IMAGE_URL[0].url
+            }
+          />
+        </View>
+      )}
+
       {!trophiesArray ? (
         <ActivityIndicator size={"large"} />
       ) : (
@@ -152,27 +109,6 @@ const Home_Authenticated = ({ navigation }: Props) => {
           ))}
         </Picker>
       )}
-
-      {!activeTrophyImage && !userData ? (
-        <ActivityIndicator size={"large"} />
-      ) : (
-        <View>
-          <Image
-            style={{
-              height: 250,
-              width: 250,
-              backgroundColor: "transparent",
-            }}
-            source={
-              TROPHY_IMAGE_URL.find(
-                (e: { image: string; url: NodeRequire }) =>
-                  e.image ===
-                  (activeTrophyImage ? activeTrophyImage : userData.trophyImage)
-              )?.url || TROPHY_IMAGE_URL[0].url
-            }
-          />
-        </View>
-      )}
     </View>
   );
 };
@@ -182,12 +118,33 @@ const styles = StyleSheet.create({
     height: "100%",
   },
 
+  topBarViewContainer: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+
   picker: {
     marginVertical: 30,
     width: 300,
     padding: 10,
     borderWidth: 1,
     borderColor: "#666",
+  },
+
+  normalTextStyle: {
+    fontSize: 20,
+    fontFamily: "Rajdhani_400Regular",
+    color: "#2b2024",
+  },
+
+  customButtonText: {
+    color: "#fbf9fa",
+    fontFamily: "Rajdhani_400Regular",
+    justifyContent: "center",
+    fontSize: 20,
+    fontWeight: "bold",
   },
 });
 

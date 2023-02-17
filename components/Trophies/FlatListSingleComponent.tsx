@@ -4,10 +4,25 @@ import { auth } from "../../firebaseConfig";
 
 //* Needed for dynamic import of images
 import TROPHY_IMAGE_URL from "../../data/TrohpyData";
-import { updateSingleTrophyData_DB } from "../../utils/database";
+import {
+  updateSingleTrophyData_DB,
+  updateTotalScore_DB,
+} from "../../utils/database";
 import CustomButton from "../ui/CustomButton";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const FlatListSingleComponent = (props: { data: trophy_DB; index: number }) => {
+  const updateDBHandler = () => {
+    updateSingleTrophyData_DB(
+      auth.currentUser.uid,
+      props.data.name,
+      "available",
+      true
+    );
+
+    updateTotalScore_DB(auth.currentUser.uid, -props.data.costs);
+  };
+
   return (
     <View style={[styles.mainViewContainer]}>
       <Text style={styles.normalTextStyle}>{props.data.name}</Text>
@@ -25,21 +40,18 @@ const FlatListSingleComponent = (props: { data: trophy_DB; index: number }) => {
         }
       />
       {!props.data.available ? (
-        <CustomButton
-          onPress={() =>
-            updateSingleTrophyData_DB(
-              auth.currentUser.uid,
-              props.data.name,
-              "available",
-              true
-            )
-          }
-          width={"100%"}
-        >
-          <Text style={styles.customButtonText}>Enable</Text>
+        <CustomButton onPress={updateDBHandler} width={"100%"}>
+          <Text style={styles.customButtonText}>
+            Unlock for{" "}
+            <MaterialCommunityIcons
+              name="currency-krw"
+              size={24}
+              color="black"
+            />
+          </Text>
         </CustomButton>
       ) : (
-        <Text style={styles.normalTextStyle}>Already unlocked</Text>
+        <Text style={styles.normalTextStyle}>Already Unlocked</Text>
       )}
     </View>
   );
@@ -50,7 +62,7 @@ export default FlatListSingleComponent;
 const styles = StyleSheet.create({
   mainViewContainer: {
     elevation: 1,
-    justifyContent: "space-between",
+    alignItems: "center",
     flexDirection: "column",
     width: "100%",
     padding: 35,
@@ -65,6 +77,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: "Rajdhani_400Regular",
     color: "#2b2024",
+    padding: 10,
   },
 
   customButtonText: {
