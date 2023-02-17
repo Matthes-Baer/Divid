@@ -33,6 +33,9 @@ const FlatListSingleComponent = (props: {
       ]}
     >
       <View style={styles.sectionViewContainer}>
+        <Text style={[styles.normalTextStyle]}>{props.index + 1}.</Text>
+      </View>
+      <View style={styles.sectionViewContainer}>
         <Text style={styles.normalTextStyle}>{getDate()}</Text>
       </View>
       <View style={styles.sectionViewContainer}>
