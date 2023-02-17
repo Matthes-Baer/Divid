@@ -9,15 +9,8 @@ import CustomButton from "../ui/CustomButton";
 
 const FlatListSingleComponent = (props: { data: trophy_DB; index: number }) => {
   return (
-    <View
-      style={[
-        styles.mainViewContainer,
-        { backgroundColor: props.index % 2 === 0 ? "#a80038" : "#fd0054" },
-      ]}
-    >
-      <Text>
-        {props.data.name} / {JSON.stringify(props.data.available)}
-      </Text>
+    <View style={[styles.mainViewContainer]}>
+      <Text style={styles.normalTextStyle}>{props.data.name}</Text>
       <Image
         style={{
           height: 250,
@@ -43,9 +36,11 @@ const FlatListSingleComponent = (props: { data: trophy_DB; index: number }) => {
           }
           width={"100%"}
         >
-          <Text>Enable</Text>
+          <Text style={styles.customButtonText}>Enable</Text>
         </CustomButton>
-      ) : null}
+      ) : (
+        <Text style={styles.normalTextStyle}>Already unlocked</Text>
+      )}
     </View>
   );
 };
@@ -54,11 +49,11 @@ export default FlatListSingleComponent;
 
 const styles = StyleSheet.create({
   mainViewContainer: {
-    elevation: 5,
+    elevation: 1,
     justifyContent: "space-between",
     flexDirection: "column",
     width: "100%",
-    padding: 15,
+    padding: 35,
     marginBottom: 25,
   },
 
@@ -69,6 +64,14 @@ const styles = StyleSheet.create({
   normalTextStyle: {
     fontSize: 20,
     fontFamily: "Rajdhani_400Regular",
+    color: "#2b2024",
+  },
+
+  customButtonText: {
     color: "#fbf9fa",
+    fontFamily: "Rajdhani_400Regular",
+    justifyContent: "center",
+    fontSize: 20,
+    fontWeight: "bold",
   },
 });

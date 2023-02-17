@@ -17,14 +17,7 @@ import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 type Props = NativeStackScreenProps<Authenticated_Screens_Type, "Trophies">;
 
 //? Database & Auth
-import {
-  readAllUserData_DB,
-  readSortedScoresArray_DB,
-  readSpecificUserData_DB,
-  addScore_DB,
-  updateSingleData_DB,
-  readTrophiesData_DB,
-} from "../../utils/database";
+import { readTrophiesData_DB } from "../../utils/database";
 import type { userData_DB } from "../../utils/interfaces-and-types";
 import { auth } from "../../firebaseConfig";
 import { FlatList } from "react-native-gesture-handler";
@@ -46,7 +39,13 @@ const Trophies_Authenticated = ({ navigation, route }: Props) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.mainHeading}>Enable Trophies</Text>
+      <View style={styles.mainHeadingViewContainer}>
+        <Text style={styles.mainHeading}>
+          Use your game points to unlock trophy images you can use as your main
+          profile picture.
+        </Text>
+      </View>
+
       {!userData ? (
         <ActivityIndicator size={"large"} />
       ) : (
@@ -56,6 +55,8 @@ const Trophies_Authenticated = ({ navigation, route }: Props) => {
             <FlatListSingleComponent data={data.item} index={data.index} />
           )}
           keyExtractor={(item) => item.name + Math.random()}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
         />
       )}
     </View>
@@ -68,12 +69,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
+  mainHeadingViewContainer: {
+    borderBottomColor: "black",
+    borderBottomWidth: 2,
+    width: "100%",
+    alignItems: "center",
+    padding: 15,
+  },
+
   mainHeading: {
-    fontSize: 45,
+    fontSize: 20,
     fontFamily: "Rajdhani_400Regular",
     color: "#2b2024",
-    marginTop: 35,
-    marginBottom: 25,
   },
 });
 
