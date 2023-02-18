@@ -16,12 +16,8 @@ type Props = NativeStackScreenProps<Authenticated_Screens_Type, "Home">;
 
 //? Database & Auth
 import {
-  readAllUserData_DB,
-  readSortedScoresArray_DB,
   readSpecificUserData_DB,
-  addScore_DB,
   updateSingleData_DB,
-  updateSingleTrophyData_DB,
   readTrophiesData_DB,
 } from "../../utils/database";
 import type { userData_DB, trophy_DB } from "../../utils/interfaces-and-types";
@@ -29,11 +25,15 @@ import { auth } from "../../firebaseConfig";
 import { Picker } from "@react-native-picker/picker";
 import TROPHY_IMAGE_URL from "../../data/TrohpyData";
 import CustomButton from "../../components/ui/CustomButton";
+import FadeAnimation from "../../components/ui/FadeAnimation";
+import PickerModal from "../../components/Home_Authenticated/PickerModal";
 
 const Home_Authenticated = ({ navigation }: Props) => {
   const [userData, setUserData] = useState<userData_DB>();
   const [activeTrophyImage, setActiveTrophyImage] = useState<string>();
   const [trophiesArray, setTrophiesArray] = useState<Array<trophy_DB>>();
+  const [changePictureBoolean, setChangePictureBoolean] =
+    useState<boolean>(false);
 
   const signOutHandler = () => {
     signOut(auth);
@@ -56,7 +56,14 @@ const Home_Authenticated = ({ navigation }: Props) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: changePictureBoolean ? "rgba(0,0,0,0.1)" : "#f2f2f2",
+        },
+      ]}
+    >
       {!userData ? (
         <ActivityIndicator size={"large"} />
       ) : (
@@ -96,31 +103,25 @@ const Home_Authenticated = ({ navigation }: Props) => {
             />
           </View>
         )}
+        {trophiesArray && userData ? (
+          <PickerModal
+            visible={changePictureBoolean}
+            activeTrophyImage={activeTrophyImage}
+            activeImageHandler={activeImageHandler}
+            setter={setChangePictureBoolean}
+            trophiesArray={trophiesArray}
+            userData={userData}
+          />
+        ) : null}
 
-        {!trophiesArray ? (
-          <ActivityIndicator size={"large"} />
-        ) : (
-          <Picker
-            selectedValue={
-              !activeTrophyImage && !userData ? (
-                <ActivityIndicator size={"large"} />
-              ) : activeTrophyImage ? (
-                activeTrophyImage
-              ) : (
-                userData.trophyImage
-              )
-            }
-            onValueChange={activeImageHandler}
-            mode="dropdown" // Android only
-            style={styles.picker}
+        <View style={styles.changePictureMainViewContainer}>
+          <CustomButton
+            width={"75%"}
+            onPress={() => setChangePictureBoolean(true)}
           >
-            <Picker.Item label="None" value="None" />
-
-            {trophiesArray.map((e: trophy_DB) => (
-              <Picker.Item key={e.name} label={e.name} value={e.name} />
-            ))}
-          </Picker>
-        )}
+            <Text style={styles.customButtonText}>Change Picture</Text>
+          </CustomButton>
+        </View>
       </View>
     </View>
   );
@@ -142,6 +143,11 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     marginTop: 25,
+  },
+
+  changePictureMainViewContainer: {
+    width: "100%",
+    alignItems: "center",
   },
 
   picker: {
