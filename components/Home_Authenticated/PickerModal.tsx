@@ -73,7 +73,7 @@ const PickerModal = (props: {
 const styles = StyleSheet.create({
   centeredView: {
     marginBottom: "auto",
-    marginTop: "125%",
+    marginTop: "auto",
     marginLeft: "auto",
     marginRight: "auto",
     width: "90%",

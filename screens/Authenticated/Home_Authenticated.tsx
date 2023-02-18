@@ -7,6 +7,7 @@ import {
   StyleSheet,
   ActivityIndicator,
   Image,
+  Dimensions,
 } from "react-native";
 
 //? Navigation
@@ -65,7 +66,7 @@ const Home_Authenticated = ({ navigation }: Props) => {
       ]}
     >
       {!userData ? (
-        <ActivityIndicator size={"large"} />
+        <ActivityIndicator size={"large"} color={"#2b2024"} />
       ) : (
         <View style={styles.topBarViewContainer}>
           <Text style={styles.normalTextStyle}>Hello, {userData.username}</Text>
@@ -76,19 +77,19 @@ const Home_Authenticated = ({ navigation }: Props) => {
       )}
 
       <View style={styles.midPartViewContainer}>
-        <Text>
+        <Text style={styles.normalTextStyle}>
           Play a game and pick a trophy image in the Trophies section which can
           be enabled on this home screen.
         </Text>
 
         {!activeTrophyImage && !userData ? (
-          <ActivityIndicator size={"large"} />
+          <ActivityIndicator size={"large"} color={"#2b2024"} />
         ) : (
           <View>
             <Image
               style={{
-                height: 250,
-                width: 250,
+                height: Dimensions.get("window").width * 0.95,
+                width: Dimensions.get("window").width,
                 backgroundColor: "transparent",
               }}
               source={

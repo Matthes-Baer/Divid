@@ -140,7 +140,7 @@ const Start_NotAuthenticated = () => {
             loading={loading}
           >
             {loading ? (
-              <ActivityIndicator size={25} color={"#2b2024"} />
+              <ActivityIndicator size={25} color={"#fbf9fa"} />
             ) : (
               <Text style={styles.customButtonText}>Register</Text>
             )}
