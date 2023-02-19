@@ -31,7 +31,7 @@ export default function Start(): JSX.Element {
         Inhalt fehlt noch
       </Text>
       <Text>Styling: Scores</Text>
-      <Text>Styling: Trophies</Text>
+      <Text>Styling: Trophies - Bilder-Größe anpassen wie bei Home Screen</Text>
       <Text>
         Styling: Überall fehlt es noch an Background und ggf. Feinschliff
       </Text>

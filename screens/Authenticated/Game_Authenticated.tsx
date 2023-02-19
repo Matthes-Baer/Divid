@@ -62,6 +62,12 @@ const Home_Authenticated = ({ navigation }: Props) => {
   const [attempts, setAttempts] = useState<number>(3);
   const [totalAttempts, setTotalAttempts] = useState<number>(0);
 
+  useEffect(() => {
+    if (!auth.currentUser) {
+      navigation.navigate("Start");
+    }
+  }, []);
+
   const gameModeSetHandler = (setMode: string) => {
     setGameMode(GAMEMODES.find((e: Gamemode) => e.mode === setMode));
   };
@@ -293,6 +299,8 @@ const Home_Authenticated = ({ navigation }: Props) => {
             onChangeText={(e: string) => setPickedNumber(+e)}
             maxLength={3}
             style={styles.textInput}
+            selectionColor={"#fd0054"}
+            cursorColor={"#fd0054"}
           />
 
           <CustomButton onPress={gameResetHandler} width={"75%"}>
@@ -427,7 +435,6 @@ const styles = StyleSheet.create({
   },
 
   textInput: {
-    width: "25%",
     backgroundColor: "#2b2024",
     fontSize: 75,
     fontFamily: "Rajdhani_400Regular",
