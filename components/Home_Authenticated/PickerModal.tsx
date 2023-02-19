@@ -31,7 +31,10 @@ const PickerModal = (props: {
         <View style={styles.centeredView}>
           <Pressable
             onPress={() => props.setter(false)}
-            style={styles.closePressable}
+            style={({ pressed }) => [
+              { backgroundColor: pressed ? "#fd0054" : "#2b2024" },
+              styles.closePressable,
+            ]}
           >
             <Entypo name="cross" size={30} color="#fbf9fa" />
           </Pressable>
@@ -97,7 +100,6 @@ const styles = StyleSheet.create({
     top: 0,
     right: 0,
     padding: 5,
-    backgroundColor: "#2b2024",
   },
 
   picker: {
