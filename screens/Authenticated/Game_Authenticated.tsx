@@ -156,8 +156,12 @@ const Home_Authenticated = ({ navigation }: Props) => {
   };
 
   return (
-    <View style={styles.mainContainer}>
-      <Text style={styles.mainHeading}>Play a Game</Text>
+    <View style={[styles.mainContainer, { marginTop: gameActive ? 172.5 : 0 }]}>
+      <Text
+        style={[styles.mainHeading, { display: gameActive ? "none" : "flex" }]}
+      >
+        Play a Game
+      </Text>
       <CustomButton
         width={"75%"}
         onPress={() => setInfoModalVisible(!infoModalVisible)}
@@ -281,21 +285,26 @@ const Home_Authenticated = ({ navigation }: Props) => {
           </View>
         </View>
       ) : (
-        <View>
+        <View style={styles.actualGameViewContainer}>
+          <Text style={styles.guessText}>Your Guess:</Text>
           <TextInput
             keyboardType="numeric"
             value={pickedNumber.toString()}
             onChangeText={(e: string) => setPickedNumber(+e)}
             maxLength={3}
+            style={styles.textInput}
           />
 
-          <Text>
-            Game number: {gameNumber} / pickedNumber: {pickedNumber}
-          </Text>
-          <Button onPress={gameResetHandler} title="abort game"></Button>
-          <Text>Hints: ...</Text>
-          <Text>{attempts}</Text>
-          <Button title="guess Number" onPress={guessHandler} />
+          <CustomButton onPress={gameResetHandler} width={"75%"}>
+            <Text style={styles.customButtonText}>Abort Game</Text>
+          </CustomButton>
+          <View style={styles.attemptsViewContainer}>
+            <Text style={styles.attemptsText}>Attempts:{attempts}</Text>
+          </View>
+
+          <CustomButton onPress={guessHandler} width={"75%"}>
+            <Text style={styles.customButtonText}>Guess Number</Text>
+          </CustomButton>
           <View style={{ height: windowDimensions.height / 2 }}>
             <FlatList
               data={givenHints}
@@ -340,6 +349,9 @@ const Home_Authenticated = ({ navigation }: Props) => {
         resetHandler={gameResetHandler}
         totalScore={gameMode.factor - totalAttempts - hintsAmount * 2 + 1}
       />
+      {/* <Text>
+        Game number: {gameNumber} / pickedNumber: {pickedNumber}
+      </Text> */}
     </View>
   );
 };
@@ -372,6 +384,11 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
 
+  actualGameViewContainer: {
+    marginTop: 25,
+    width: "85%",
+  },
+
   gamemodePickerView: {
     marginBottom: 15,
   },
@@ -399,6 +416,34 @@ const styles = StyleSheet.create({
     marginTop: 35,
     marginBottom: 25,
   },
+
+  guessText: {
+    color: "#2b2024",
+    fontFamily: "Rajdhani_400Regular",
+    justifyContent: "center",
+    fontSize: 35,
+    marginLeft: "auto",
+    marginRight: "auto",
+  },
+
+  textInput: {
+    width: "25%",
+    backgroundColor: "#2b2024",
+    fontSize: 75,
+    fontFamily: "Rajdhani_400Regular",
+    color: "#fbf9fa",
+    padding: 25,
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginTop: 10,
+    marginBottom: 10,
+    borderRadius: 5,
+    elevation: 5,
+  },
+
+  attemptsViewContainer: {},
+
+  attemptsText: {},
 });
 
 export default Home_Authenticated;

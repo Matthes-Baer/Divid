@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import type { HintItemProps } from "../../utils/interfaces-and-types";
 
 const HintItem: React.FC<HintItemProps> = (props: {
@@ -7,13 +7,18 @@ const HintItem: React.FC<HintItemProps> = (props: {
   hintUsed: boolean;
 }) => {
   return (
-    <View>
-      <Text>
+    <View style={styles.viewContainer}>
+      <Text style={styles.textContainer}>
         Number to be found is {props.hintDividable ? "" : "not "}dividable by{" "}
         {props.hintNumber}
       </Text>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  viewContainer: {},
+  textContainer: {},
+});
 
 export default HintItem;

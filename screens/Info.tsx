@@ -26,9 +26,15 @@ export default function Start(): JSX.Element {
         Anpassen?
       </Text>
       <Text>Styling: Home</Text>
-      <Text>Styling: Game</Text>
+      <Text>
+        Styling: Game - Actual Game Window - Style-Container bereits erstellt,
+        Inhalt fehlt noch
+      </Text>
       <Text>Styling: Scores</Text>
       <Text>Styling: Trophies</Text>
+      <Text>
+        Styling: Überall fehlt es noch an Background und ggf. Feinschliff
+      </Text>
       <Text>
         Für Game: Bessere Score-Berechnung überlegen (Mit welchem Faktor
         subtrahiert wird / soll der erste Hint, der immer erscheint, auch schon
