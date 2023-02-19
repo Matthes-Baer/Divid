@@ -69,7 +69,7 @@ const Home_Authenticated = ({ navigation }: Props) => {
         <ActivityIndicator size={"large"} color={"#2b2024"} />
       ) : (
         <View style={styles.topBarViewContainer}>
-          <Text style={styles.normalTextStyle}>Hello, {userData.username}</Text>
+          <Text style={styles.userNameText}>Hello, {userData.username}</Text>
           <CustomButton onPress={signOutHandler} width={"25%"}>
             <Text style={styles.customButtonText}>Logout</Text>
           </CustomButton>
@@ -89,8 +89,9 @@ const Home_Authenticated = ({ navigation }: Props) => {
             <Image
               style={{
                 height: Dimensions.get("window").width * 0.95,
-                width: Dimensions.get("window").width,
+                width: Dimensions.get("window").width * 0.95,
                 backgroundColor: "transparent",
+                borderRadius: 5,
               }}
               source={
                 TROPHY_IMAGE_URL.find(
@@ -138,6 +139,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    marginTop: 15,
+    padding: 7.5,
   },
 
   midPartViewContainer: {
@@ -149,6 +152,7 @@ const styles = StyleSheet.create({
   changePictureMainViewContainer: {
     width: "100%",
     alignItems: "center",
+    marginTop: 15,
   },
 
   picker: {
@@ -160,7 +164,16 @@ const styles = StyleSheet.create({
   },
 
   normalTextStyle: {
-    fontSize: 20,
+    fontSize: 25,
+    fontFamily: "Rajdhani_400Regular",
+    color: "#2b2024",
+    paddingLeft: 15,
+    paddingRight: 15,
+    textAlign: "justify",
+  },
+
+  userNameText: {
+    fontSize: 30,
     fontFamily: "Rajdhani_400Regular",
     color: "#2b2024",
   },

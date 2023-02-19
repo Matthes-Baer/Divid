@@ -34,5 +34,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     elevation: 3.5,
     height: 50,
+    borderBottomColor: "#2b2024",
+    borderBottomWidth: 1,
+    borderTopColor: "#2b2024",
+    borderTopWidth: 1,
+    borderRightColor: "#2b2024",
+    borderRightWidth: 1,
+    borderLeftColor: "#2b2024",
+    borderLeftWidth: 1,
   },
 });
