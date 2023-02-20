@@ -8,6 +8,7 @@ import {
   FlatList,
   useWindowDimensions,
   Dimensions,
+  Image,
 } from "react-native";
 import { auth } from "../../firebaseConfig";
 
@@ -33,6 +34,8 @@ import {
 } from "../../utils/database";
 import SlideXAnimation from "../../components/ui/SlideXAnimation";
 import FadeAnimation from "../../components/ui/FadeAnimation";
+import Constants from "expo-constants";
+
 type Props = NativeStackScreenProps<Authenticated_Screens_Type, "Game">;
 
 const GAMEMODES: Gamemode[] = [
@@ -164,14 +167,31 @@ const Home_Authenticated = ({ navigation }: Props) => {
   };
 
   return (
-    <View style={[styles.mainContainer, { marginTop: gameActive ? 50 : 0 }]}>
+    <View style={[styles.mainContainer]}>
+      <Image
+        source={require("../../assets/backgroundImages/abstract-background-2.png")}
+        style={{
+          width: Dimensions.get("window").width,
+          height: 300,
+          zIndex: -9000,
+          opacity: 0.3,
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+        }}
+      />
       <Text
         style={[styles.mainHeading, { display: gameActive ? "none" : "flex" }]}
       >
         Play a Game
       </Text>
 
-      <View style={styles.howToPlayViewContainer}>
+      <View
+        style={[
+          styles.howToPlayViewContainer,
+          { marginTop: gameActive ? 15 : 0 },
+        ]}
+      >
         <CustomButton
           width={"75%"}
           onPress={() => setInfoModalVisible(!infoModalVisible)}
@@ -346,9 +366,6 @@ const Home_Authenticated = ({ navigation }: Props) => {
         resetHandler={gameResetHandler}
         totalScore={gameMode.factor - totalAttempts - hintsAmount * 2 + 1}
       />
-      {/* <Text>
-        Game number: {gameNumber} / pickedNumber: {pickedNumber}
-      </Text> */}
     </View>
   );
 };
@@ -358,6 +375,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#f2f2f2",
+    height: "100%",
   },
 
   sectionViewContainer: {

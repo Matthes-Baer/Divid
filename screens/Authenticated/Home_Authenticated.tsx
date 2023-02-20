@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
   Image,
   Dimensions,
+  StatusBar,
 } from "react-native";
 
 //? Navigation
@@ -28,6 +29,8 @@ import TROPHY_IMAGE_URL from "../../data/TrohpyData";
 import CustomButton from "../../components/ui/CustomButton";
 import FadeAnimation from "../../components/ui/FadeAnimation";
 import PickerModal from "../../components/Home_Authenticated/PickerModal";
+
+import Constants from "expo-constants";
 
 const Home_Authenticated = ({ navigation }: Props) => {
   const [userData, setUserData] = useState<userData_DB>();
@@ -125,6 +128,18 @@ const Home_Authenticated = ({ navigation }: Props) => {
           </CustomButton>
         </View>
       </View>
+      <Image
+        source={require("../../assets/backgroundImages/abstract-background-1.png")}
+        style={{
+          width: Dimensions.get("window").width,
+          height: Dimensions.get("window").height,
+          zIndex: -9000,
+          opacity: 0.15,
+          position: "absolute",
+          top: Constants.statusBarHeight,
+          left: 0,
+        }}
+      />
     </View>
   );
 };

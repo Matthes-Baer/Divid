@@ -25,13 +25,7 @@ export default function Start(): JSX.Element {
         Logik: Für Home noch weitere Einträge für UserData, ggf. Settings zum
         Anpassen?
       </Text>
-      <Text>Styling: Home</Text>
-      <Text>
-        Styling: Game - Actual Game Window - Style-Container bereits erstellt,
-        Inhalt fehlt noch
-      </Text>
-      <Text>Styling: Scores</Text>
-      <Text>Styling: Trophies - Bilder-Größe anpassen wie bei Home Screen</Text>
+
       <Text>
         Styling: Überall fehlt es noch an Background und ggf. Feinschliff
       </Text>
