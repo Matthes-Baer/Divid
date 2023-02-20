@@ -42,7 +42,7 @@ const Scores_Authenticated = ({ navigation, route }: Props) => {
   return (
     <View style={styles.container}>
       <Image
-        source={require("../../assets/backgroundImages/abstract-background-3.png")}
+        source={require("../../assets/backgroundImages/abstract-background-3.webp")}
         style={{
           width: Dimensions.get("window").width,
           height: Dimensions.get("window").height - Constants.statusBarHeight,

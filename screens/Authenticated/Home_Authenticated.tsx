@@ -129,7 +129,7 @@ const Home_Authenticated = ({ navigation }: Props) => {
         </View>
       </View>
       <Image
-        source={require("../../assets/backgroundImages/abstract-background-1.png")}
+        source={require("../../assets/backgroundImages/abstract-background-1.webp")}
         style={{
           width: Dimensions.get("window").width,
           height: Dimensions.get("window").height,

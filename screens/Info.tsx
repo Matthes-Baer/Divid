@@ -17,10 +17,7 @@ export default function Start(): JSX.Element {
         Logo erstellen mit Midjourney / Trophies erstellen mit Midjourney (Auch
         Bild für "None" raussuchen) - webp verwenden.
       </Text>
-      <Text>
-        Logik: Home ggf. aufteilen in einzelne Components / generell
-        übersichtlicher gestalten
-      </Text>
+
       <Text>
         Logik: Für Home noch weitere Einträge für UserData, ggf. Settings zum
         Anpassen?
@@ -34,6 +31,7 @@ export default function Start(): JSX.Element {
         subtrahiert wird / soll der erste Hint, der immer erscheint, auch schon
         subtrahiert werden vom totalScore?)
       </Text>
+      <Text>Für Trophies: Richtige Preise überlegen</Text>
       <Text>
         Für Trophies: Bilder-Namen und Paths bei TropyData.ts eintragen /
         Bilder-Namen bei createUser_DB eintragen
