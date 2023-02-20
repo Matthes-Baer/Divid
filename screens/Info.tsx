@@ -24,7 +24,17 @@ export default function Start(): JSX.Element {
       </Text>
 
       <Text>
+        Game: How to play Modal Information Korrektur lesen (noch erwähnen,
+        welche Punkte es bei easy, medium & hard geben kann?)
+      </Text>
+
+      <Text>
         Styling: Überall fehlt es noch an Background und ggf. Feinschliff
+      </Text>
+
+      <Text>
+        Anfangs-Ladescreen-Bild anpassen (splash image, background color, ...)
+        in app.json
       </Text>
       <Text>
         Für Game: Bessere Score-Berechnung überlegen (Mit welchem Faktor

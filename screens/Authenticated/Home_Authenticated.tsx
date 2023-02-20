@@ -88,10 +88,10 @@ const Home_Authenticated = ({ navigation }: Props) => {
         {!activeTrophyImage && !userData ? (
           <ActivityIndicator size={"large"} color={"#2b2024"} />
         ) : (
-          <View>
+          <View style={{ marginTop: 10 }}>
             <Image
               style={{
-                height: Dimensions.get("window").width * 0.95,
+                height: Dimensions.get("window").width * 0.85,
                 width: Dimensions.get("window").width * 0.95,
                 backgroundColor: "transparent",
                 borderRadius: 5,
