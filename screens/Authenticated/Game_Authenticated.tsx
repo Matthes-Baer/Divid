@@ -7,6 +7,7 @@ import {
   StyleSheet,
   FlatList,
   useWindowDimensions,
+  Dimensions,
 } from "react-native";
 import { auth } from "../../firebaseConfig";
 
@@ -31,6 +32,7 @@ import {
   updateTotalScore_DB,
 } from "../../utils/database";
 import SlideXAnimation from "../../components/ui/SlideXAnimation";
+import FadeAnimation from "../../components/ui/FadeAnimation";
 type Props = NativeStackScreenProps<Authenticated_Screens_Type, "Game">;
 
 const GAMEMODES: Gamemode[] = [
@@ -162,18 +164,21 @@ const Home_Authenticated = ({ navigation }: Props) => {
   };
 
   return (
-    <View style={[styles.mainContainer, { marginTop: gameActive ? 172.5 : 0 }]}>
+    <View style={[styles.mainContainer, { marginTop: gameActive ? 50 : 0 }]}>
       <Text
         style={[styles.mainHeading, { display: gameActive ? "none" : "flex" }]}
       >
         Play a Game
       </Text>
-      <CustomButton
-        width={"75%"}
-        onPress={() => setInfoModalVisible(!infoModalVisible)}
-      >
-        <Text style={styles.customButtonText}>How to Play</Text>
-      </CustomButton>
+
+      <View style={styles.howToPlayViewContainer}>
+        <CustomButton
+          width={"75%"}
+          onPress={() => setInfoModalVisible(!infoModalVisible)}
+        >
+          <Text style={styles.customButtonText}>How to Play</Text>
+        </CustomButton>
+      </View>
 
       {!gameActive ? (
         <View style={styles.sectionViewContainer}>
@@ -189,22 +194,12 @@ const Home_Authenticated = ({ navigation }: Props) => {
               width={"75%"}
             >
               <View style={styles.customButtonChildrenContainer}>
-                <Text
-                  style={[
-                    styles.customButtonText,
-                    {
-                      color: gameMode.mode === "easy" ? "#2b2024" : "#fbf9fa",
-                    },
-                  ]}
-                >
-                  Easy
-                </Text>
+                <Text style={styles.customButtonText}>Easy</Text>
                 <Text
                   style={[
                     styles.customButtonText,
                     {
                       fontSize: 10,
-                      color: gameMode.mode === "easy" ? "#2b2024" : "#fbf9fa",
                     },
                   ]}
                 >
@@ -224,22 +219,12 @@ const Home_Authenticated = ({ navigation }: Props) => {
               width={"75%"}
             >
               <View style={styles.customButtonChildrenContainer}>
-                <Text
-                  style={[
-                    styles.customButtonText,
-                    {
-                      color: gameMode.mode === "medium" ? "#2b2024" : "#fbf9fa",
-                    },
-                  ]}
-                >
-                  Medium
-                </Text>
+                <Text style={styles.customButtonText}>Medium</Text>
                 <Text
                   style={[
                     styles.customButtonText,
                     {
                       fontSize: 10,
-                      color: gameMode.mode === "medium" ? "#2b2024" : "#fbf9fa",
                     },
                   ]}
                 >
@@ -259,22 +244,12 @@ const Home_Authenticated = ({ navigation }: Props) => {
               width={"75%"}
             >
               <View style={styles.customButtonChildrenContainer}>
-                <Text
-                  style={[
-                    styles.customButtonText,
-                    {
-                      color: gameMode.mode === "hard" ? "#2b2024" : "#fbf9fa",
-                    },
-                  ]}
-                >
-                  Hard
-                </Text>
+                <Text style={styles.customButtonText}>Hard</Text>
                 <Text
                   style={[
                     styles.customButtonText,
                     {
                       fontSize: 10,
-                      color: gameMode.mode === "hard" ? "#2b2024" : "#fbf9fa",
                     },
                   ]}
                 >
@@ -303,18 +278,39 @@ const Home_Authenticated = ({ navigation }: Props) => {
             cursorColor={"#fd0054"}
           />
 
-          <CustomButton onPress={gameResetHandler} width={"75%"}>
-            <Text style={styles.customButtonText}>Abort Game</Text>
-          </CustomButton>
-          <View style={styles.attemptsViewContainer}>
-            <Text style={styles.attemptsText}>Attempts:{attempts}</Text>
+          <View style={styles.attemptsAndAdditionalHintViewContainer}>
+            <Text style={styles.attemptsContainerText}>
+              Next hint in {attempts} attempt/s
+            </Text>
+            {additionalHint ? (
+              <FadeAnimation value={1} duration={1000}>
+                <Text style={[styles.attemptsContainerText, { fontSize: 15 }]}>
+                  {additionalHint.larger
+                    ? "Game number is higher than the picked number."
+                    : "Game number is lower than the picked number."}
+                </Text>
+              </FadeAnimation>
+            ) : null}
           </View>
 
-          <CustomButton onPress={guessHandler} width={"75%"}>
-            <Text style={styles.customButtonText}>Guess Number</Text>
-          </CustomButton>
-          <View style={{ height: windowDimensions.height / 2 }}>
+          <View style={styles.guessNumberViewContainer}>
+            <CustomButton onPress={guessHandler} width={"75%"}>
+              <Text style={styles.customButtonText}>Guess Number</Text>
+            </CustomButton>
+          </View>
+
+          <View
+            style={{
+              height: Dimensions.get("window").height * 0.2,
+              width: Dimensions.get("window").width * 0.9,
+              borderBottomColor: "#2b2024",
+              borderBottomWidth: 1,
+              borderTopColor: "#2b2024",
+              borderTopWidth: 1,
+            }}
+          >
             <FlatList
+              showsVerticalScrollIndicator={false}
               data={givenHints}
               renderItem={(hint) => {
                 return (
@@ -335,17 +331,10 @@ const Home_Authenticated = ({ navigation }: Props) => {
               }}
             />
           </View>
-
-          <View>
-            {additionalHint ? (
-              <Text>
-                {additionalHint.larger
-                  ? "Game Number is higher than the picked Number"
-                  : "Game Number is lower than the picked number"}
-              </Text>
-            ) : (
-              ""
-            )}
+          <View style={styles.abortGameViewContainer}>
+            <CustomButton onPress={gameResetHandler} width={"75%"}>
+              <Text style={styles.customButtonText}>Abort Game</Text>
+            </CustomButton>
           </View>
         </View>
       )}
@@ -372,18 +361,28 @@ const styles = StyleSheet.create({
   },
 
   sectionViewContainer: {
-    width: "85%",
+    width: "100%",
     alignItems: "center",
     marginTop: 50,
     backgroundColor: "transparent",
     padding: 15,
-    elevation: 1,
   },
 
   customButtonChildrenContainer: {
     justifyContent: "center",
     alignItems: "center",
     padding: 15,
+  },
+
+  abortGameViewContainer: {
+    marginTop: 25,
+    width: "100%",
+    alignItems: "center",
+  },
+
+  howToPlayViewContainer: {
+    width: "100%",
+    alignItems: "center",
   },
 
   startGameButtonViewContainer: {
@@ -395,6 +394,7 @@ const styles = StyleSheet.create({
   actualGameViewContainer: {
     marginTop: 25,
     width: "85%",
+    alignItems: "center",
   },
 
   gamemodePickerView: {
@@ -434,6 +434,11 @@ const styles = StyleSheet.create({
     marginRight: "auto",
   },
 
+  guessNumberViewContainer: {
+    width: "100%",
+    alignItems: "center",
+    marginBottom: 25,
+  },
   textInput: {
     backgroundColor: "#2b2024",
     fontSize: 75,
@@ -445,12 +450,20 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
     borderRadius: 5,
-    elevation: 5,
+    elevation: 2.5,
   },
 
-  attemptsViewContainer: {},
+  attemptsAndAdditionalHintViewContainer: {
+    padding: 15,
+    alignItems: "center",
+    height: 70,
+  },
 
-  attemptsText: {},
+  attemptsContainerText: {
+    fontSize: 20,
+    fontFamily: "Rajdhani_400Regular",
+    color: "#2b2024",
+  },
 });
 
 export default Home_Authenticated;

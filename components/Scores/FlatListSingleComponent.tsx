@@ -21,10 +21,6 @@ const FlatListSingleComponent = (props: {
     return dateResult;
   };
 
-  useEffect(() => {
-    // console.log(props.index);
-  });
-
   return (
     <View
       style={[
@@ -50,7 +46,7 @@ export default FlatListSingleComponent;
 
 const styles = StyleSheet.create({
   mainViewContainer: {
-    elevation: 5,
+    elevation: 2.5,
     justifyContent: "space-between",
     flexDirection: "row",
     width: "100%",

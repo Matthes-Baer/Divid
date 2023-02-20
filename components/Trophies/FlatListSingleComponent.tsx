@@ -1,5 +1,12 @@
 import type { trophy_DB } from "../../utils/interfaces-and-types";
-import { View, Text, StyleSheet, Image, Button } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Button,
+  Dimensions,
+} from "react-native";
 import { auth } from "../../firebaseConfig";
 
 //* Needed for dynamic import of images
@@ -25,12 +32,14 @@ const FlatListSingleComponent = (props: { data: trophy_DB; index: number }) => {
 
   return (
     <View style={[styles.mainViewContainer]}>
-      <Text style={styles.normalTextStyle}>{props.data.name}</Text>
+      <Text style={styles.titleText}>{props.data.name}</Text>
       <Image
         style={{
-          height: 250,
-          width: 250,
+          height: Dimensions.get("window").width * 0.95,
+          width: Dimensions.get("window").width * 0.95,
           backgroundColor: "transparent",
+          borderRadius: 5,
+          marginBottom: 15,
         }}
         source={
           TROPHY_IMAGE_URL.find(
@@ -42,11 +51,11 @@ const FlatListSingleComponent = (props: { data: trophy_DB; index: number }) => {
       {!props.data.available ? (
         <CustomButton onPress={updateDBHandler} width={"100%"}>
           <Text style={styles.customButtonText}>
-            Unlock for{" "}
+            Unlock for {props.data.costs}{" "}
             <MaterialCommunityIcons
               name="currency-krw"
-              size={24}
-              color="black"
+              size={20}
+              color="#fbf9fa"
             />
           </Text>
         </CustomButton>
@@ -61,12 +70,11 @@ export default FlatListSingleComponent;
 
 const styles = StyleSheet.create({
   mainViewContainer: {
-    elevation: 1,
     alignItems: "center",
     flexDirection: "column",
     width: "100%",
-    padding: 35,
     marginBottom: 25,
+    marginTop: 15,
   },
 
   sectionViewContainer: {
@@ -75,6 +83,13 @@ const styles = StyleSheet.create({
 
   normalTextStyle: {
     fontSize: 20,
+    fontFamily: "Rajdhani_400Regular",
+    color: "#2b2024",
+    padding: 10,
+  },
+
+  titleText: {
+    fontSize: 30,
     fontFamily: "Rajdhani_400Regular",
     color: "#2b2024",
     padding: 10,

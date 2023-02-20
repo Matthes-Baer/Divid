@@ -11,7 +11,7 @@ type FadeInViewProps = PropsWithChildren<{
 
 const FadeAnimation: React.FC<FadeInViewProps> = (props: {
   children: ReactNode;
-  style: ViewStyle;
+  style?: ViewStyle;
   value: number;
   duration: number;
 }) => {
