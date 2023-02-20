@@ -1,5 +1,14 @@
 import { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ActivityIndicator,
+  Image,
+  Dimensions,
+} from "react-native";
+
+import Constants from "expo-constants";
 
 //? Navigation
 import type {
@@ -32,6 +41,18 @@ const Scores_Authenticated = ({ navigation, route }: Props) => {
 
   return (
     <View style={styles.container}>
+      <Image
+        source={require("../../assets/backgroundImages/abstract-background-3.png")}
+        style={{
+          width: Dimensions.get("window").width,
+          height: Dimensions.get("window").height - Constants.statusBarHeight,
+          zIndex: -9000,
+          opacity: 1,
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+        }}
+      />
       <Text style={styles.mainHeading}>Top 10 Scores</Text>
       {!scoresArray ? (
         <ActivityIndicator size={"large"} />
