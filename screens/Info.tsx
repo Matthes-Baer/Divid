@@ -41,7 +41,10 @@ export default function Start(): JSX.Element {
         subtrahiert wird / soll der erste Hint, der immer erscheint, auch schon
         subtrahiert werden vom totalScore?)
       </Text>
-      <Text>Für Trophies: Richtige Preise überlegen</Text>
+      <Text>
+        Für Trophies: Richtige Preise überlegen - abstimmen mit Punkten, die man
+        gewinnt.
+      </Text>
       <Text>
         Für Trophies: Bilder-Namen und Paths bei TropyData.ts eintragen /
         Bilder-Namen bei createUser_DB eintragen
