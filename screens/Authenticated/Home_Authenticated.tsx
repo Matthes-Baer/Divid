@@ -50,7 +50,7 @@ const Home_Authenticated = ({ navigation }: Props) => {
       navigation.navigate("Start");
     } else {
       readSpecificUserData_DB(auth.currentUser.uid, setUserData);
-      readTrophiesData_DB(auth.currentUser.uid, setTrophiesArray, true);
+      readTrophiesData_DB(auth.currentUser.uid, setTrophiesArray, true, true);
     }
   }, []);
 

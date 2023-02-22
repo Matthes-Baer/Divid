@@ -16,6 +16,7 @@ import {
   DatabaseReference,
   ThenableReference,
   runTransaction,
+  Query,
 } from "firebase/database";
 import type { userData_DB, trophy_DB } from "./interfaces-and-types";
 
@@ -39,13 +40,73 @@ export function createUser_DB(
 
   const tropyArray: Array<trophy_DB> = [
     {
-      name: "FirstPic" as string,
+      name: "Apocalyptic Scene" as string,
       costs: 50 as number,
       available: false as boolean,
     },
     {
-      name: "SecondPic" as string,
+      name: "Asian City" as string,
       costs: 75 as number,
+      available: false as boolean,
+    },
+    {
+      name: "City Street" as string,
+      costs: 125 as number,
+      available: false as boolean,
+    },
+    {
+      name: "Winter Alley" as string,
+      costs: 150 as number,
+      available: false as boolean,
+    },
+    {
+      name: "Black Hole" as string,
+      costs: 250 as number,
+      available: false as boolean,
+    },
+    {
+      name: "Castle In The Distance" as string,
+      costs: 500 as number,
+      available: false as boolean,
+    },
+    {
+      name: "Futuristic City" as string,
+      costs: 1000 as number,
+      available: false as boolean,
+    },
+    {
+      name: "City After Dark" as string,
+      costs: 1500 as number,
+      available: false as boolean,
+    },
+    {
+      name: "Castle On The Mountain" as string,
+      costs: 2000 as number,
+      available: false as boolean,
+    },
+    {
+      name: "Biopunk House" as string,
+      costs: 2500 as number,
+      available: false as boolean,
+    },
+    {
+      name: "Inside" as string,
+      costs: 3000 as number,
+      available: false as boolean,
+    },
+    {
+      name: "Warhammer 40k Space Marines" as string,
+      costs: 3500 as number,
+      available: false as boolean,
+    },
+    {
+      name: "Fantasy Villa" as string,
+      costs: 4000 as number,
+      available: false as boolean,
+    },
+    {
+      name: "Warhammer 40k Space Ships" as string,
+      costs: 4500 as number,
       available: false as boolean,
     },
   ];
@@ -56,8 +117,20 @@ export function createUser_DB(
   );
   //* "update" for adding multiple entries at once.
   update(trophiesRef, {
-    FirstPic: tropyArray[0],
-    SecondPic: tropyArray[1],
+    ApocalypticScene: tropyArray[0],
+    AsianCity: tropyArray[1],
+    CityStreet: tropyArray[2],
+    WinterAlley: tropyArray[3],
+    BlackHole: tropyArray[4],
+    CastleInTheDistance: tropyArray[5],
+    FuturisticCity: tropyArray[6],
+    CityAfterDark: tropyArray[7],
+    CastleOnTheMountain: tropyArray[8],
+    BiopunkHouse: tropyArray[9],
+    Inside: tropyArray[10],
+    Warhammer40kSpaceMarines: tropyArray[11],
+    FantasyVilla: tropyArray[12],
+    Warhammer40kSpaceShips: tropyArray[13],
   });
 }
 
@@ -209,10 +282,17 @@ export function readAllUserData_DB(userId: string, callback?: Function): void {
 export function readTrophiesData_DB(
   userId: string,
   callback?: Function,
+  sorted?: boolean,
   available?: boolean
 ): void {
-  const refUser: DatabaseReference = ref(db, "users/" + userId + "/Trophies");
+  //* Multiple Orders don't work at once with the realtime database - for such queries the Firebase Cloud Firestore would be needed.
+  let refUser: Query | DatabaseReference;
+  refUser = sorted
+    ? query(ref(db, "users/" + userId + "/Trophies"), orderByChild("costs"))
+    : ref(db, "users/" + userId + "/Trophies");
 
+  // const refUser: DatabaseReference = ref(db, "users/" + userId + "/Trophies");
+  //* Reading Data in realtime
   onValue(refUser, (snapshot) => {
     let result: trophy_DB[] = [];
 

@@ -45,6 +45,7 @@ export default function Start(): JSX.Element {
         Für Trophies: Richtige Preise überlegen - abstimmen mit Punkten, die man
         gewinnt.
       </Text>
+      <Text>Trophies: Alert für "no sufficient funds" richtig anpassen.</Text>
       <Text>
         Für Trophies: Bilder-Namen und Paths bei TropyData.ts eintragen /
         Bilder-Namen bei createUser_DB eintragen

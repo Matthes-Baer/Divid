@@ -26,19 +26,18 @@ import { auth } from "../../firebaseConfig";
 import { FlatList } from "react-native-gesture-handler";
 
 //* Needed for dynamic import of images
-import TROPHY_IMAGE_URL from "../../data/TrohpyData";
 import FlatListSingleComponent from "../../components/Trophies/FlatListSingleComponent";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const Trophies_Authenticated = ({ navigation, route }: Props) => {
-  const [tropyData, setTrophyData] = useState<Array<trophy_DB>>();
+  const [trophyData, setTrophyData] = useState<Array<trophy_DB>>();
   const [userData, setUserData] = useState<userData_DB>();
 
   useEffect(() => {
     if (!auth.currentUser) {
       navigation.navigate("Start");
     } else {
-      readTrophiesData_DB(auth.currentUser.uid, setTrophyData);
+      readTrophiesData_DB(auth.currentUser.uid, setTrophyData, true);
       readSpecificUserData_DB(auth.currentUser.uid, setUserData);
     }
   }, []);
@@ -51,7 +50,7 @@ const Trophies_Authenticated = ({ navigation, route }: Props) => {
           profile picture.
         </Text>
         {!userData ? (
-          <ActivityIndicator size={"small"} />
+          <ActivityIndicator size={"large"} color={"#2b2024"} />
         ) : (
           <View style={styles.currencyViewContainer}>
             <Text style={styles.currencyText}>{userData.TotalScore}</Text>
@@ -65,13 +64,17 @@ const Trophies_Authenticated = ({ navigation, route }: Props) => {
         )}
       </View>
 
-      {!tropyData ? (
+      {!trophyData ? (
         <ActivityIndicator size={"large"} />
       ) : (
         <FlatList
-          data={tropyData}
+          data={trophyData}
           renderItem={(data) => (
-            <FlatListSingleComponent data={data.item} index={data.index} />
+            <FlatListSingleComponent
+              data={data.item}
+              index={data.index}
+              totalScore={userData.TotalScore}
+            />
           )}
           keyExtractor={(item) => item.name + Math.random()}
           showsHorizontalScrollIndicator={false}
