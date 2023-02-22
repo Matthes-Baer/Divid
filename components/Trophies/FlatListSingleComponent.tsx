@@ -1,40 +1,38 @@
-import type { trophy_DB, userData_DB } from "../../utils/interfaces-and-types";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  Button,
-  Dimensions,
-  Alert,
-} from "react-native";
+import type { trophy_DB } from "../../utils/interfaces-and-types";
+import { View, Text, StyleSheet, Image, Dimensions, Alert } from "react-native";
 import { auth } from "../../firebaseConfig";
 
 //* Needed for dynamic import of images
 import TROPHY_IMAGE_URL from "../../data/TrohpyData";
 import {
-  readSpecificUserData_DB,
   updateSingleTrophyData_DB,
   updateTotalScore_DB,
 } from "../../utils/database";
 import CustomButton from "../ui/CustomButton";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useEffect, useState } from "react";
 
 const FlatListSingleComponent = (props: {
   data: trophy_DB;
   index: number;
   totalScore: number;
 }) => {
-  const [userData, setUserData] = useState<userData_DB>();
-
-  // useEffect(() => {
-  //   readSpecificUserData_DB(auth.currentUser.uid, setUserData);
-  // }, []);
-
   const updateDBHandler = () => {
     if (props.totalScore < props.data.costs) {
-      Alert.alert("No sufficient funds");
+      Alert.alert(
+        "Insufficient Funds",
+        "Play a game to earn points.",
+        [
+          {
+            text: "OK",
+            style: "default",
+            onPress() {},
+          },
+        ],
+        {
+          cancelable: true,
+          onDismiss() {},
+        }
+      );
       return;
     } else {
       updateSingleTrophyData_DB(
@@ -46,7 +44,6 @@ const FlatListSingleComponent = (props: {
 
       updateTotalScore_DB(auth.currentUser.uid, -props.data.costs);
     }
-    // readSpecificUserData_DB(auth.currentUser.uid, setUserData);
   };
 
   return (

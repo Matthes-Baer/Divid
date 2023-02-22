@@ -7,7 +7,7 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/trophyImages/fantasy-castle.webp",
+      "image": "./assets/Splash-Screen.png",
       "resizeMode": "contain",
       "backgroundColor": "#2b2024"
     },

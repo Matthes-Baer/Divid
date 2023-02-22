@@ -36,9 +36,8 @@ const InfoModal: React.FC<PropsType> = (props: {
               <Text style={styles.SectionHeading}>Game mode:</Text>
               <Text style={styles.normalText}>
                 In easy mode, the number can range from 5 to 100, while in
-                medium mode, it can range from 5 to 250, and from 5 to 500 in
-                hard mode.The harder the The more game modes you play, the more
-                points you can earn.
+                medium mode it can range from 5 to 250 and from 5 to 500 in hard
+                mode. The harder the game mode, the more points you can earn.
               </Text>
             </View>
 
@@ -46,12 +45,12 @@ const InfoModal: React.FC<PropsType> = (props: {
               <Text style={styles.SectionHeading}>Hints:</Text>
               <Text style={styles.normalText}>
                 You start off with a single hint that tells you if the number is
-                dividable or not dividable by a specific number. With this hint
-                You have three chances to guess the right number.If you don't If
-                you guess the correct number within these three attempts, you
-                will receive a new hint and another three attempts. appears.
-                After 20 hints, you will get hints on whether the number is
-                higher or lower than your last guess number.
+                dividable or not by a specific number. With this hint, you have
+                three chances to guess the right number. If you don't guess the
+                correct number within these three attempts, you will receive
+                another hint and another three attempts. After 20 hints, you
+                will get hints on whether the number is higher or lower than
+                your last guess.
               </Text>
             </View>
 
@@ -60,9 +59,9 @@ const InfoModal: React.FC<PropsType> = (props: {
               <Text style={styles.normalText}>
                 As soon as you guess the correct number, you win the game. When
                 you win a game, you receive points that you can spend in the
-                Trophies area to adjust your image in the Home area. However,
-                the potential points you may earn are reduced by each attempt
-                and hint given throughout the game round.
+                Trophies area to adjust your image in the Home area. The
+                potential points you may earn are reduced by each attempt and
+                hint given throughout the game round.
               </Text>
             </View>
             <CustomButton

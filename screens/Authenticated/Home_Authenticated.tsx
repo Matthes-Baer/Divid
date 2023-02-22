@@ -81,18 +81,25 @@ const Home_Authenticated = ({ navigation }: Props) => {
 
       <View style={styles.midPartViewContainer}>
         <Text style={styles.normalTextStyle}>
-          Play a game and pick a trophy image in the Trophies section which can
+          Play a game and pick a trophy image in the Trophies section, which can
           be enabled on this home screen.
         </Text>
 
         {!activeTrophyImage && !userData ? (
           <ActivityIndicator size={"large"} color={"#2b2024"} />
         ) : (
-          <View style={{ marginTop: 10 }}>
+          <View
+            style={{
+              marginTop: 10,
+              height: Dimensions.get("window").width * 0.85,
+              width: Dimensions.get("window").width * 0.95,
+              elevation: 5,
+            }}
+          >
             <Image
               style={{
-                height: Dimensions.get("window").width * 0.85,
-                width: Dimensions.get("window").width * 0.95,
+                height: "100%",
+                width: "100%",
                 backgroundColor: "transparent",
                 borderRadius: 5,
               }}

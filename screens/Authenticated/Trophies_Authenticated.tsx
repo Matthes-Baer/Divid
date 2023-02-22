@@ -1,12 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  Button,
-  StyleSheet,
-  ActivityIndicator,
-  Image,
-} from "react-native";
+import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 
 //? Navigation
 import type {
@@ -47,7 +40,7 @@ const Trophies_Authenticated = ({ navigation, route }: Props) => {
       <View style={styles.mainHeadingViewContainer}>
         <Text style={styles.mainHeading}>
           Use your game points to unlock trophy images you can use as your main
-          profile picture.
+          Home area picture.
         </Text>
         {!userData ? (
           <ActivityIndicator size={"large"} color={"#2b2024"} />
@@ -64,9 +57,7 @@ const Trophies_Authenticated = ({ navigation, route }: Props) => {
         )}
       </View>
 
-      {!trophyData ? (
-        <ActivityIndicator size={"large"} />
-      ) : (
+      {trophyData && userData ? (
         <FlatList
           data={trophyData}
           renderItem={(data) => (
@@ -80,6 +71,8 @@ const Trophies_Authenticated = ({ navigation, route }: Props) => {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         />
+      ) : (
+        <ActivityIndicator size={"large"} />
       )}
     </View>
   );

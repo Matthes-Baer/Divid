@@ -46,7 +46,7 @@ export default FlatListSingleComponent;
 
 const styles = StyleSheet.create({
   mainViewContainer: {
-    elevation: 2.5,
+    elevation: 5,
     justifyContent: "space-between",
     flexDirection: "row",
     width: "100%",
