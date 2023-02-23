@@ -1,14 +1,12 @@
 import { signOut } from "firebase/auth";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   View,
   Text,
-  Button,
   StyleSheet,
   ActivityIndicator,
   Image,
   Dimensions,
-  StatusBar,
 } from "react-native";
 
 //? Navigation
@@ -24,10 +22,8 @@ import {
 } from "../../utils/database";
 import type { userData_DB, trophy_DB } from "../../utils/interfaces-and-types";
 import { auth } from "../../firebaseConfig";
-import { Picker } from "@react-native-picker/picker";
 import TROPHY_IMAGE_URL from "../../data/TrohpyData";
 import CustomButton from "../../components/ui/CustomButton";
-import FadeAnimation from "../../components/ui/FadeAnimation";
 import PickerModal from "../../components/Home_Authenticated/PickerModal";
 
 import Constants from "expo-constants";

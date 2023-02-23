@@ -4,6 +4,7 @@ import { auth } from "../../firebaseConfig";
 
 //* Needed for dynamic import of images
 import TROPHY_IMAGE_URL from "../../data/TrohpyData";
+
 import {
   updateSingleTrophyData_DB,
   updateTotalScore_DB,

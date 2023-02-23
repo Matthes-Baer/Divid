@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import { Modal, StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import CustomButton from "../ui/CustomButton";

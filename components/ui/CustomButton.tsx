@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Pressable, Text, StyleSheet } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 
 const CustomButton = (props: {
   onPress: Function;

@@ -20,10 +20,10 @@ import {
 } from "firebase/database";
 import type { userData_DB, trophy_DB } from "./interfaces-and-types";
 
+//? Used for references
 const db = getDatabase();
 
 //? Create & Add Functions
-
 export function createUser_DB(
   userId: string,
   username: string,
@@ -141,7 +141,7 @@ export function addScore_DB(
   usedHints: number,
   attempts: number
 ): void {
-  // const newPostKey = push(child(ref(db), "Scores")).key;
+  //? Adding to the same "list"
   const postListRef: DatabaseReference = ref(db, "users/" + userId + "/Scores");
   const newPostRef: ThenableReference = push(postListRef);
   set(newPostRef, {
@@ -158,7 +158,6 @@ export function addScore_DB(
 }
 
 //? Update Functions
-
 export function updateSingleData_DB(
   userId: string,
   input: string | number,
@@ -204,9 +203,8 @@ export function updateTotalScore_DB(userId: string, inputValue: number): void {
 }
 
 //? Read Functions
-
 export function readSpecificUserData_DB(userId: string, callback?: Function) {
-  const value = ref(db, "users/" + userId);
+  const value: DatabaseReference = ref(db, "users/" + userId);
   let data: userData_DB;
 
   onValue(value, (snapshot) => {
@@ -220,7 +218,7 @@ export function readSortedScoresArray_DB(
   callback?: Function
 ): void {
   //* Multiple Orders don't work at once with the realtime database - for such queries the Firebase Cloud Firestore would be needed.
-  const queryRef = query(
+  const queryRef: Query = query(
     ref(db, "users/" + userId + "/Scores"),
     orderByChild("score")
   );
@@ -252,7 +250,7 @@ export function readTopTenSortedScoresArray_DB(
   callback?: Function
 ): void {
   //* Multiple Orders don't work at once with the realtime database - for such queries the Firebase Cloud Firestore would be needed.
-  const queryRef = query(
+  const queryRef: Query = query(
     ref(db, "users/" + userId + "/Scores"),
     orderByChild("score")
   );
@@ -291,7 +289,6 @@ export function readTrophiesData_DB(
     ? query(ref(db, "users/" + userId + "/Trophies"), orderByChild("costs"))
     : ref(db, "users/" + userId + "/Trophies");
 
-  // const refUser: DatabaseReference = ref(db, "users/" + userId + "/Trophies");
   //* Reading Data in realtime
   onValue(refUser, (snapshot) => {
     let result: trophy_DB[] = [];

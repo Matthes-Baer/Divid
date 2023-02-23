@@ -1,15 +1,13 @@
-import { signOut } from "firebase/auth";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   View,
   Text,
-  Button,
   StyleSheet,
   FlatList,
-  useWindowDimensions,
   Dimensions,
   Image,
 } from "react-native";
+import { TextInput } from "react-native-gesture-handler";
 import { auth } from "../../firebaseConfig";
 
 import type {
@@ -18,23 +16,21 @@ import type {
   Hint,
 } from "../../utils/interfaces-and-types";
 
+//? Navigation
 import type { Authenticated_Screens_Type } from "../../utils/interfaces-and-types";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+
+//? Data
+import { HINTS_STATIC } from "../../data/GameData";
+import { addScore_DB, updateTotalScore_DB } from "../../utils/database";
+
+//? Custom Components
+import SlideXAnimation from "../../components/ui/SlideXAnimation";
+import FadeAnimation from "../../components/ui/FadeAnimation";
 import InfoModal from "../../components/Game/InfoModal";
 import CustomButton from "../../components/ui/CustomButton";
 import HintItem from "../../components/Game/HintItem";
-import { ScrollView, TextInput } from "react-native-gesture-handler";
 import SuccessModal from "../../components/Game/SuccessModal";
-import { HINTS_STATIC } from "../../data/GameData";
-import {
-  addScore_DB,
-  readSpecificUserData_DB,
-  updateSingleData_DB,
-  updateTotalScore_DB,
-} from "../../utils/database";
-import SlideXAnimation from "../../components/ui/SlideXAnimation";
-import FadeAnimation from "../../components/ui/FadeAnimation";
-import Constants from "expo-constants";
 
 type Props = NativeStackScreenProps<Authenticated_Screens_Type, "Game">;
 
@@ -45,7 +41,7 @@ const GAMEMODES: Gamemode[] = [
 ];
 
 const Home_Authenticated = ({ navigation }: Props) => {
-  const windowDimensions = useWindowDimensions();
+  // const windowDimensions = useWindowDimensions();
 
   const [infoModalVisible, setInfoModalVisible] = useState<boolean>(false);
   const [successModalVisible, setSuccessModalVisible] =

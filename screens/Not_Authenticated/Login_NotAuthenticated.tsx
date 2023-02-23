@@ -4,7 +4,6 @@ import { TextInput } from "react-native-gesture-handler";
 import { authSignin } from "../../utils/auth";
 import { auth } from "../../firebaseConfig";
 import { AntDesign, Feather } from "@expo/vector-icons";
-
 import CustomButton from "../../components/ui/CustomButton";
 
 const Start_NotAuthenticated = () => {

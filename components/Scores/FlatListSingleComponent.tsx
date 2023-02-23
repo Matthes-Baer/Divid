@@ -1,6 +1,5 @@
 import type { scoresArrayElement_DB } from "../../utils/interfaces-and-types";
 import { View, Text, StyleSheet } from "react-native";
-import { useEffect } from "react";
 
 const FlatListSingleComponent = (props: {
   data: scoresArrayElement_DB;

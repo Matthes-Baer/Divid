@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { useState } from "react";
 import { AntDesign, Feather } from "@expo/vector-icons";
 

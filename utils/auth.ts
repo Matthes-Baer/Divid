@@ -1,12 +1,8 @@
 import { auth } from "../firebaseConfig";
-//! bei Register dafür sorgen, dass verification E-Mail gesendet wird zum Aktivieren des Accounts - ohne Aktivieren kann man ansonsten beispielsweise die Reward-Bilder nicht einsehen oder etwas ähnliches.
-
-// auth.useDeviceLanguage();
 
 import {
   createUserWithEmailAndPassword,
   deleteUser,
-  onAuthStateChanged,
   sendEmailVerification,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
@@ -25,7 +21,7 @@ export const authRegister: (a: string, b: string, c: string) => void = (
 ) => {
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential: UserCredential) => {
-      const user = userCredential.user;
+      const user: User = userCredential.user;
       if (!user) {
         throw new Error("User isn't authenticated.");
       }
@@ -49,8 +45,8 @@ export const authSignin: (a: string, b: string) => void = (
 ) => {
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential: UserCredential) => {
-      // Signed in
-      const user = userCredential.user;
+      //* Signed in
+      const user: User = userCredential.user;
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -74,7 +70,6 @@ export const updateUserProfile: (a: string, b: string) => void = (
     });
 };
 
-//? auth.currentUser for currentUser
 export const updateUserEmail: (a: string) => void = (email: string) => {
   updateEmail(auth.currentUser, email)
     .then(() => {
@@ -85,7 +80,7 @@ export const updateUserEmail: (a: string) => void = (email: string) => {
     });
 };
 
-export const sendEmailVerificationMail = () => {
+export const sendEmailVerificationMail = (): void => {
   sendEmailVerification(auth.currentUser).then(() => {
     console.log("Email verification was sent");
   });

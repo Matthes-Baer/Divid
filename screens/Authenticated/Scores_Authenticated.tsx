@@ -19,10 +19,7 @@ import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 type Props = NativeStackScreenProps<Authenticated_Screens_Type, "Scores">;
 
 //? Database & Auth
-import {
-  readSortedScoresArray_DB,
-  readTopTenSortedScoresArray_DB,
-} from "../../utils/database";
+import { readTopTenSortedScoresArray_DB } from "../../utils/database";
 import { auth } from "../../firebaseConfig";
 import { FlatList } from "react-native-gesture-handler";
 import FlatListSingleComponent from "../../components/Scores/FlatListSingleComponent";

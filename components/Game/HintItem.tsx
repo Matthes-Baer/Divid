@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { Text, StyleSheet } from "react-native";
 import type { HintItemProps } from "../../utils/interfaces-and-types";
 import FadeAnimation from "../ui/FadeAnimation";
 
