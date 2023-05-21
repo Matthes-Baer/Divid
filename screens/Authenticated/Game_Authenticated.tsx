@@ -140,7 +140,6 @@ const Home_Authenticated = ({ navigation }: Props) => {
       return;
     } else {
       setAttempts((prev: number) => prev - 1);
-      console.log(attempts);
       if (attempts === 1) {
         getHintHandler();
         setAttempts(3);

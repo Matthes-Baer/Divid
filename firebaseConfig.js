@@ -1,22 +1,20 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
+// Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import { getAuth } from "firebase/auth";
-import { getDatabase } from "firebase/database";
 
-// Your web app's Firebase configuration
+import { getAuth } from "firebase/auth";
+
+// web app's Firebase configuration
+//! process.env. doesn't work like that, just a placeholder
 const firebaseConfig = {
-  apiKey: "AIzaSyC5k5VoJmqaYDfomgopw3RR4RPDRFwrXhM",
-  authDomain: "divid-5f8e5.firebaseapp.com",
-  databaseURL:
-    "https://divid-5f8e5-default-rtdb.europe-west1.firebasedatabase.app",
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTHDOMAIN,
+  databaseURL: process.env.FIREBASE_DATABASEURL,
   projectId: "divid-5f8e5",
   storageBucket: "divid-5f8e5.appspot.com",
   messagingSenderId: "119969415068",
   appId: "1:119969415068:web:1956f5655b819eeac61259",
-  databaseURL:
-    "https://divid-5f8e5-default-rtdb.europe-west1.firebasedatabase.app/",
 };
 
 // Initialize Firebase
