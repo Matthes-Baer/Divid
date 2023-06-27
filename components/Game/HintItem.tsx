@@ -8,9 +8,6 @@ const HintItem: React.FC<HintItemProps> = (props: {
   hintDividable: boolean;
   hintUsed: boolean;
 }) => {
-  useEffect(() => {
-    console.log(props.hintNumber);
-  });
   return (
     <FadeAnimation style={styles.viewContainer} duration={1000} value={1}>
       <Text
