@@ -7,7 +7,6 @@ import { getAuth } from "firebase/auth";
 
 //* web app's Firebase configuration
 
-//! process.env. doesn't work like that, that's just a placeholder
 //! A polished production build would require a proper env approach
 const firebaseConfig = {
   apiKey: "apiKey",
