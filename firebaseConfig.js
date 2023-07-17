@@ -10,9 +10,9 @@ import { getAuth } from "firebase/auth";
 //! process.env. doesn't work like that, that's just a placeholder
 //! A polished production build would require a proper env approach
 const firebaseConfig = {
-  apiKey: AIzaSyC5k5VoJmqaYDfomgopw3RR4RPDRFwrXhM,
-  authDomain: process.env.FIREBASE_AUTHDOMAIN,
-  databaseURL: process.env.FIREBASE_DATABASEURL,
+  apiKey: "apiKey",
+  authDomain: "authDomain",
+  databaseURL: "databaseURL",
   projectId: "divid-5f8e5",
   storageBucket: "divid-5f8e5.appspot.com",
   messagingSenderId: "119969415068",
