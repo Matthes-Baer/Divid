@@ -28,8 +28,7 @@ In terms of functionality, Divid incorporates a Firebase backend system that inc
 ## Additional Information ❗
 - This project is not published in an app store and, therefore, can only be accessed by locally starting the application. Additionally, to use the app, it would necessary to input the corresponding Firebase information in the firebaseConfig.js file, such as the apiKey, for example.
 
-## Project Images
-
+## Project Images 📷
 <div style="display: flex; flex-direction: column;" align="center">
   <p>Loading screen - The app's initial loading screen:</p>
   <img src="./github/Loading.jpg" alt="Loading" width="400" height="700">
